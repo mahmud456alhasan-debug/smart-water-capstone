@@ -118,6 +118,10 @@ Planning works best when capstone scope explicitly reuses lab modules instead of
 
 **Run:** `streamlit run app/main.py` → http://localhost:8501
 
+**GitHub push:** commit `408f211` on `main` — https://github.com/mahmud456alhasan-debug/smart-water-capstone
+
+**Screenshot:** `week7_session_b_Streamlit_page.png` (Weather & Alerts tab, RED alert at 22 mm/h)
+
 ## Lessons learned (Session B)
 
 Add `pytest.ini` early when using a `src/` layout. Restart Streamlit after code changes. One screenshot of the dashboard plus `pytest -q` terminal output is enough for submission.
