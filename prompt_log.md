@@ -90,3 +90,34 @@ Make it ready for development in Week 7 Session B. Python 3.8+, Streamlit, numpy
 ## Lessons learned
 
 Planning works best when capstone scope explicitly reuses lab modules instead of starting a new stack. Documenting wet-cell and unit conventions early avoids Week 8 debugging. Cursor can generate scaffold and report artifacts in one session; GitHub push and one screenshot remain manual. Cross-checking architecture with a second LLM (ChatGPT/Gemini) is optional but useful before Session B coding.
+
+---
+
+# Week 7 Session B — Core Development
+
+**Tool:** Cursor Agent | **Date:** 2026-05-22
+
+## Feature: pytest path + modules
+
+**Issue:** `ModuleNotFoundError: No module named 'src'` when running `pytest -q`.
+
+**Fix:** Added `pytest.ini` (`pythonpath = .`) and `conftest.py` to insert project root on `sys.path`. Same pattern in `app/main.py` for Streamlit.
+
+**Result:** `2 passed in 0.11s`
+
+## Feature: Streamlit four-tab dashboard
+
+**Prompt (summary):** Wire Week 5–6 lab logic into capstone `src/` packages and replace `app/main.py` stubs with Weather, Runoff, Reservoir, and Flood tabs.
+
+**Implementation:**
+- `src/runoff/scs_cn.py` — full SCS-CN with Q <= P
+- `src/reservoir/optimizer.py` + `wrapper.py` — 7-day schedule (~$708,849)
+- `src/flood/inundation.py` — DEM load + map
+- `src/weather/` — CSV load + GREEN/AMBER/RED alerts
+- `data/dem.npy` copied from week6_session_b_lab4
+
+**Run:** `streamlit run app/main.py` → http://localhost:8501
+
+## Lessons learned (Session B)
+
+Add `pytest.ini` early when using a `src/` layout. Restart Streamlit after code changes. One screenshot of the dashboard plus `pytest -q` terminal output is enough for submission.
