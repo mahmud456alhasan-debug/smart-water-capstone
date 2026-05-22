@@ -125,3 +125,36 @@ Planning works best when capstone scope explicitly reuses lab modules instead of
 ## Lessons learned (Session B)
 
 Add `pytest.ini` early when using a `src/` layout. Restart Streamlit after code changes. One screenshot of the dashboard plus `pytest -q` terminal output is enough for submission.
+
+---
+
+# Week 8 Session A — Testing & Validation
+
+**Tool:** Cursor Agent | **Date:** 2026-05-22
+
+## Exercise 1: Comprehensive tests
+
+**Prompt (from lab guide):** Write pytest tests with normal, edge, invalid, and physical cases; fixtures; target >80% coverage for capstone `src/` functions.
+
+**Added:** `tests/test_runoff.py`, `test_weather.py`, `test_flood.py`, `test_reservoir.py`, `test_validation.py`, `test_integration.py`, `tests/conftest.py`.
+
+**Hallucination found:** Assumed P=5 mm always below Ia for CN=95; high CN lowers Ia so runoff was non-zero. Fixed test to use P=2 mm, CN=80.
+
+**Result:** `29 passed`; coverage **96%** on `src/` (`pytest -q --cov=src --cov-report=term-missing`).
+
+## Exercise 2: Swiss Cheese Model
+
+| Layer | Implementation |
+|-------|----------------|
+| 1 Code review | Manual review of units in reservoir/flood modules |
+| 2 Unit tests | 29 pytest cases |
+| 3 Physical validation | `src/validation.py` (Q<=P, storage bounds, monotonic flood) |
+| 4 Integration | `tests/test_integration.py` workflows |
+
+## Screenshot
+
+`week8_session_a_terminal.png` — pytest + coverage table (96%).
+
+## Lessons learned (Session 8)
+
+Swiss Cheese layers map cleanly to validation.py plus integration tests. Coverage exposes untested reservoir and weather modules quickly. Always verify SCS-CN Ia before assuming zero runoff.
