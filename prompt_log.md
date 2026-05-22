@@ -181,6 +181,10 @@ Swiss Cheese layers map cleanly to validation.py plus integration tests. Coverag
 
 **Repo:** https://github.com/mahmud456alhasan-debug/smart-water-capstone
 
+**Git push:** commit `1ada4e6` on `main`.
+
+**Report screenshots:** `week8_session_b_github1.png` (repo tree), `week8_session_b_github2.png` (README).
+
 ## Exercise 4: Final review
 
 **Ready:** AGENTS.md, README, prompt_log, tests, app, presentation files.
