@@ -75,11 +75,15 @@ Make it ready for development in Week 7 Session B. Python 3.8+, Streamlit, numpy
 
 ## Exercise 4 - Repository
 
-**GitHub URL:** `REPLACE_WITH_YOUR_REPO_URL` *(fill after you push)*
+**GitHub URL:** https://github.com/mahmud456alhasan-debug/smart-water-capstone
 
 **Planned repo name:** `smart-water-capstone`
 
 **Commit message:** `Week 7 Session A: capstone scope and architecture`
+
+**Push result:** `main` branch, 30 objects, tracking `origin/main`.
+
+**Report screenshots:** `week7_session_a_github_page_a.png` (file tree), `week7_session_a_github_page_b.png` (README).
 
 ---
 

@@ -31,6 +31,4 @@ Copy `dem.npy` from `../week6_session_b_lab4/data/dem.npy` when implementing flo
 
 ## GitHub
 
-Replace with your repo URL after Exercise 4:
-
-`https://github.com/YOUR_USERNAME/smart-water-capstone`
+https://github.com/mahmud456alhasan-debug/smart-water-capstone
