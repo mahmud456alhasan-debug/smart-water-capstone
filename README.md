@@ -73,7 +73,7 @@ End-to-end decision-support workflow: **weather data → rainfall alert → SCS-
 | Experiment 3 | Reservoir dispatch optimization | [PDF](submission/experiment_reports/Experiment3_Reservoir_Optimization/Experiment3_Reservoir_Optimization_Report.pdf) |
 | Experiment 4 | Flood inundation analysis | [PDF](submission/experiment_reports/Experiment4_Flood_Inundation/Experiment4_Flood_Inundation_Report.pdf) |
 
-Short filenames for releases: [`release/`](release/) · LaTeX sources: [`submission/`](submission/)
+Short filenames for GitHub Releases: [`release/`](release/) · Full packages (LaTeX + PDF + figures): [`submission/`](submission/) — see [submission README](submission/README.md) for `.tex` paths
 
 ---
 
