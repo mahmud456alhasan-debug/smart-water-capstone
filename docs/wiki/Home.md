@@ -8,15 +8,17 @@ Welcome to **Smart Water Lab** — an AI-augmented water resources decision supp
 
 Weather → Rainfall alert → Runoff → Reservoir optimization → Flood mapping
 
-![Pipeline](../assets/smart_water_pipeline.png)
+![Pipeline](../../assets/smart_water_pipeline.png)
 
 ## Quick links
 
-- [Experiment 1 — Rainfall Alert](Experiment-1-Rainfall-Alert)
-- [Experiment 2 — SCS-CN Runoff](Experiment-2-SCSCN-Runoff)
-- [Experiment 3 — Reservoir Optimization](Experiment-3-Reservoir-Optimization)
-- [Experiment 4 — Flood Inundation](Experiment-4-Flood-Inundation)
-- [AI Engineering Portfolio](AI-Engineering-Portfolio)
+- [Experiment 1 — Rainfall Alert](Experiment-1-Rainfall-Alert.md)
+- [Experiment 2 — SCS-CN Runoff](Experiment-2-SCSCN-Runoff.md)
+- [Experiment 3 — Reservoir Optimization](Experiment-3-Reservoir-Optimization.md)
+- [Experiment 4 — Flood Inundation](Experiment-4-Flood-Inundation.md)
+- [AI Engineering Portfolio](AI-Engineering-Portfolio.md)
+
+> When pasting into **GitHub Wiki**, rename pages without `.md` (e.g. `Experiment-1-Rainfall-Alert`) and use wiki-style links.
 
 ## Metrics
 

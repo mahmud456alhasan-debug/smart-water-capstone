@@ -20,7 +20,7 @@ Integrated rainfall monitoring, runoff modeling, reservoir optimization, and flo
 - [Engineering outcomes](#engineering-outcomes)
 - [Submission package](#submission-package)
 - [Platform modules](#platform-modules)
-- [Validation & AI engineering](#validation--ai-engineering)
+- [Validation and AI engineering](#validation-and-ai-engineering)
 - [Quick start](#quick-start)
 - [Documentation](#documentation)
 
@@ -59,7 +59,7 @@ End-to-end decision-support workflow: **weather data → rainfall alert → SCS-
 | Streamlit dashboards (experiments + capstone) | 5 |
 | Reproducibility scorecards | 4 |
 
-> **Official release:** [v1.0 — Smart Water Lab Submission](https://github.com/mahmud456alhasan-debug/smart-water-capstone/releases) — attach PDFs from [`release/`](release/) (see [`docs/GITHUB_SETUP.md`](docs/GITHUB_SETUP.md)).
+> **Official release:** [v1.0 — Smart Water Lab Submission](https://github.com/mahmud456alhasan-debug/smart-water-capstone/releases/tag/v1.0.0) — PDFs in [`release/`](release/) (create release via [`docs/GITHUB_SETUP.md`](docs/GITHUB_SETUP.md) if link is empty).
 
 ---
 
@@ -99,7 +99,7 @@ Six axes: technical quality, testing, physical validation, AI collaboration, rep
 
 ---
 
-## Validation & AI engineering
+## Validation and AI engineering
 
 | Layer | Implementation |
 |-------|----------------|
