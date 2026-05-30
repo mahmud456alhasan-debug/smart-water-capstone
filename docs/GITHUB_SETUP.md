@@ -1,122 +1,115 @@
 # GitHub repository setup
 
-Complete these on [smart-water-capstone](https://github.com/mahmud456alhasan-debug/smart-water-capstone) after pushing the latest README and `assets/`.
+Do these steps on [smart-water-capstone](https://github.com/mahmud456alhasan-debug/smart-water-capstone) after `git push`.
 
 ---
 
-## 1. About section (gear icon on repo home)
+## Step 1 — About section (highest impact, 2 minutes)
 
-**Description**
+On the repo home page, click the **gear icon** next to "About".
 
-```
-AI-Augmented Smart Water Lab: rainfall monitoring, runoff modeling, reservoir optimization, flood analysis, 88 tests, 5 PDF reports, AI engineering case study.
-```
-
-**Topics** (add all that fit)
+**Description** (paste exactly):
 
 ```
-python
+AI-Augmented Smart Water Lab featuring rainfall monitoring, runoff modeling, reservoir optimization, flood analysis and engineering validation.
+```
+
+**Topics** (add each):
+
+```
 hydrology
 water-resources
 streamlit
+python
 optimization
 flood-modeling
 reservoir-optimization
-scipy
 pytest
 ai-engineering
 decision-support
 ```
 
+Save. The empty "No description" box disappears immediately.
+
 ---
 
-## 2. Push latest presentation changes
+## Step 2 — Push latest README
 
 ```bash
 cd ~/Downloads/Software\ Development/ai_water_lab/capstone
-git add README.md assets/ docs/ .gitignore
-git commit -m "Engineering showcase README, assets gallery, docs"
 git push origin main
 ```
 
-If commit fails with a hook error, use:
+If commit needed first:
 
 ```bash
-git commit -F /tmp/commitmsg.txt
-# where commitmsg.txt contains one line: Engineering showcase README, assets gallery, docs
+echo "Premium README, release PDFs, wiki pages" > /tmp/msg.txt
+git add README.md release/ docs/wiki/
+git commit -F /tmp/msg.txt
+git push origin main
 ```
 
 ---
 
-## 3. Create Release v1.0 — Course Submission
+## Step 3 — Create Release v1.0 (5 minutes)
 
-**GitHub → Releases → Draft a new release**
+**Releases → Draft a new release**
 
 | Field | Value |
 |-------|--------|
 | Tag | `v1.0.0` |
-| Title | `v1.0 — Course Submission` |
-| Description | See below |
+| Release title | `v1.0 — Smart Water Lab Submission` |
+| Description | Paste from `docs/RELEASE_NOTES.md` |
 
-**Attach files** (upload from `submission/`):
+**Attach these 5 files** from the `release/` folder:
 
-- `submission/portfolio/AI_Engineering_Portfolio.pdf`
-- `submission/experiment_reports/Experiment1_Rainfall_Alert/Experiment1_Rainfall_Alert_Report.pdf`
-- `submission/experiment_reports/Experiment2_SCSCN_Runoff/Experiment2_SCSCN_Runoff_Report.pdf`
-- `submission/experiment_reports/Experiment3_Reservoir_Optimization/Experiment3_Reservoir_Optimization_Report.pdf`
-- `submission/experiment_reports/Experiment4_Flood_Inundation/Experiment4_Flood_Inundation_Report.pdf`
+1. `AI_Engineering_Portfolio.pdf`
+2. `Experiment1_Rainfall_Alert.pdf`
+3. `Experiment2_SCSCN_Runoff.pdf`
+4. `Experiment3_Reservoir_Optimization.pdf`
+5. `Experiment4_Flood_Inundation.pdf`
 
-**Release notes template:**
-
-```markdown
-## Smart Water Lab v1.0 — Course Submission
-
-- 4 specialized hydrology experiments + capstone dashboard
-- AI-Augmented Engineering Case Study (PDF)
-- 88 automated tests, 4 validation CLIs
-- Monte Carlo reservoir uncertainty, forecast risk pipeline
-- Integrated pipeline and maturity figures in README
-
-Mahmudul Hasan (4125999049) — Xi'an Jiaotong University — 2026
-```
-
-### CLI (if `gh` is authenticated)
-
-```bash
-cd capstone
-gh release create v1.0.0 \
-  --title "v1.0 — Course Submission" \
-  --notes-file docs/RELEASE_NOTES.md \
-  submission/portfolio/AI_Engineering_Portfolio.pdf \
-  submission/experiment_reports/Experiment1_Rainfall_Alert/Experiment1_Rainfall_Alert_Report.pdf \
-  submission/experiment_reports/Experiment2_SCSCN_Runoff/Experiment2_SCSCN_Runoff_Report.pdf \
-  submission/experiment_reports/Experiment3_Reservoir_Optimization/Experiment3_Reservoir_Optimization_Report.pdf \
-  submission/experiment_reports/Experiment4_Flood_Inundation/Experiment4_Flood_Inundation_Report.pdf
-```
+Click **Publish release**. Visitors will see **Releases → v1.0** instead of "No releases published".
 
 ---
 
-## 4. Enable Wiki (optional, ~15 min)
+## Step 4 — Populate Wiki (15 minutes, optional)
 
-1. Repo **Settings → Features → Wikis → check ON**  
-2. **Wiki → Create first page** — paste content from `docs/WIKI_HOME.md`  
-3. Add pages for Experiments 1–4 linking to PDFs  
+1. **Settings → General → Features → Wikis → ON**
+2. Click **Wiki** tab → **Create the first page**
+3. Copy content from `docs/wiki/Home.md`
+4. Create pages (New Page) from each file in `docs/wiki/`:
+   - Experiment-1-Rainfall-Alert.md
+   - Experiment-2-SCSCN-Runoff.md
+   - Experiment-3-Reservoir-Optimization.md
+   - Experiment-4-Flood-Inundation.md
+   - AI-Engineering-Portfolio.md
 
 ---
 
-## 5. GitHub Pages (optional, Tier 4)
+## Step 5 — Verify landing page
 
-Not required for grading. If desired later:
+After push, confirm README shows in order:
 
-- Settings → Pages → Source: branch `main`, folder `/docs`  
-- Add `docs/index.md` landing page (future work)
+1. Title + professional intro
+2. Badges
+3. Quick navigation links
+4. **Pipeline banner image**
+5. Engineering outcomes
+6. Metrics + submission table
+7. 2×2 screenshot gallery
+8. Quick start
 
 ---
 
 ## Checklist
 
-- [ ] About description + topics set  
-- [ ] README shows pipeline + radar images on first scroll  
-- [ ] No `__pycache__` or `.coverage` in file tree  
-- [ ] Release v1.0 with 5 PDFs attached  
-- [ ] Wiki home page (optional)
+- [ ] About description + topics set
+- [ ] `git push` complete
+- [ ] Release v1.0 with 5 PDFs from `release/`
+- [ ] Wiki home + 5 pages (optional)
+- [ ] No `__pycache__` in file tree
+
+## Repository rename (optional, skip if already submitted)
+
+Current name `smart-water-capstone` is fine for coursework. Portfolio alternative: `smart-water-lab-suite` (requires GitHub Settings → rename + update local remote).

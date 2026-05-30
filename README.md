@@ -2,43 +2,47 @@
 
 ### AI-Augmented Water Resources Decision Support Platform
 
+Integrated rainfall monitoring, runoff modeling, reservoir optimization, and flood-risk analysis with documented AI-assisted software engineering practices.
+
+**Student:** Mahmudul Hasan (4125999049) · **Xi'an Jiaotong University** · 2026
+
 ![Python](https://img.shields.io/badge/Python-3.8+-3776AB?logo=python&logoColor=white)
 ![Tests](https://img.shields.io/badge/Tests-88-success)
 ![Reports](https://img.shields.io/badge/PDF_Reports-5-blue)
 ![Validation](https://img.shields.io/badge/Validation_CLIs-4-informational)
 ![AI Review](https://img.shields.io/badge/AI_Corrections-9-orange)
 
-**Mahmudul Hasan** · 4125999049 · Xi'an Jiaotong University · 2026  
-*AI-Augmented Software Engineering — complete hydrology suite with formal reports and documented verification*
+---
+
+## Quick navigation
+
+- [Integrated architecture](#integrated-system-architecture)
+- [Engineering outcomes](#engineering-outcomes)
+- [Submission package](#submission-package)
+- [Platform modules](#platform-modules)
+- [Validation & AI engineering](#validation--ai-engineering)
+- [Quick start](#quick-start)
+- [Documentation](#documentation)
 
 ---
 
-## What this repository is
+## Integrated system architecture
 
-One integrated engineering platform—not a single homework script:
+![Smart Water Decision Support Pipeline — weather to flood assessment workflow](assets/smart_water_pipeline.png)
 
-| Module | Capability |
-|--------|------------|
-| Rainfall monitoring | Live API + 3h/6h forecast risk classification |
-| Runoff modeling | USDA SCS-CN + CN uncertainty band |
-| Reservoir optimization | 7-day dispatch + Monte Carlo P10/P50/P90 |
-| Flood analysis | DEM inundation, stage curves, 9/9 validation |
-| Capstone dashboard | Streamlit integration of all four domains |
-| AI case study | Swiss Cheese verification + Jagged Frontier evidence |
+End-to-end decision-support workflow: **weather data → rainfall alert → SCS-CN runoff → reservoir dispatch → flood inundation mapping**, with validation and formal reports at each stage.
 
 ---
 
-## Submission package (start here)
+## Engineering outcomes
 
-| Document | Description | Download |
-|----------|-------------|----------|
-| AI Engineering Case Study | Integrated pipeline, AI stats, validity threats | [PDF](submission/portfolio/AI_Engineering_Portfolio.pdf) |
-| Experiment 1 | Rainfall monitoring & alerting | [PDF](submission/experiment_reports/Experiment1_Rainfall_Alert/Experiment1_Rainfall_Alert_Report.pdf) |
-| Experiment 2 | SCS-CN runoff modeling | [PDF](submission/experiment_reports/Experiment2_SCSCN_Runoff/Experiment2_SCSCN_Runoff_Report.pdf) |
-| Experiment 3 | Reservoir dispatch optimization | [PDF](submission/experiment_reports/Experiment3_Reservoir_Optimization/Experiment3_Reservoir_Optimization_Report.pdf) |
-| Experiment 4 | Flood inundation analysis | [PDF](submission/experiment_reports/Experiment4_Flood_Inundation/Experiment4_Flood_Inundation_Report.pdf) |
-
-LaTeX sources and appendix code: [`submission/`](submission/)
+- **88** automated pytest cases across four experiments  
+- **4** dedicated validation CLI tools (`validate_*`, batch API, constraint checks)  
+- **5** formal PDF reports including AI engineering case study  
+- **Monte Carlo** inflow uncertainty — 100 scenarios, P10/P50/P90 revenue and storage  
+- **9** documented AI corrections (83% first-pass rate on 52 reviewed deliverables)  
+- **End-to-end pipeline** linking monitoring, operations, and flood impact assessment  
+- **4** reproducibility scorecards (`audit_summary.txt` per experiment)  
 
 ---
 
@@ -48,73 +52,67 @@ LaTeX sources and appendix code: [`submission/`](submission/)
 |--------|------:|
 | Specialized experiments | 4 |
 | PDF reports + case study | **5** |
-| Automated tests (Exp 1–4) | **88** |
+| Automated tests | **88** |
 | Validation CLI scripts | 4 |
 | AI outputs reviewed / corrected | 52 / **9** |
 | Monte Carlo inflow scenarios | 100 |
-| Python modules (core experiments) | ~40 |
+| Streamlit dashboards (experiments + capstone) | 5 |
 | Reproducibility scorecards | 4 |
+
+> **Official release:** [v1.0 — Smart Water Lab Submission](https://github.com/mahmud456alhasan-debug/smart-water-capstone/releases) — attach PDFs from [`release/`](release/) (see [`docs/GITHUB_SETUP.md`](docs/GITHUB_SETUP.md)).
 
 ---
 
-## Integrated system architecture
+## Submission package
 
-![Smart Water Decision Support Pipeline](assets/smart_water_pipeline.png)
+| Document | Description | Download |
+|----------|-------------|----------|
+| AI Engineering Case Study | Pipeline, AI statistics, threats to validity | [PDF](submission/portfolio/AI_Engineering_Portfolio.pdf) |
+| Experiment 1 | Rainfall monitoring & alerting | [PDF](submission/experiment_reports/Experiment1_Rainfall_Alert/Experiment1_Rainfall_Alert_Report.pdf) |
+| Experiment 2 | SCS-CN runoff modeling | [PDF](submission/experiment_reports/Experiment2_SCSCN_Runoff/Experiment2_SCSCN_Runoff_Report.pdf) |
+| Experiment 3 | Reservoir dispatch optimization | [PDF](submission/experiment_reports/Experiment3_Reservoir_Optimization/Experiment3_Reservoir_Optimization_Report.pdf) |
+| Experiment 4 | Flood inundation analysis | [PDF](submission/experiment_reports/Experiment4_Flood_Inundation/Experiment4_Flood_Inundation_Report.pdf) |
 
-Weather and forecast data flow through monitoring → runoff → reservoir operations → flood impact assessment, with validation and LaTeX evidence at each stage.
+Short filenames for releases: [`release/`](release/) · LaTeX sources: [`submission/`](submission/)
 
 ---
 
 ## Engineering maturity
 
-![Engineering maturity radar](assets/case_study_radar.png)
+![Engineering maturity self-assessment — typical course project vs this submission](assets/case_study_radar.png)
 
-Self-assessed comparison: typical course project vs this submission (technical quality, testing, physical validation, AI collaboration, reproducibility, documentation).
+Six axes: technical quality, testing, physical validation, AI collaboration, reproducibility, documentation (1–10 self-assessment).
 
 ---
 
 ## Platform modules
 
-### Rainfall monitoring (Experiment 1)
+| Rainfall monitoring | Runoff modeling |
+|:--:|:--:|
+| ![Rainfall dashboard — OpenWeather alerts and forecast risk](assets/rainfall_dashboard.png) | ![SCS-CN runoff sensitivity and uncertainty](assets/runoff_analysis.png) |
+| Exp 1 — API, GREEN/YELLOW/RED, 3h/6h forecast | Exp 2 — hand-validated Q=13.80 mm at P=50, CN=80 |
 
-![Rainfall dashboard](assets/rainfall_dashboard.png)
-
-OpenWeather integration, GREEN/YELLOW/RED thresholds, forecast risk pipeline, 50-city batch validation.
-
-### Runoff modeling (Experiment 2)
-
-![Runoff analysis](assets/runoff_analysis.png)
-
-Hand-validated SCS-CN reference (P=50 mm, CN=80 → Q=13.80 mm), CN sensitivity and uncertainty band.
-
-### Reservoir optimization (Experiment 3)
-
-![Reservoir Monte Carlo uncertainty](assets/reservoir_optimization.png)
-
-trust-constr dispatch, ecological trade-off, drought infeasibility documented, Monte Carlo revenue/storage distributions.
-
-### Flood inundation (Experiment 4)
-
-![Flood extent comparison](assets/flood_analysis.png)
-
-Synthetic DEM, monotonic stage–area–volume curves, seed sensitivity, 9/9 physical validation PASS.
+| Reservoir optimization | Flood analysis |
+|:--:|:--:|
+| ![Monte Carlo revenue and storage distributions](assets/reservoir_optimization.png) | ![Flood extent at 40 m vs 50 m water level](assets/flood_analysis.png) |
+| Exp 3 — trust-constr, eco trade-off, P10/P50/P90 | Exp 4 — DEM inundation, 9/9 validation PASS |
 
 ---
 
-## Project highlights
+## Validation & AI engineering
 
-- **AI-augmented workflow** — 9 documented corrections; 83% first-pass rate on reviewed deliverables  
-- **Swiss Cheese verification** — AI review → pytest → physical rules → validation CLI → report evidence  
-- **Jagged Frontier reflection** — AI failures logged and fixed, not hidden  
-- **Monte Carlo uncertainty** — inflow perturbation with P10/P50/P90 outcomes  
-- **Threats to validity** — explicit model limitations in case study  
-- **End-to-end pipeline** — four experiments designed as one decision-support workflow  
+| Layer | Implementation |
+|-------|----------------|
+| Swiss Cheese verification | AI review → pytest → physical rules → validation CLI → report evidence |
+| Jagged Frontier | AI mistakes documented in `prompt_log.md` and case study |
+| Critical AI use | 52 deliverables reviewed, 9 required human correction |
+| Threats to validity | OpenWeather sparsity, SCS-CN lumped CN, bathtub flood model, LLM hallucination risk |
 
-Details: [`submission/portfolio/AI_Engineering_Portfolio.md`](submission/portfolio/AI_Engineering_Portfolio.md)
+Full narrative: [`submission/portfolio/AI_Engineering_Portfolio.md`](submission/portfolio/AI_Engineering_Portfolio.md) · Capstone reflection: [`JAGGED_FRONTIER.md`](JAGGED_FRONTIER.md)
 
 ---
 
-## Quick start (capstone dashboard)
+## Quick start
 
 ```bash
 git clone https://github.com/mahmud456alhasan-debug/smart-water-capstone.git
@@ -124,7 +122,7 @@ streamlit run app/main.py
 pytest -q
 ```
 
-Place `dem.npy` in `data/` for the flood tab (from Week 6 lab or local experiment 4 output).
+Copy `dem.npy` into `data/` for the flood tab (from Week 6 lab or local Experiment 4 output).
 
 ---
 
@@ -132,18 +130,16 @@ Place `dem.npy` in `data/` for the flood tab (from Week 6 lab or local experimen
 
 ```text
 smart-water-capstone/
-├── assets/                  Showcase figures (README visuals)
-├── submission/              PDFs, LaTeX, report screenshots  ← grading
-├── docs/                    Wiki content, GitHub setup guide
-├── app/                     Streamlit capstone
-├── src/                     weather · runoff · reservoir · flood
-├── tests/                   Capstone pytest
-├── ARCHITECTURE.md          System design
-├── AGENTS.md                AI collaboration protocol
-└── prompt_log.md            Documented AI interaction log
+├── assets/           README showcase figures
+├── release/          PDFs with short names (for GitHub Releases)
+├── submission/       Full LaTeX + screenshots + appendix code
+├── docs/             Wiki pages + GitHub setup guide
+├── app/              Streamlit capstone dashboard
+├── src/              weather · runoff · reservoir · flood modules
+└── tests/            Capstone pytest suite
 ```
 
-Full experiment source code runs locally under `ai_water_lab/experiment*` (not duplicated here).
+Experiment source code: local `ai_water_lab/experiment*` folders (not duplicated in this repo).
 
 ---
 
@@ -151,10 +147,11 @@ Full experiment source code runs locally under `ai_water_lab/experiment*` (not d
 
 | Resource | Purpose |
 |----------|---------|
-| [`docs/WIKI_HOME.md`](docs/WIKI_HOME.md) | Paste into GitHub Wiki |
-| [`docs/GITHUB_SETUP.md`](docs/GITHUB_SETUP.md) | About description, topics, Release v1.0 |
+| [`docs/GITHUB_SETUP.md`](docs/GITHUB_SETUP.md) | **About description, topics, Release v1.0** |
+| [`docs/wiki/`](docs/wiki/) | Wiki pages — copy to GitHub Wiki |
 | [`submission/README.md`](submission/README.md) | Regenerate PDFs and figures |
-| [`JAGGED_FRONTIER.md`](JAGGED_FRONTIER.md) | Capstone AI reflection |
+| [`ARCHITECTURE.md`](ARCHITECTURE.md) | Capstone system design |
+| [`AGENTS.md`](AGENTS.md) | AI collaboration protocol |
 
 ---
 
