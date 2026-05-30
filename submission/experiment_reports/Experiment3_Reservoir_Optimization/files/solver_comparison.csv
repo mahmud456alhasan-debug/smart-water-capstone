@@ -1,0 +1,3 @@
+solver,revenue_usd,feasible,iterations,runtime_s,message
+trust-constr,146443.33,True,91,0.5238,`xtol` termination condition is satisfied.
+SLSQP,146443.33,True,5,0.0036,Optimization terminated successfully

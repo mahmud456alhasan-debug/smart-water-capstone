@@ -1,0 +1,47 @@
+========================================================================
+  ENGINEERING AUDIT SUMMARY — Experiment 3: Reservoir Optimization
+  Student: Mahmudul Hasan (4125999049)
+  Generated: 2026-05-30 07:50 UTC
+========================================================================
+
+1. FILES CHECKED
+------------------------------------------------------------------------
+ [X] formulation.md               (4,289 bytes)
+ [X] reservoir_optimize.py        (24,835 bytes)
+ [X] validate_constraints.py      (1,452 bytes)
+ [X] tradeoff_analysis.py         (5,476 bytes)
+ [X] scenario_analysis.py         (4,325 bytes)
+ [X] uncertainty_analysis.py      (8,932 bytes)
+ [X] AGENTS.md                    (2,021 bytes)
+ [X] prompt_log.md                (3,708 bytes)
+ [X] README.md                    (1,319 bytes)
+ [X] requirements.txt             (80 bytes)
+ RESULT: 10/10 key files present
+
+2. TESTS
+------------------------------------------------------------------------
+ pytest collected: 23 tests
+ Includes: optimize, trade-off, scenarios, Monte Carlo uncertainty
+
+3. VALIDATION
+------------------------------------------------------------------------
+ [X] Storage bounds V_min <= V <= V_max all days
+ [X] Ecological release Q >= Q_eco (hard bounds + validate_constraints.py)
+ [X] Mass balance continuity closed (tolerance 1e-3 m3)
+ [X] Solver comparison: trust-constr vs SLSQP
+ [X] Scenario analysis: drought may be infeasible (honest)
+ [X] Monte Carlo: 100 perturbed inflows, P10/P50/P90 revenue & storage
+
+4. KNOWN LIMITATIONS
+------------------------------------------------------------------------
+ - 7-day horizon; no MPC rolling horizon
+ - Inflow uncertainty is multiplicative Normal, not ensemble forecast
+
+5. REPRODUCIBILITY
+------------------------------------------------------------------------
+ [X] Fixed seed (42) for Monte Carlo
+ [X] formulation.md documents units and constraints before code
+
+========================================================================
+  VERDICT: READY FOR SUBMISSION
+========================================================================

@@ -1,0 +1,79 @@
+========================================================================
+  EXPERIMENT 4: FLOOD INUNDATION - VALIDATION REPORT
+  Student: Mahmudul Hasan (4125999049)
+========================================================================
+
+  >>> OVERALL: PASS <<<
+
+SECTION 0 - DEM AND UNITS
+------------------------------------------------------------------------
+  Grid size              : 100 x 100
+  Cell size              : 1.0 m
+  Elevation min/max (m)  : 35.96 / 68.81
+  Flooded at 40 m        : 2.41%
+  Flooded at 50 m        : 25.25%
+  Flood volume 40 m      : 285.0 m^3
+  Flood volume 50 m      : 12277.9 m^3
+  Flood mask rule        : elevation < water_level
+
+SECTION 1 - CHECKLIST
+------------------------------------------------------------------------
+  [PASS]  Flooded percentage in [0, 100]%
+           PASS - All test levels in range
+  [PASS]  Monotonic increase (40, 45, 50 m)
+           PASS - 2.41% -> 25.25%
+  [PASS]  Curve monotonic (40.0-50.0 m, step 0.5 m)
+           PASS - 21 levels non-decreasing
+  [PASS]  Inundation depth non-negative
+           PASS - No negative depths
+  [PASS]  Non-flooded cells depth = 0
+           PASS - Dry cells have zero depth
+  [PASS]  Water below min DEM -> 0% flooded
+           PASS - 0.00% at 35.0 m
+  [PASS]  Water above max DEM -> 100% flooded
+           PASS - 100.00% at 69.8 m
+  [PASS]  Max depth <= water_level - min_elevation
+           PASS - max 14.04 m <= 14.04 m
+  [PASS]  Flood extent at 50 m > 40 m
+           PASS - 25.25% > 2.41%
+  [PASS]  Flood volume increases 40 m -> 50 m
+           PASS - 285 -> 12278 m^3
+
+SECTION 2 - DYNAMIC CURVE (40.0-50.0 m, step 0.5 m, 21 points)
+------------------------------------------------------------------------
+   40.0 m  ->    2.41%
+   40.5 m  ->    3.22%
+   41.0 m  ->    3.95%
+   41.5 m  ->    4.81%
+   42.0 m  ->    5.57%
+   42.5 m  ->    6.48%
+   43.0 m  ->    7.43%
+   43.5 m  ->    8.11%
+   44.0 m  ->    8.97%
+   44.5 m  ->    9.99%
+   45.0 m  ->   10.92%
+   45.5 m  ->   11.97%
+   46.0 m  ->   13.16%
+   46.5 m  ->   14.41%
+   47.0 m  ->   15.81%
+   47.5 m  ->   17.19%
+   48.0 m  ->   18.77%
+   48.5 m  ->   20.19%
+   49.0 m  ->   21.77%
+   49.5 m  ->   23.47%
+   50.0 m  ->   25.25%
+
+SECTION 3 - SEED SENSITIVITY (@ 50 m)
+------------------------------------------------------------------------
+  seed  42  z=[36.0,68.8]  ->  25.25% flooded
+  seed   7  z=[36.0,69.1]  ->  25.45% flooded
+  seed  99  z=[35.1,69.4]  ->  25.04% flooded
+
+SECTION 4 - PERFORMANCE (ms)
+------------------------------------------------------------------------
+  DEM load              : 0.23
+  Single calculate_flood: 0.04
+  Full curve simulation : 2.68
+
+  ALL CHECKS PASSED
+========================================================================

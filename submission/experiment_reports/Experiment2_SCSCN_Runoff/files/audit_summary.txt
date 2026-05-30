@@ -1,0 +1,42 @@
+========================================================================
+  ENGINEERING AUDIT SUMMARY — Experiment 2: SCS-CN Runoff
+  Student: Mahmudul Hasan (4125999049)
+  Generated: 2026-05-30 07:50 UTC
+========================================================================
+
+1. FILES CHECKED
+------------------------------------------------------------------------
+ [X] scscn_runoff.py              (1,120 bytes)
+ [X] sensitivity_analysis.py      (3,107 bytes)
+ [X] cn_uncertainty.py            (3,841 bytes)
+ [X] validate_reference.py        (2,078 bytes)
+ [X] AGENTS.md                    (1,625 bytes)
+ [X] prompt_log.md                (1,614 bytes)
+ [X] README.md                    (971 bytes)
+ [X] requirements.txt             (68 bytes)
+ RESULT: 8/8 key files present
+
+2. TESTS
+------------------------------------------------------------------------
+ pytest collected: 23 tests
+ Includes: formula, boundaries, Q<=P, cn_uncertainty band
+
+3. VALIDATION
+------------------------------------------------------------------------
+ [X] Hand reference: P=50 mm, CN=80 -> Q=13.80 mm (validate_reference.py)
+ [X] Physical: Q >= 0, Q <= P for parametrized grid
+ [X] CN uncertainty: band [75, 85] at P=50 mm (cn_uncertainty.py)
+
+4. KNOWN LIMITATIONS
+------------------------------------------------------------------------
+ - Single-event depth; no hydrograph routing or AMC adjustment
+ - CN uncertainty shown as deterministic sensitivity band, not PDF
+
+5. REPRODUCIBILITY
+------------------------------------------------------------------------
+ [X] Pure Python + pytest; no API keys required
+ [X] validate_reference.py prints PASS/FAIL for grader
+
+========================================================================
+  VERDICT: READY FOR SUBMISSION
+========================================================================

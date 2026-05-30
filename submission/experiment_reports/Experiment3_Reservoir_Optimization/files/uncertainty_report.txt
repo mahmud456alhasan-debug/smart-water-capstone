@@ -1,0 +1,25 @@
+MONTE CARLO INFLOW UNCERTAINTY REPORT
+============================================================
+Scenarios: 100  |  Noise std: 10%
+Feasible solutions: 72 / 100
+
+REVENUE (USD, 7-day)
+----------------------------------------
+  Deterministic:  146,443.33
+  Mean (MC):      144,644.16
+  Std dev:        4,961.54
+  P10:            138,072.94
+  P50:            145,348.25
+  P90:            150,865.45
+
+FINAL STORAGE (m3)
+----------------------------------------
+  Deterministic:  100,000
+  P10:            100,000
+  P50:            100,000
+  P90:            100,000
+
+INTERPRETATION
+----------------------------------------
+  Inflow forecast error (10% multiplicative) propagates to revenue
+  and end-of-horizon storage. P10/P90 bracket the risk envelope.

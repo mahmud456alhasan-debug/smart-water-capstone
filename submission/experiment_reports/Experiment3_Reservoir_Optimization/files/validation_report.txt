@@ -1,0 +1,77 @@
+========================================================================
+  EXPERIMENT 3: RESERVOIR DISPATCH — VALIDATION REPORT
+  Student: Mahmudul Hasan (4125999049)
+========================================================================
+
+  >>> OVERALL: PASS <<<
+
+SECTION 0 — PROBLEM PARAMETERS
+------------------------------------------------------------------------
+  V0 (initial storage)     :        500,000 m^3
+  V_min / V_max            :        100,000 / 1,000,000 m^3
+  Q_eco / Q_max            :           10.0 / 100.0 m^3/s
+  Timestep DT              :         86,400 s (1 day)
+  Head H (optimization)    :           80.0 m
+  Turbine efficiency eta   :           0.85
+  Inflows (m^3/s)          : [15.0, 12.0, 10.0, 8.0, 12.0, 15.0, 18.0]
+  Prices ($/kWh)           : [0.08, 0.08, 0.08, 0.08, 0.1, 0.12, 0.1]
+
+SECTION 1 — VALIDATION SUMMARY
+------------------------------------------------------------------------
+  Storage bounds           : PASS
+  Release bounds           : PASS
+  Mass balance             : PASS
+  Ecological deficit       : PASS
+  Worst storage slack (m^3): 0.0000
+  Worst eco deficit (m^3/s): 0.000000
+  Worst balance error (m^3): 0.00e+00
+  Tolerance                : 0.001
+  Total revenue (USD)      : 146,443.33
+
+SECTION 2 — OPTIMAL SCHEDULE (DAY BY DAY)
+------------------------------------------------------------------------
+  Day   Inflow   Release      S_start        S_end     Energy  Price    Revenue
+        (m3/s)    (m3/s)         (m3)         (m3)      (kWh) ($/kWh)        ($)
+    1    15.00   10.8031      500,000      862,611  172,957.0   0.08  13,836.56
+    2    12.00   10.4098      862,611    1,000,000  166,660.8   0.08  13,332.86
+    3    10.00   10.0000    1,000,000    1,000,000  160,099.2   0.08  12,807.94
+    4     8.00   10.0000    1,000,000      827,200  160,099.2   0.08  12,807.94
+    5    12.00   10.0000      827,200    1,000,000  160,099.2   0.10  16,009.92
+    6    15.00   25.4167    1,000,000      100,000  406,918.8   0.12  48,830.26
+    7    18.00   18.0000      100,000      100,000  288,178.6   0.10  28,817.86
+
+SECTION 3 — STORAGE & RELEASE CONSTRAINT DETAIL
+------------------------------------------------------------------------
+  Day 1: storage margin to V_min=762,610.7 m^3, to V_max=137,389.3 m^3 | release=10.8031 m^3/s [OK]
+  Day 2: storage margin to V_min=900,000.0 m^3, to V_max=0.0 m^3 | release=10.4098 m^3/s [OK]
+  Day 3: storage margin to V_min=900,000.0 m^3, to V_max=0.0 m^3 | release=10.0000 m^3/s [OK]
+  Day 4: storage margin to V_min=727,200.0 m^3, to V_max=172,800.0 m^3 | release=10.0000 m^3/s [OK]
+  Day 5: storage margin to V_min=900,000.0 m^3, to V_max=0.0 m^3 | release=10.0000 m^3/s [OK]
+  Day 6: storage margin to V_min=0.0 m^3, to V_max=900,000.0 m^3 | release=25.4167 m^3/s [OK]
+  Day 7: storage margin to V_min=0.0 m^3, to V_max=900,000.0 m^3 | release=18.0000 m^3/s [OK]
+
+SECTION 4 — MASS BALANCE (CONTINUITY)
+------------------------------------------------------------------------
+  S0 + sum(I*DT) - sum(Q*DT) = 100,000.0 m^3
+  Computed final storage     = 100,000.0 m^3
+  Horizon error              = 2.18e-10 m^3
+  Per-day max error          = 0.00e+00 m^3
+
+SECTION 5 — SOLVER COMPARISON (SLSQP vs trust-constr)
+------------------------------------------------------------------------
+  trust-constr: success=True, revenue=$146,443.33, feasible=True, iters=91, time=416.5 ms
+  SLSQP       : success=True, revenue=$146,443.33, feasible=True, iters=5, time=3.1 ms
+
+SECTION 6 — HEAD SENSITIVITY (same optimal releases)
+------------------------------------------------------------------------
+  H =  25.0 m  ->  total revenue = $45,763.54
+  H =  30.0 m  ->  total revenue = $54,916.25 <-- guide/peer reference (~$45k--$55k scale)
+  H =  50.0 m  ->  total revenue = $91,527.08
+  H =  80.0 m  ->  total revenue = $146,443.33 <-- optimization head
+
+NOTE: Experiment guide sample revenue ~$45,000 uses lower head (25--30 m).
+This project optimizes at H = 80 m (documented in formulation.md); schedule
+and constraints remain valid; only revenue magnitude scales with head.
+
+All constraint checks passed. Solution is physically valid.
+========================================================================

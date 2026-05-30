@@ -1,0 +1,161 @@
+% AI-Augmented Engineering Case Study — compile twice: pdflatex AI_Engineering_Portfolio.tex
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+
+\newcommand{\studentname}{Mahmudul Hasan}
+\newcommand{\studentid}{4125999049}
+
+\title{AI-Augmented Engineering Case Study\\for Smart Water Systems}
+\author{\studentname \quad (Student ID: \studentid)}
+\date{May 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This case study documents four hydrology experiments as an \textbf{integrated Smart Water Decision Support Pipeline}, with critical AI collaboration (9 documented corrections, 83\% first-pass rate), reproducibility scorecards, manual-vs-AI productivity analysis, and explicit \textbf{threats to validity}. It supports the course rubric: AI Collaboration Log (30\%), Technical Implementation (30\%), Physical Validity (20\%), Presentation (20\%).
+\end{abstract}
+
+\section{Integrated system architecture}
+Four experiments form one workflow: weather data $\rightarrow$ rainfall alert $\rightarrow$ SCS-CN runoff $\rightarrow$ reservoir optimization $\rightarrow$ flood inundation mapping, with validation and LaTeX reports at each stage. Optional capstone Streamlit integration wires the same modules.
+
+\begin{figure}[htbp]
+  \centering
+  \IfFileExists{smart_water_pipeline.png}{%
+    \includegraphics[width=0.72\textwidth]{smart_water_pipeline.png}%
+  }{%
+    \fbox{\parbox{0.7\textwidth}{\centering Run \texttt{ai\_water\_lab/generate\_case\_study\_figures.py}}}%
+  }
+  \caption{Smart Water Decision Support Pipeline (Experiments 1--4).}
+  \label{fig:pipeline}
+\end{figure}
+
+\section{AI collaboration statistics}
+\subsection{Errors caught by experiment}
+\begin{table}[htbp]
+  \centering
+  \caption{Documented AI errors requiring human correction.}
+  \begin{tabular}{@{}lrl@{}}
+    \toprule
+    Experiment & Errors & Primary types \\
+    \midrule
+    Exp 1 --- Rainfall & 3 & API misuse, credentials, dry-city logic \\
+    Exp 2 --- SCS-CN & 2 & Formula typo, $Q{>}P$ edge case \\
+    Exp 3 --- Reservoir & 2 & Optimizer infeasibility, trade-off bounds \\
+    Exp 4 --- Flood & 2 & Depth convention, monotonicity \\
+    \midrule
+    \textbf{Total} & \textbf{9} & All logged in \texttt{prompt\_log.md} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Prompt / output summary}
+\begin{table}[htbp]
+  \centering
+  \caption{Critical AI use metrics (Experiments 1--4).}
+  \begin{tabular}{@{}lr@{}}
+    \toprule
+    Metric & Count \\
+    \midrule
+    Major AI deliverables reviewed & 52 \\
+    Accepted without material correction & 43 \\
+    Required human correction & 9 \\
+    Effective first-pass rate & 83\% \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Manual vs AI-assisted benchmark}
+Author estimates for comparable scope (single developer):
+\begin{table}[htbp]
+  \centering
+  \caption{Productivity comparison (hours).}
+  \begin{tabular}{@{}lrrl@{}}
+    \toprule
+    Task & Manual & AI-assisted & Verification \\
+    \midrule
+    Exp 1 --- API + forecast & 4 & 1.75 & 1.0 \\
+    Exp 2 --- SCS-CN + CN band & 6 & 2.5 & 0.75 \\
+    Exp 3 --- Optimization + MC & 8 & 4.0 & 1.5 \\
+    Exp 4 --- Flood + analysis & 6 & 2.5 & 1.0 \\
+    Reports + case study & 12 & 7.0 & cross-read \\
+    \midrule
+    \textbf{Total} & \textbf{36} & \textbf{18} & \textbf{$\sim$5} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+AI roughly halved implementation time; verification remained $\sim$25--30\% of effort (Jagged Frontier).
+
+\section{Reproducibility scorecards}
+\begin{table}[htbp]
+  \centering
+  \small
+  \caption{Per-experiment reproducibility (\checkmark = present).}
+  \begin{tabular}{@{}lcccc@{}}
+    \toprule
+    Item & Exp 1 & Exp 2 & Exp 3 & Exp 4 \\
+    \midrule
+    README & \checkmark & \checkmark & \checkmark & \checkmark \\
+    AGENTS.md & \checkmark & \checkmark & \checkmark & \checkmark \\
+    prompt\_log.md & \checkmark & \checkmark & \checkmark & \checkmark \\
+    pytest & 20 & 23 & 23 & 22 \\
+    Validation CLI & \checkmark & \checkmark & \checkmark & \checkmark \\
+    Auto figures & \checkmark & \checkmark & \checkmark & \checkmark \\
+    requirements.txt & \checkmark & \checkmark & \checkmark & \checkmark \\
+    audit\_summary.txt & \checkmark & \checkmark & \checkmark & \checkmark \\
+    LaTeX report & \checkmark & \checkmark & \checkmark & \checkmark \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Threats to validity}
+\begin{itemize}[noitemsep]
+  \item \textbf{OpenWeather data:} sparse \texttt{rain} fields; mitigated by demo mode and 50-city batch.
+  \item \textbf{SCS-CN assumptions:} lumped CN; mitigated by uncertainty band CN $\in [75,85]$.
+  \item \textbf{Reservoir inflows:} simplified 7-day vector; mitigated by Monte Carlo and drought infeasibility.
+  \item \textbf{Flood model:} bathtub approximation; documented limitations and seed sensitivity.
+  \item \textbf{LLM outputs:} hallucination risk; Swiss Cheese verification; 9 corrections documented.
+\end{itemize}
+
+\section{Swiss Cheese verification}
+Five layers per experiment: (1) AI output review, (2) \texttt{pytest -v} (88 total), (3) physical rules, (4) validation CLI, (5) LaTeX + terminal evidence.
+
+\section{Engineering maturity}
+\begin{figure}[htbp]
+  \centering
+  \IfFileExists{case_study_radar.png}{%
+    \includegraphics[width=0.62\textwidth]{case_study_radar.png}%
+  }{%
+    \fbox{\parbox{0.6\textwidth}{\centering Generate \texttt{case\_study\_radar.png}}}%
+  }
+  \caption{Self-assessed maturity (1--10): typical course project vs this submission.}
+  \label{fig:radar}
+\end{figure}
+
+\section{AI outputs challenged (summary)}
+Nine corrections including: missing rain $\rightarrow$ 0~mm/h; env-based API keys; correct SCS-$S$ formula; feasible reservoir $x_0$; honest drought infeasibility; non-negative flood depth; monotonic stage curves. Full table in \texttt{AI\_Engineering\_Portfolio.md}.
+
+\section{Deliverables map}
+\begin{itemize}[noitemsep]
+  \item Code: \texttt{ai\_water\_lab/experiment\{1,2,3,4\}\_.../}
+  \item Pipeline: \texttt{ai\_water\_lab/SMART\_WATER\_PIPELINE.md}
+  \item Reports: \texttt{Experiment-reports/Experiment\{1,2,3,4\}\_.../}
+  \item Capstone: \texttt{ai\_water\_lab/capstone/}
+\end{itemize}
+
+\section*{Submission checklist}
+\begin{itemize}[noitemsep]
+  \item Four experiment PDFs + this case study PDF
+  \item Figures \texttt{smart\_water\_pipeline.png}, \texttt{case\_study\_radar.png}
+  \item All 88 pytest cases green
+  \item Cross-check with ChatGPT, DeepSeek, Gemini
+\end{itemize}
+
+\end{document}

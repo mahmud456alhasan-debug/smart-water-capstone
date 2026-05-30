@@ -1,0 +1,12 @@
+eco_flow_m3s,total_revenue_usd,eco_deficit_m3s_days,feasible,solver_success,note
+2.0,140412.928,0.0,False,False,"Day 4: release 8.00 outside [10.0, 100.0]"
+5.0,140412.928,0.0,False,False,"Day 4: release 8.00 outside [10.0, 100.0]"
+6.0,140412.928,0.0,False,False,"Day 4: release 8.00 outside [10.0, 100.0]"
+8.0,140412.928,0.0,False,False,"Day 4: release 8.00 outside [10.0, 100.0]"
+9.0,,,False,False,"Day 4 infeasible: release bounds [9.000, 8.000], storage=100000 m^3, inflow=8.0 m^3/s"
+10.0,146443.33119222475,0.0,True,True,
+11.0,144338.32184012604,0.0,True,True,
+12.0,,,False,False,"Day 4 infeasible: release bounds [12.000, 10.630], storage=327200 m^3, inflow=8.0 m^3/s"
+13.0,,,False,False,"Day 4 infeasible: release bounds [13.000, 8.630], storage=154400 m^3, inflow=8.0 m^3/s"
+14.0,,,False,False,"Day 3 infeasible: release bounds [14.000, 12.630], storage=327200 m^3, inflow=10.0 m^3/s"
+15.0,,,False,False,"Day 3 infeasible: release bounds [15.000, 11.630], storage=240800 m^3, inflow=10.0 m^3/s"

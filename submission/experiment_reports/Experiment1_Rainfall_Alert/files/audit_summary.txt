@@ -1,0 +1,48 @@
+========================================================================
+  ENGINEERING AUDIT SUMMARY — Experiment 1: Rainfall Forecasting & Alert
+  Student: Mahmudul Hasan (4125999049)
+  Generated: 2026-05-30 07:50 UTC
+========================================================================
+
+1. FILES CHECKED
+------------------------------------------------------------------------
+ [X] main.py                      (3,008 bytes)
+ [X] weather_monitor.py           (9,311 bytes)
+ [X] api_client.py                (2,342 bytes)
+ [X] forecast_engine.py           (5,120 bytes)
+ [X] forecast_risk.py             (2,476 bytes)
+ [X] alerts.py                    (3,166 bytes)
+ [X] AGENTS.md                    (2,015 bytes)
+ [X] prompt_log.md                (2,300 bytes)
+ [X] README.md                    (1,554 bytes)
+ [X] requirements.txt             (100 bytes)
+ RESULT: 10/10 key files present
+
+2. TESTS
+------------------------------------------------------------------------
+ pytest collected: 20 tests
+ Coverage: api_client, alerts, forecast_engine (mocked, no network)
+
+3. VALIDATION
+------------------------------------------------------------------------
+ [X] Threshold boundaries: GREEN <10, YELLOW 10-20, RED >=20 mm/h
+ [X] Missing rain field -> 0 mm/h (dry cities)
+ [X] Forecast pipeline: current -> 3h -> 6h -> risk classification
+ [X] Demo mode: ?demo_mm= URL + forecast_risk.py --demo-mm
+ [X] 50-city batch CLI: main.py --file cities_world_famous.txt
+
+4. KNOWN LIMITATIONS
+------------------------------------------------------------------------
+ - OpenWeather 3h forecast is interval accumulation, not radar nowcast
+ - 6h rate uses first two forecast intervals (6 hours total)
+ - Email alerts not implemented (log file only)
+
+5. REPRODUCIBILITY
+------------------------------------------------------------------------
+ [X] OPENWEATHER_API_KEY from environment (.env.example provided)
+ [X] pytest runs offline with mocks
+ [X] Demo mode works without API key
+
+========================================================================
+  VERDICT: READY FOR SUBMISSION (depth: forecast risk + validation)
+========================================================================
