@@ -6,9 +6,11 @@ Verified: `pytest --collect-only` on 2026-05-31.
 
 ---
 
-## One-sentence answer
+## One-sentence answer (safe for professors)
 
-> **33** pytest cases in the capstone repo (`tests/`); **88** pytest cases across the four experiment codebases (local `ai_water_lab/experiment*`); **121** total pytest in the full Smart Water project.
+> **Capstone GitHub repository:** **33** automated pytest tests (`pytest -q` in this repo).  
+> **Additional experiment development folders** (local `ai_water_lab/experiment*`, not in this repo): **88** pytest tests.  
+> **Total verification tests:** **121** — only **33** run in this repo’s CI.
 
 ---
 

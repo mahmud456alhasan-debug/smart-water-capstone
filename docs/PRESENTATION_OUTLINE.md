@@ -21,7 +21,7 @@
 **Say:**
 - “Pipeline: Weather CSV → SCS-CN runoff → 7-day reservoir dispatch → DEM flood map.”
 - “Code layout: `app/main.py` + four `src/` packages + `validation.py` physical checks.”
-- “33 pytest tests, 96% coverage on `src/`; 88 tests across all experiments.”
+- “**33 pytest tests** in this repo (GitHub CI); **88 additional tests** in local experiment folders — see `docs/TEST_COUNTS.md`.”
 
 **Show:** README architecture diagram or four-tab Streamlit header.
 

@@ -75,9 +75,9 @@ Expected: `AssertionError` — Q ≈ 0.345 mm, not 0.
 
 ---
 
-## Case B — Week 2 / Experiment 2 (AI-generated **wrong code**)
+## Case B — Week 2 / Experiment 2 (AI-assisted **wrong code**)
 
-**Stronger evidence** — literal buggy AI-style formula in code.
+**Strongest evidence** — buggy SCS-CN formula preserved from Week 2 CoT debugging lab (intentional errors for line-by-line review). Prompt log documents the session; I verified and corrected the formula before production use.
 
 ### 1. Prompt
 

@@ -5,80 +5,65 @@
 
 ---
 
-## What this folder is
+## Start here (for graders)
 
-Assignment 3 is **not** “write some pytest files.” It proves you used **layered verification** to catch **AI-generated mistakes** before trusting hydrology code.
+| Priority | File | Purpose |
+|----------|------|---------|
+| **1** | [README.md](README.md) | This page |
+| **2** | [SWISS_CHEESE_REPORT.pdf](SWISS_CHEESE_REPORT.pdf) | Swiss Cheese narrative (LMS) |
+| **3** | [HALLUCINATION_CASE_STUDY.pdf](HALLUCINATION_CASE_STUDY.pdf) | Primary hallucination case (LMS) |
+| **4** | [tests/](../tests/) + [evidence/](evidence/) | **33 pytest** + buggy/fixed code |
 
-| File | Purpose |
-|------|---------|
-| [EVIDENCE_CHAIN.md](EVIDENCE_CHAIN.md) | Prompt → AI output → test → failure → fix |
-| [evidence/](evidence/) | **buggy_rainfall.py** + **rainfall_fixed.py** in repo |
-| [SWISS_CHEESE_REPORT.md](SWISS_CHEESE_REPORT.md) | Full narrative: layers, test strategy, evidence |
-| [HALLUCINATION_CASE_STUDY.md](HALLUCINATION_CASE_STUDY.md) | Primary case study (AI claim → test → failure → fix) |
-| [SWISS_CHEESE_REPORT.pdf](SWISS_CHEESE_REPORT.pdf) | **PDF for LMS upload** |
-| [HALLUCINATION_CASE_STUDY.pdf](HALLUCINATION_CASE_STUDY.pdf) | **PDF for LMS upload** |
+Markdown sources: [SWISS_CHEESE_REPORT.md](SWISS_CHEESE_REPORT.md) · [HALLUCINATION_CASE_STUDY.md](HALLUCINATION_CASE_STUDY.md)
+
+**Optional (supporting detail):** [EVIDENCE_CHAIN.md](EVIDENCE_CHAIN.md) · [CODE_ATTRIBUTION.md](CODE_ATTRIBUTION.md) · [docs/TEST_COUNTS.md](../docs/TEST_COUNTS.md) · [docs/GRADER_AUDIT.md](../docs/GRADER_AUDIT.md)
 
 ---
 
-## Swiss Cheese layers (this project)
+## What this assignment proves
+
+Layered verification caught **AI-assisted mistakes** before trusting hydrology code — not “tests pass” alone.
+
+**Strongest story (Case B):**
 
 ```text
-AI-generated code
-      ↓
-Layer 1 — Human / AI review     (units, formulas, AGENTS.md)
-      ↓
-Layer 2 — Unit & boundary tests     33 capstone tests (+ 88 experiment tests — see docs/TEST_COUNTS.md)
-      ↓
-Layer 3 — Physical validity     (src/validation.py)
-      ↓
-Layer 4 — Integration tests     (tests/test_integration.py)
-      ↓
-Layer 5 — Validation CLI        (experiment validate_* scripts)
-      ↓
-Trusted result
+AI-assisted / draft SCS-CN code  →  wrong formula  →  terminal + tests  →  fix  →  regression tests
 ```
+
+Evidence: [`evidence/buggy_rainfall.py`](evidence/buggy_rainfall.py) → [`evidence/rainfall_fixed.py`](evidence/rainfall_fixed.py) → [`src/runoff/scs_cn.py`](../src/runoff/scs_cn.py)
+
+Reproduce failure: `python3 assignment3/scripts/demo_wrong_assumption_fails.py`
 
 ---
 
-## Test code locations
+## Tests (capstone repo only)
 
-**The code and tests are NOT inside `assignment3/`** — they live in the main capstone tree (built in Week 8 Session A). This folder is the **submission narrative** that points graders to the evidence.
-
-| What | Path | Count |
-|------|------|------:|
-| **Capstone tests (Assignment 3 focus)** | [`../tests/`](../tests/) | **33** |
-| Application code | [`../src/`](../src/), [`../app/`](../app/) | — |
-| Physical rules layer | [`../src/validation.py`](../src/validation.py) | 4 validators |
-| Hallucination regression test | [`../tests/test_runoff.py`](../tests/test_runoff.py) → `test_hallucination_cn95_p6_produces_runoff` | 1 |
-| Full experiment suite | local `ai_water_lab/experiment*/tests/` | **88** total |
-
-Run capstone tests:
+**33 automated pytest cases** in [`tests/`](../tests/) — this is what GitHub Actions runs.
 
 ```bash
-cd smart-water-capstone
-pytest -q --cov=src --cov-report=term-missing
+pytest -q   # expect 33 passed
+```
+
+Additional **88 experiment tests** live in local `ai_water_lab/experiment*` folders (not in this repo). See [docs/TEST_COUNTS.md](../docs/TEST_COUNTS.md).
+
+---
+
+## Swiss Cheese layers
+
+```text
+AI draft / review  →  pytest (33)  →  validation.py  →  integration tests  →  trusted result
 ```
 
 ---
 
-## Hallucination requirement (≥1)
+## Related assignments
 
-**Primary documented case:** SCS-CN initial-abstraction assumption — see [HALLUCINATION_CASE_STUDY.md](HALLUCINATION_CASE_STUDY.md).
-
-**Additional AI errors caught:** [../assignment4/AI_FAILURES.md](../assignment4/AI_FAILURES.md) (9 total across experiments + capstone).
-
----
-
-## Related
-
-| Resource | Link |
-|----------|------|
-| Prompt log (Week 8A) | [../prompt_log.md](../prompt_log.md) |
-| Jagged Frontier | [../docs/JAGGED_FRONTIER.md](../docs/JAGGED_FRONTIER.md) |
-| Assignment 4 capstone | [../assignment4/README.md](../assignment4/README.md) |
-| Test counts | [docs/TEST_COUNTS.md](../docs/TEST_COUNTS.md) |
-| Grader audit | [docs/GRADER_AUDIT.md](../docs/GRADER_AUDIT.md) |
-| GitHub repo | https://github.com/mahmud456alhasan-debug/smart-water-capstone |
+| # | Folder |
+|---|--------|
+| 1 | [assignment1/](../assignment1/) |
+| 2 | [assignment2/](../assignment2/) |
+| 3 | **this folder** |
+| 4 | [assignment4/](../assignment4/) |
 
 ---
 

@@ -58,7 +58,7 @@ python3 mnist_cnn.py --mode eval
 
 | Assignment | Folder |
 |------------|--------|
-| Assignment 1 — Reasoning Log | [lab_reports/](../lab_reports/) (Weeks 1–2) |
+| Assignment 1 — Reasoning Log | [assignment1/](../assignment1/) |
 | Assignment 2 | **this folder** |
 | Assignment 3 — Swiss Cheese Test Suite | [assignment3/](../assignment3/) |
 | Assignment 4 — Final Capstone | [assignment4/](../assignment4/) + [app/](../app/) |

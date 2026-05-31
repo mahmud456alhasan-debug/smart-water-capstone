@@ -19,6 +19,33 @@ Integrated rainfall monitoring, runoff modeling, reservoir optimization, and flo
 
 ---
 
+## Course assignments
+
+| Assignment | Topic | Folder |
+|------------|-------|--------|
+| **Assignment 1** | Reasoning Log and AI-Assisted Development Reflection | [assignment1/](assignment1/) · [**Live project →**](https://d00r08r76qg9.space.minimaxi.com/) |
+| **Assignment 2** | CNN-Based MNIST Digit Classification | [assignment2/](assignment2/) |
+| **Assignment 3** | Swiss Cheese Testing and AI Failure Analysis | [assignment3/](assignment3/) |
+| **Assignment 4** | Smart Water Decision Support Capstone Project | [assignment4/](assignment4/) |
+
+**Assignment 1:** [LLM Universe — Large Language Models Explained](https://d00r08r76qg9.space.minimaxi.com/) · Weeks 1–2 lab reports in [`assignment1/`](assignment1/).
+
+```text
+smart-water-capstone/
+├── assignment1/      Assignment 1 — Reasoning Log
+├── assignment2/      Assignment 2 — CNN MNIST Classification
+├── assignment3/      Assignment 3 — Swiss Cheese Testing & AI Failure Analysis
+├── assignment4/      Assignment 4 — Smart Water Capstone Project
+├── submission/       Final experiment reports (PDF + LaTeX)
+├── lab_reports/      Weekly laboratory reports (Weeks 1–8)
+├── docs/             Engineering documentation
+├── app/              Streamlit dashboard
+├── src/              Source code modules
+└── tests/            Pytest suite (33 tests)
+```
+
+---
+
 ## Platform gallery
 
 | Rainfall monitoring | Runoff modeling |
@@ -53,9 +80,9 @@ Full evidence: [submission/](submission/) · [docs/ENGINEERING.md](docs/ENGINEER
 | Specialized experiments | 4 |
 | PDF reports + case study | **5** |
 | Weekly lab reports | **16** |
-| Automated tests (capstone repo) | **33** |
-| Automated tests (experiments 1–4) | **88** |
-| **Total project pytest** | **121** |
+| Automated tests (this repository) | **33** |
+| Additional experiment tests (local dev folders, not in repo) | **88** |
+| Total verification tests | **121** |
 | Validation CLI scripts | 4 |
 | AI outputs reviewed / corrected | 52 / **9** |
 | Monte Carlo inflow scenarios | 100 |
@@ -119,22 +146,9 @@ Complete semester progression from AI-assisted software engineering foundations 
 
 ## Repository structure
 
-```text
-smart-water-capstone/
-├── assets/           Showcase figures (pipeline, dashboards)
-├── release/          PDFs for GitHub Releases
-├── submission/       Experiment packages (PDF + LaTeX + figures)
-├── lab_reports/      Weekly course labs (16 PDFs, appendix code)
-├── assignment2/      Assignment 2 — CNN MNIST + PDF report
-├── assignment3/      Assignment 3 — Swiss Cheese test suite
-├── assignment4/      Assignment 4 — rubric mapping & checklist
-├── docs/             Engineering details, wiki, GitHub setup
-├── app/              Streamlit capstone dashboard
-├── src/              weather · runoff · reservoir · flood modules
-└── tests/            Capstone pytest suite (**33** tests; see docs/TEST_COUNTS.md)
-```
+Additional folders: [`assets/`](assets/) showcase figures · [`release/`](release/) GitHub Release PDFs · [`assignment4/`](assignment4/) rubric mapping and checklist.
 
-Specialized experiment reports and reproducibility artifacts are available in [`submission/`](submission/).
+Specialized experiment reports and reproducibility artifacts: [`submission/`](submission/).
 
 ---
 
@@ -144,10 +158,11 @@ Specialized experiment reports and reproducibility artifacts are available in [`
 |----------|---------|
 | [docs/README.md](docs/README.md) | **Documentation index** — all process and engineering docs |
 | [submission/README.md](submission/README.md) | Formal experiment reports (PDF + LaTeX) |
-| [lab_reports/README.md](lab_reports/README.md) | Weekly lab reports (Weeks 1–8) |
-| [assignment2/README.md](assignment2/README.md) | **Assignment 2** — CNN MNIST + PDF |
+| [assignment1/README.md](assignment1/README.md) | Assignment 1 — Reasoning Log |
+| [assignment2/README.md](assignment2/README.md) | Assignment 2 — CNN MNIST + PDF |
 | [assignment3/README.md](assignment3/README.md) | Assignment 3 — Swiss Cheese test suite |
 | [assignment4/README.md](assignment4/README.md) | Assignment 4 — capstone rubric |
+| [lab_reports/README.md](lab_reports/README.md) | Weekly lab reports (Weeks 1–8) |
 | [docs/ENGINEERING.md](docs/ENGINEERING.md) | Validation and AI engineering evidence |
 | [docs/GITHUB_SETUP.md](docs/GITHUB_SETUP.md) | About section, Release v1.0, wiki |
 

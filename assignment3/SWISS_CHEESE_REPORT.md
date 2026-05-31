@@ -12,7 +12,9 @@ The Swiss Cheese model: each verification layer has holes, but **stacked layers*
 
 ---
 
-## 2. AI-generated code under test
+## 2. AI-assisted code under test
+
+**Honest scope:** AI produced drafts; I verified, modified, tested, and corrected hydrology logic. Do not treat every line as unedited model output — see [CODE_ATTRIBUTION.md](CODE_ATTRIBUTION.md).
 
 **Tool used:** Cursor Agent (course-allowed AI assistant; OpenCode not required).
 

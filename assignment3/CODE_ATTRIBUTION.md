@@ -2,7 +2,9 @@
 
 **Mahmudul Hasan (4125999049)**
 
-Which code was **AI-generated** (with human review) vs **written/adjusted manually** — required for honest Assignment 3 & 4 grading.
+Which code was **AI-assisted** (drafts with human review) vs **written/adjusted manually** — required for honest Assignment 3 & 4 grading.
+
+**Do not claim** “AI wrote this exact buggy code” unless the prompt log shows it. Case B uses a **lab debugging artifact** (`buggy_rainfall.py`) with documented CoT review; production code was human-verified.
 
 **Primary tool:** Cursor Agent (Weeks 7–8 capstone). **OpenCode:** Week 1–2 labs only (optional). **ChatGPT/Gemini:** rubric review only.
 
