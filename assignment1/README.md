@@ -11,8 +11,9 @@ Use DeepSeek R1 or Kimi to solve a non-trivial algorithmic problem. Document the
 
 | Resource | Link |
 |----------|------|
-| **Assignment 1 project (live)** | [**LLM Universe — Large Language Models Explained**](https://d00r08r76qg9.space.minimaxi.com/) |
-| Lab report sources | [`lab_reports/`](../lab_reports/) |
+| **Reasoning log materials** | Weeks 1–2 labs and prompt logs (below) |
+| **LLM exploration (supplementary)** | [LLM Universe — interactive site](https://d00r08r76qg9.space.minimaxi.com/) |
+| Lab report index | [`lab_reports/`](../lab_reports/) |
 
 ---
 
@@ -37,7 +38,7 @@ Full lab index: [lab_reports/README.md](../lab_reports/README.md)
 
 | # | Folder | Status |
 |---|--------|--------|
-| 1 | **assignment1/** | [LLM Universe (live)](https://d00r08r76qg9.space.minimaxi.com/) · labs linked |
+| 1 | **assignment1/** | Reasoning log · [LLM exploration site](https://d00r08r76qg9.space.minimaxi.com/) |
 | 2 | [assignment2/](../assignment2/) | Complete (PDF + CNN code) |
 | 3 | [assignment3/](../assignment3/) | Complete (tests + evidence) |
 | 4 | [assignment4/](../assignment4/) + [app/](../app/) | Complete (capstone) |

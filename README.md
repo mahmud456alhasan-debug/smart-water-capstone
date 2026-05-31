@@ -1,52 +1,125 @@
 <p align="center">
-  <img src="assets/smart_water_pipeline.png" alt="Smart Water Decision Support Pipeline" width="900">
+  <img src="assets/smart_water_pipeline.png" alt="Smart Water Decision Support Pipeline" width="100%">
 </p>
 
-# Smart Water Lab
+<h1 align="center">Smart Water Lab</h1>
 
-### AI-Augmented Water Resources Decision Support Platform
+<p align="center">
+  <strong>AI-Augmented Water Resources Decision Support Platform</strong><br>
+  Rainfall Monitoring · Runoff Modeling · Reservoir Optimization · Flood Analysis
+</p>
 
-Integrated rainfall monitoring, runoff modeling, reservoir optimization, and flood-risk analysis with documented AI-assisted software engineering practices.
+<p align="center">
+  <strong>Course Project Portfolio</strong> — AI-Augmented Software Engineering<br>
+  Xi'an Jiaotong University · 2026 · Mahmudul Hasan (4125999049)
+</p>
 
-**Mahmudul Hasan (4125999049)** · Xi'an Jiaotong University · 2026
+<p align="center">
+  <a href="#course-assignments">Assignments</a> ·
+  <a href="#project-snapshot">Snapshot</a> ·
+  <a href="#platform-gallery">Gallery</a> ·
+  <a href="#results-snapshot">Results</a> ·
+  <a href="#key-deliverables">Reports</a> ·
+  <a href="#quick-start">Quick Start</a> ·
+  <a href="#learning-journey-weeks-18">Labs</a> ·
+  <a href="#further-documentation">Docs</a>
+</p>
 
-![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)
-![Tests](https://github.com/mahmud456alhasan-debug/smart-water-capstone/actions/workflows/tests.yml/badge.svg)
-![Reports](https://img.shields.io/badge/PDF_Reports-5-orange)
-![Lab Reports](https://img.shields.io/badge/Lab_Reports-16-blue)
-![Validation](https://img.shields.io/badge/Validation-PASS-success)
-![Course](https://img.shields.io/badge/XJTU-Software_Development-red)
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white" alt="Python">
+  <img src="https://github.com/mahmud456alhasan-debug/smart-water-capstone/actions/workflows/tests.yml/badge.svg" alt="Tests CI">
+  <img src="https://img.shields.io/badge/Tests-33-green" alt="33 tests">
+  <img src="https://img.shields.io/badge/Coverage-96%25-brightgreen" alt="Coverage">
+  <img src="https://img.shields.io/badge/PDF_Reports-5-orange" alt="PDF Reports">
+  <img src="https://img.shields.io/badge/Lab_Reports-16-blue" alt="Lab Reports">
+  <img src="https://img.shields.io/badge/Validation-PASS-success" alt="Validation">
+  <img src="https://img.shields.io/badge/XJTU-Software_Development-red" alt="XJTU">
+</p>
+
+---
+
+## Why this project matters
+
+Water managers must act under uncertainty — heavy rain, limited storage, and flood exposure at the same time. This portfolio integrates **rainfall monitoring**, **SCS-CN runoff prediction**, **reservoir operation planning**, and **flood-risk assessment** into one Streamlit decision-support workflow, with documented AI-assisted engineering practices (prompt logs, Swiss Cheese testing, physical validation).
+
+---
+
+## Project snapshot
+
+| Metric | Value |
+|--------|------:|
+| Course assignments | **4** |
+| Specialized experiments | **4** |
+| Weekly lab reports | **16** |
+| Formal PDF reports | **5** |
+| Automated tests (this repository) | **33** |
+| Additional experiment tests (local dev folders, not in repo) | **88** |
+| Total verification tests | **121** |
+| Validation CLI scripts | **4** |
+| AI outputs reviewed / corrected | **52 / 9** |
+| Monte Carlo inflow scenarios | **100** |
 
 ---
 
 ## Course assignments
 
-| Assignment | Topic | Folder |
-|------------|-------|--------|
-| **Assignment 1** | Reasoning Log and AI-Assisted Development Reflection | [assignment1/](assignment1/) · [**Live project →**](https://d00r08r76qg9.space.minimaxi.com/) |
-| **Assignment 2** | CNN-Based MNIST Digit Classification | [assignment2/](assignment2/) |
-| **Assignment 3** | Swiss Cheese Testing and AI Failure Analysis | [assignment3/](assignment3/) |
-| **Assignment 4** | Smart Water Decision Support Capstone Project | [assignment4/](assignment4/) |
+<a id="course-assignments"></a>
 
-**Assignment 1:** [LLM Universe — Large Language Models Explained](https://d00r08r76qg9.space.minimaxi.com/) · Weeks 1–2 lab reports in [`assignment1/`](assignment1/).
+### Assignment 1 — Reasoning Log and AI-Assisted Development Reflection
 
-```text
-smart-water-capstone/
-├── assignment1/      Assignment 1 — Reasoning Log
-├── assignment2/      Assignment 2 — CNN MNIST Classification
-├── assignment3/      Assignment 3 — Swiss Cheese Testing & AI Failure Analysis
-├── assignment4/      Assignment 4 — Smart Water Capstone Project
-├── submission/       Final experiment reports (PDF + LaTeX)
-├── lab_reports/      Weekly laboratory reports (Weeks 1–8)
-├── docs/             Engineering documentation
-├── app/              Streamlit dashboard
-├── src/              Source code modules
-└── tests/            Pytest suite (33 tests)
-```
+Weeks 1–2 laboratory reports, prompt logs, and LLM exploration activities.  
+Includes an interactive LLM education site built as part of the reflection work.
+
+➡️ [Open assignment1/](assignment1/) · [Live exploration site](https://d00r08r76qg9.space.minimaxi.com/)
+
+---
+
+### Assignment 2 — CNN-Based MNIST Digit Classification
+
+PyTorch CNN for handwritten digit recognition — training, evaluation, confusion matrix, and demo.
+
+➡️ [Open assignment2/](assignment2/)
+
+---
+
+### Assignment 3 — Swiss Cheese Testing and AI Failure Analysis
+
+Layered pytest verification that caught AI-assisted hydrology mistakes — buggy vs corrected SCS-CN code, evidence chain, regression tests.
+
+➡️ [Open assignment3/](assignment3/)
+
+---
+
+### Assignment 4 — Smart Water Decision Support Capstone
+
+Integrated Streamlit app, engineering documentation, formal experiment reports, and live-demo materials.
+
+➡️ [Open assignment4/](assignment4/) · [Run the app](app/main.py)
+
+---
+
+### Repository layout
+
+| Folder | Contents |
+|--------|----------|
+| `assignment1/` | Reasoning log, Weeks 1–2 labs, LLM exploration link |
+| `assignment2/` | CNN MNIST project + PDF report |
+| `assignment3/` | Swiss Cheese testing + AI failure evidence |
+| `assignment4/` | Capstone rubric and checklist |
+| `app/` | Streamlit dashboard |
+| `src/` | Core hydrology modules |
+| `tests/` | Pytest suite (**33** tests in CI) |
+| `submission/` | Final experiment reports (PDF + LaTeX) |
+| `lab_reports/` | Weekly laboratory reports (Weeks 1–8) |
+| `docs/` | Engineering documentation |
+
+Also: [`assets/`](assets/) showcase figures · [`release/`](release/) GitHub Release PDFs
 
 ---
 
 ## Platform gallery
+
+<a id="platform-gallery"></a>
 
 | Rainfall monitoring | Runoff modeling |
 |:--:|:--:|
@@ -62,6 +135,8 @@ smart-water-capstone/
 
 ## Results snapshot
 
+<a id="results-snapshot"></a>
+
 | Experiment | Key result |
 |------------|------------|
 | Rainfall monitoring | GREEN / YELLOW / RED classification validated; 3h/6h forecast risk pipeline |
@@ -73,23 +148,15 @@ Full evidence: [submission/](submission/) · [docs/ENGINEERING.md](docs/ENGINEER
 
 ---
 
-## Key metrics
+## Technologies
 
-| Metric | Value |
-|--------|------:|
-| Specialized experiments | 4 |
-| PDF reports + case study | **5** |
-| Weekly lab reports | **16** |
-| Automated tests (this repository) | **33** |
-| Additional experiment tests (local dev folders, not in repo) | **88** |
-| Total verification tests | **121** |
-| Validation CLI scripts | 4 |
-| AI outputs reviewed / corrected | 52 / **9** |
-| Monte Carlo inflow scenarios | 100 |
+Python · Streamlit · NumPy · SciPy · Pytest · Monte Carlo simulation · SCS-CN hydrology · Cursor Agent · Chain-of-Thought prompting · Physical validation CLI
 
 ---
 
 ## Key deliverables
+
+<a id="key-deliverables"></a>
 
 | | Document | Download |
 |--|----------|----------|
@@ -105,6 +172,8 @@ Full evidence: [submission/](submission/) · [docs/ENGINEERING.md](docs/ENGINEER
 
 ## Quick start
 
+<a id="quick-start"></a>
+
 ```bash
 git clone https://github.com/mahmud456alhasan-debug/smart-water-capstone.git
 cd smart-water-capstone
@@ -118,6 +187,8 @@ Copy `dem.npy` into `data/` for the flood tab (from Week 6 lab or local Experime
 ---
 
 ## Learning journey (Weeks 1–8)
+
+<a id="learning-journey-weeks-18"></a>
 
 Complete semester progression from AI-assisted software engineering foundations to the integrated Smart Water platform.
 
@@ -144,15 +215,9 @@ Complete semester progression from AI-assisted software engineering foundations 
 
 ---
 
-## Repository structure
-
-Additional folders: [`assets/`](assets/) showcase figures · [`release/`](release/) GitHub Release PDFs · [`assignment4/`](assignment4/) rubric mapping and checklist.
-
-Specialized experiment reports and reproducibility artifacts: [`submission/`](submission/).
-
----
-
 ## Further documentation
+
+<a id="further-documentation"></a>
 
 | Resource | Purpose |
 |----------|---------|
