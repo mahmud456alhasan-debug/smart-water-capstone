@@ -1,4 +1,4 @@
-# Assignment 1 — The Reasoning Log
+# Assignment 1 — LLM Universe Educational Website
 
 **Mahmudul Hasan (4125999049)** · Xi'an Jiaotong University · 2026  
 **Course:** AI-Augmented Software Engineering · **Weight:** 20% · **Due:** Week 4
@@ -7,41 +7,51 @@
 
 ## Deliverable
 
-Use DeepSeek R1 or Kimi to solve a non-trivial algorithmic problem. Document the **Chain-of-Thought prompt** and **verification steps** used to catch errors.
+Interactive **MiniMax** web application introducing Large Language Models, transformers, prompt engineering, and AI ethics — built as Assignment 1.
 
 | Resource | Link |
 |----------|------|
-| **Reasoning log materials** | Weeks 1–2 labs and prompt logs (below) |
-| **LLM exploration (supplementary)** | [LLM Universe — interactive site](https://d00r08r76qg9.space.minimaxi.com/) |
-| Lab report index | [`lab_reports/`](../lab_reports/) |
+| **Live site** | [**LLM Universe — Large Language Models Explained**](https://d00r08r76qg9.space.minimaxi.com/) |
+| Preview screenshot | [`assets/llm_universe_preview.png`](../assets/llm_universe_preview.png) |
+
+**Topic:** LLMs, AI foundations, and prompt engineering  
+**Platform:** [MiniMax Agent](https://www.minimaxi.com/)
 
 ---
 
-## Where the work lives today
+## Site features
 
-Assignment 1 content is documented in **Weeks 1–2** weekly lab reports:
+- What is an LLM — tokens, training, next-token prediction
+- Transformer architecture — self-attention, multi-head, positional encoding
+- 7-scene animated explainer for non-technical audiences
+- LLM history timeline (Word2Vec → GPT-3 → ChatGPT → multimodal era)
+- Major models comparison table (GPT-4o, Claude, Gemini, Llama, DeepSeek, Qwen)
+- Real-world use cases and ethics section (hallucinations, bias, alignment)
+- 15-question interactive quiz
+
+---
+
+## Supporting coursework (Weeks 1–2)
 
 | Session | Topic | Report |
 |---------|-------|--------|
-| 1A | Environment setup & first AI script | [PDF](../lab_reports/Week1_SessionA_Report.pdf) · [TeX](../lab_reports/Week1_SessionA_Report.tex) |
-| 1B | AI mental models (Chain-of-Thought) | [PDF](../lab_reports/Week1_SessionB_Report.pdf) · [TeX](../lab_reports/Week1_SessionB_Report.tex) |
-| 2A | Chain-of-Thought prompting | [PDF](../lab_reports/Week2_SessionA_Report.pdf) · [TeX](../lab_reports/Week2_SessionA_Report.tex) |
-| 2B | Context engineering (AGENTS.md) | [PDF](../lab_reports/Week2_SessionB_Report.pdf) · [TeX](../lab_reports/Week2_SessionB_Report.tex) |
+| 1A | Environment setup & first AI script | [PDF](../lab_reports/Week1_SessionA_Report.pdf) |
+| 1B | AI mental models (Chain-of-Thought) | [PDF](../lab_reports/Week1_SessionB_Report.pdf) |
+| 2A | Chain-of-Thought prompting | [PDF](../lab_reports/Week2_SessionA_Report.pdf) |
+| 2B | Context engineering (AGENTS.md) | [PDF](../lab_reports/Week2_SessionB_Report.pdf) |
 
-Prompt logs: [`lab_reports/prompt_log_week1_session_b.md`](../lab_reports/prompt_log_week1_session_b.md), [`lab_reports/prompt_log_week2_session_a.md`](../lab_reports/prompt_log_week2_session_a.md)
-
-Full lab index: [lab_reports/README.md](../lab_reports/README.md)
+Prompt logs: [`prompt_log_week1_session_b.md`](../lab_reports/prompt_log_week1_session_b.md), [`prompt_log_week2_session_a.md`](../lab_reports/prompt_log_week2_session_a.md)
 
 ---
 
 ## All course assignments
 
-| # | Folder | Status |
-|---|--------|--------|
-| 1 | **assignment1/** | Reasoning log · [LLM exploration site](https://d00r08r76qg9.space.minimaxi.com/) |
-| 2 | [assignment2/](../assignment2/) | Complete (PDF + CNN code) |
-| 3 | [assignment3/](../assignment3/) | Complete (tests + evidence) |
-| 4 | [assignment4/](../assignment4/) + [app/](../app/) | Complete (capstone) |
+| # | Folder | Deliverable |
+|---|--------|-------------|
+| 1 | **assignment1/** | MiniMax LLM Universe website |
+| 2 | [assignment2/](../assignment2/) | CNN MNIST + PDF |
+| 3 | [assignment3/](../assignment3/) | Swiss Cheese tests + evidence |
+| 4 | [assignment4/](../assignment4/) + [app/](../app/) | Smart Water capstone |
 
 ---
 
@@ -50,4 +60,4 @@ Full lab index: [lab_reports/README.md](../lab_reports/README.md)
 | Resource | Link |
 |----------|------|
 | Main repository | [README](../README.md) |
-| Learning journey (Weeks 1–8) | [lab_reports/README.md](../lab_reports/README.md) |
+| Lab reports index | [lab_reports/README.md](../lab_reports/README.md) |
