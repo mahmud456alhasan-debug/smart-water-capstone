@@ -1,0 +1,69 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{array}
+
+\title{Assignment 4: Rubric Mapping\\Smart Water Capstone}
+\author{Mahmudul Hasan (4125999049)\\Xi'an Jiaotong University · 2026}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Technical Implementation (30\%)}
+\begin{tabular}{@{}p{4cm}p{9cm}@{}}
+\toprule
+Criterion & Evidence \\
+\midrule
+Code runs & \texttt{streamlit run app/main.py}; \texttt{pytest -q} $\rightarrow$ 29 passed \\
+Architecture & \texttt{docs/ARCHITECTURE.md}; pipeline figure in README \\
+Correct outputs & Four modules: weather, runoff, reservoir, flood \\
+\bottomrule
+\end{tabular}
+
+\section{AI Collaboration Log (30\%)}
+\begin{tabular}{@{}p{4cm}p{9cm}@{}}
+\toprule
+Criterion & Evidence \\
+\midrule
+AGENTS.md & Root \texttt{AGENTS.md} + per-experiment copies \\
+Prompt log & \texttt{prompt\_log.md} \\
+Corrections & 9 documented in \texttt{assignment4/AI\_FAILURES.md} \\
+Jagged Frontier & \texttt{docs/JAGGED\_FRONTIER.md} \\
+Case study & \texttt{submission/portfolio/AI\_Engineering\_Portfolio.pdf} \\
+\bottomrule
+\end{tabular}
+
+\section{Physical Validity (20\%)}
+\begin{tabular}{@{}p{4cm}p{9cm}@{}}
+\toprule
+Rule & Evidence \\
+\midrule
+$Q \le P$ & \texttt{validation.py}, \texttt{test\_runoff.py} \\
+Storage bounds & \texttt{validate\_storage\_mcm} \\
+Monotonic flood & Exp 4 validation 9/9 PASS \\
+Reference case & $Q=13.80$~mm at $P=50$, CN=80 \\
+\bottomrule
+\end{tabular}
+
+\section{Presentation (20\%)}
+\begin{tabular}{@{}p{4cm}p{9cm}@{}}
+\toprule
+Item & Evidence \\
+\midrule
+5-min outline & \texttt{docs/PRESENTATION\_OUTLINE.md} \\
+Demo script & \texttt{docs/DEMO\_SCRIPT.md} \\
+Tool evaluation & JAGGED\_FRONTIER tool comparison \\
+Live demo & Student presentation (rehearsal required) \\
+\bottomrule
+\end{tabular}
+
+\section{Repository}
+\url{https://github.com/mahmud456alhasan-debug/smart-water-capstone}
+
+\section{Assignment 3 link}
+Swiss Cheese package: \texttt{assignment3/} (29 tests + hallucination case study).
+
+\end{document}

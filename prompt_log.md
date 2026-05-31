@@ -138,16 +138,20 @@ Add `pytest.ini` early when using a `src/` layout. Restart Streamlit after code 
 
 **Added:** `tests/test_runoff.py`, `test_weather.py`, `test_flood.py`, `test_reservoir.py`, `test_validation.py`, `test_integration.py`, `tests/conftest.py`.
 
-**Hallucination found:** Assumed P=5 mm always below Ia for CN=95; high CN lowers Ia so runoff was non-zero. Fixed test to use P=2 mm, CN=80.
+**Hallucination found (Case A — test design):** While writing pytest for Week 8A, assumed P=5 mm always below Ia for CN=95. Formula check showed Ia≈2.67 mm, so Q(5,95)≈0.34 mm — not zero. Fixed zero-runoff test to P=2 mm, CN=80. Demo: `python3 assignment3/scripts/demo_wrong_assumption_fails.py`. Full evidence: `assignment3/EVIDENCE_CHAIN.md`.
 
-**Result:** `29 passed`; coverage **96%** on `src/` (`pytest -q --cov=src --cov-report=term-missing`).
+**Hallucination found (Case B — wrong code, Week 2/Exp 2):** AI-style buggy SCS-CN used `S=25400*CN-254` instead of `25400/CN-254`. Terminal: P=80, CN=85 → Q≈0.002 mm (expected ~43.6 mm). Fixed in `rainfall_fixed.py` / `src/runoff/scs_cn.py`. Evidence: `lab_reports/week2_session_a_files/buggy_rainfall.py`, Exp 2 prompt_log.
+
+**Result (Week 8A session):** `29 passed`; coverage **96%** on `src/`.
+
+**Current capstone (Assignment 3):** **33 passed** — see [`docs/TEST_COUNTS.md`](docs/TEST_COUNTS.md).
 
 ## Exercise 2: Swiss Cheese Model
 
 | Layer | Implementation |
 |-------|----------------|
 | 1 Code review | Manual review of units in reservoir/flood modules |
-| 2 Unit tests | 29 pytest cases |
+| 2 Unit tests | **33** pytest cases (29 at Week 8A; +4 for Assignment 3) |
 | 3 Physical validation | `src/validation.py` (Q<=P, storage bounds, monotonic flood) |
 | 4 Integration | `tests/test_integration.py` workflows |
 

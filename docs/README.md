@@ -12,6 +12,10 @@ Process and engineering documents for Smart Water Lab. The [main README](../READ
 | [../submission/README.md](../submission/README.md) | Formal experiment reports (PDF + LaTeX) |
 | [../lab_reports/README.md](../lab_reports/README.md) | Weekly lab reports (Weeks 1–8) |
 | [ENGINEERING.md](ENGINEERING.md) | Validation, AI engineering, maturity assessment |
+| [TEST_COUNTS.md](TEST_COUNTS.md) | Canonical test counts (33 / 88 / 121) |
+| [PHYSICAL_VALIDATION.md](PHYSICAL_VALIDATION.md) | **18 physical constraints** — rubric evidence |
+| [GRADER_AUDIT.md](GRADER_AUDIT.md) | Adversarial consistency audit |
+| [PRESENTATION_OUTLINE.md](PRESENTATION_OUTLINE.md) | **5-min strict timing** + tool comparison |
 
 ---
 

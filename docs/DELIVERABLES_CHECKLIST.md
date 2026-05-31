@@ -13,7 +13,7 @@
 - [x] **JAGGED_FRONTIER.md** — reflection report  
 - [x] **README.md** — setup and run commands  
 - [x] **Working app** — `streamlit run app/main.py`  
-- [x] **Tests** — `pytest -q` (29 passed, 96% coverage)  
+- [x] **Tests** — `pytest -q` (**33** passed, 96% coverage)
 
 ## Presentation (Session B)
 

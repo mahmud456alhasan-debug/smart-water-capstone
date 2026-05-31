@@ -1,0 +1,48 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{parskip}
+
+\title{Hallucination Case Study\\Assignment 3 --- Smart Water Lab}
+\author{Mahmudul Hasan (4125999049)}
+\date{2026}
+
+\begin{document}
+\maketitle
+
+\section{AI claim}
+During test design (Week 8 Session A, Cursor Agent): ``For CN=95 and rainfall $P=5$~mm, runoff is always zero because high CN means no runoff for small storms.''
+
+\section{Why this is wrong}
+SCS-CN initial abstraction: $I_a = 0.2 \times (25400/\mathrm{CN} - 254)$.\\
+For CN=95: $I_a \approx 5.37$~mm, so $P=5$~mm gives $Q=0$ \emph{by arithmetic}, not by a general rule. High CN \emph{lowers} $I_a$; small storms can still produce runoff when $P > I_a$.
+
+\section{Tests created}
+\texttt{tests/test\_runoff.py}: \texttt{test\_runoff\_below\_initial\_abstraction}, \texttt{test\_runoff\_not\_exceed\_rainfall\_high\_cn}.\\
+\texttt{src/validation.py}: \texttt{validate\_runoff\_mm} enforces $Q \le P$.
+
+\section{Failure discovered}
+Draft documentation over-generalized one (CN, $P$) pair. pytest + Ia table showed the verbal rule was misleading for test design.
+
+\section{Fix applied}
+\begin{itemize}
+  \item Zero-runoff test: $P=2$~mm, CN=80 ($I_a \approx 20.3$~mm).
+  \item Physical sweep: CN = 60, 80, 95 at $P=100$~mm with $Q \le P$ assert.
+  \item Documented in \texttt{prompt\_log.md} and Week 8A lab report.
+\end{itemize}
+
+\section{Evidence checklist}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Step & Location \\
+\midrule
+AI prompt & \texttt{prompt\_log.md} Week 8A \\
+Tests & \texttt{tests/test\_runoff.py} \\
+Failure documented & This file + Week 8A PDF \\
+Fix & Corrected tests + validation layer \\
+Run & \texttt{pytest -q} $\rightarrow$ 29 passed \\
+\bottomrule
+\end{tabular}
+
+\end{document}

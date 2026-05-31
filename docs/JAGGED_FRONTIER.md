@@ -31,7 +31,7 @@ The **Jagged Frontier** means AI is strong on some tasks and weak on others — 
 ## Swiss Cheese defense (how we compensated)
 
 1. **Human review** — units and hydrology rules before trusting merges  
-2. **Unit tests** — 29 tests, 96% coverage on `src/`  
+2. **Unit tests** — **33** tests, 96% coverage on `src/`  
 3. **Physical validation** — `src/validation.py` (Q<=P, storage bounds, monotonic flood)  
 4. **Integration tests** — rainfall -> alert, full reservoir wrapper  
 

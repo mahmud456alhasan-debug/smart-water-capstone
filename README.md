@@ -53,7 +53,9 @@ Full evidence: [submission/](submission/) · [docs/ENGINEERING.md](docs/ENGINEER
 | Specialized experiments | 4 |
 | PDF reports + case study | **5** |
 | Weekly lab reports | **16** |
-| Automated tests | **88** |
+| Automated tests (capstone repo) | **33** |
+| Automated tests (experiments 1–4) | **88** |
+| **Total project pytest** | **121** |
 | Validation CLI scripts | 4 |
 | AI outputs reviewed / corrected | 52 / **9** |
 | Monte Carlo inflow scenarios | 100 |
@@ -123,10 +125,12 @@ smart-water-capstone/
 ├── release/          PDFs for GitHub Releases
 ├── submission/       Experiment packages (PDF + LaTeX + figures)
 ├── lab_reports/      Weekly course labs (16 PDFs, appendix code)
+├── assignment3/      Assignment 3 — Swiss Cheese test suite
+├── assignment4/      Assignment 4 — rubric mapping & checklist
 ├── docs/             Engineering details, wiki, GitHub setup
 ├── app/              Streamlit capstone dashboard
 ├── src/              weather · runoff · reservoir · flood modules
-└── tests/            Capstone pytest suite (88 tests)
+└── tests/            Capstone pytest suite (**33** tests; see docs/TEST_COUNTS.md)
 ```
 
 Specialized experiment reports and reproducibility artifacts are available in [`submission/`](submission/).

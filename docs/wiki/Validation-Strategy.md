@@ -7,7 +7,7 @@ Swiss Cheese verification across AI-assisted development and physical modeling.
 | Layer | Implementation |
 |-------|----------------|
 | AI review | Human correction of 9/52 reviewed deliverables (83% first-pass) |
-| Unit tests | **88** pytest cases across capstone and experiment modules |
+| Unit tests | **33** capstone + **88** experiment pytest | See [TEST_COUNTS.md](TEST_COUNTS.md) |
 | Physical rules | Hand-validated reference cases (e.g. SCS-CN Q = 13.80 mm) |
 | Validation CLI | 4 dedicated `validate_*` scripts with batch checks |
 | Report evidence | PDF reports, figures, `audit_summary.txt` per experiment |

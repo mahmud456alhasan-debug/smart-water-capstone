@@ -1,0 +1,52 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{enumitem}
+
+\title{Assignment 3: Swiss Cheese Test Suite\\Smart Water Capstone}
+\author{Mahmudul Hasan (4125999049)\\Xi'an Jiaotong University · 2026}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Objective}
+Use AI-generated hydrology code and prove layered verification catches at least one AI hallucination or false assumption.
+
+\section{Swiss Cheese layers}
+\begin{enumerate}[nosep]
+  \item Human / AI review (units, formulas)
+  \item Unit \& boundary pytest (29 capstone tests)
+  \item Physical validity (\texttt{src/validation.py})
+  \item Integration tests
+  \item Coverage gate ($>$80\% on \texttt{src/})
+\end{enumerate}
+
+\section{Boundary test examples}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Test & Category & Rule \\
+\midrule
+\texttt{test\_runoff\_zero\_rainfall} & Boundary & $P=0 \Rightarrow Q=0$ \\
+\texttt{test\_runoff\_below\_initial\_abstraction} & Boundary & $P<I_a \Rightarrow Q=0$ \\
+\texttt{test\_runoff\_not\_exceed\_rainfall\_high\_cn} & Physical & $Q \le P$ for CN 60/80/95 \\
+\texttt{test\_runoff\_negative\_p\_raises} & Invalid & $P<0$ raises error \\
+\texttt{test\_validate\_runoff\_fail\_case} & Physical & $Q>P$ fails validator \\
+\bottomrule
+\end{tabular}
+
+\section{Results}
+\textbf{29 passed}; \textbf{96\%} coverage on \texttt{src/}. Evidence: \texttt{lab\_reports/week8\_session\_a\_terminal.png}.
+
+\section{Hallucination (summary)}
+\textbf{AI assumption:} ``For CN=95, $P=5$~mm always gives zero runoff.''\\
+\textbf{Caught by:} Ia formula review + pytest edge design.\\
+\textbf{Fix:} Correct zero-runoff test ($P=2$~mm, CN=80); add $Q \le P$ sweep.\\
+Full case study: \texttt{assignment3/HALLUCINATION\_CASE\_STUDY.md}.
+
+\section{Repository}
+\url{https://github.com/mahmud456alhasan-debug/smart-water-capstone}
+
+\end{document}

@@ -1,50 +1,57 @@
-# Live Demo Script — Streamlit
+# Live Demo Script — 5-Minute Defense
 
 **Before class:** `cd capstone && streamlit run app/main.py`  
-**URL:** http://localhost:8501
+**URL:** http://localhost:8501  
+**Timer:** Align with [PRESENTATION_OUTLINE.md](PRESENTATION_OUTLINE.md)
 
 ---
 
-## Tab 1: Weather & Alerts (~30 s)
+## Tab 1: Weather & Alerts (~15 s) — demo block 2:00–2:15
 
-1. Point to the rainfall table (5 rows).
-2. Point to the line chart — peak **22 mm** at 10:00.
-3. Say: "Amber at 10 mm/h, red at 20 mm/h — peak triggers **RED** flood watch."
-4. Optional: move sliders to show GREEN at lower thresholds.
-
----
-
-## Tab 2: Runoff SCS-CN (~30 s)
-
-1. Set **P = 50 mm**, **CN = 80**.
-2. Say: "SCS-CN runoff from Week 5; physical check **Q <= P** shows green."
-3. Briefly show sensitivity plot vs CN.
+1. Point to rainfall table (5 rows).
+2. Line chart peak **22 mm** at 10:00.
+3. Say: "Amber 10 mm/h, red 20 mm/h — peak triggers **RED** watch."
 
 ---
 
-## Tab 3: Reservoir (~30 s)
+## Tab 2: Runoff SCS-CN (~15 s) — 2:15–2:30
 
-1. Eco flow **10 m3/s** (default).
-2. Say: "Seven-day dispatch from Week 6; total revenue about **$708,849**, validation **PASS**."
-3. Scroll schedule table — day 7 feasible release.
+1. **P = 50 mm**, **CN = 80**.
+2. Say: "Hand-validated **Q ≈ 13.8 mm**; physical check **Q ≤ P** is green."
+3. Optional: mention sensitivity plot.
 
 ---
 
-## Tab 4: Flood map (~30 s)
+## Tab 3: Reservoir (~15 s) — 2:30–2:45
+
+1. Eco flow **10 m³/s** (default).
+2. Say: "Seven-day dispatch; revenue **~$708,849**; validation **PASS**."
+3. Scroll day-7 release in schedule table.
+
+---
+
+## Tab 4: Flood map (~15 s) — 2:45–3:00
 
 1. Flood level **50 m** — note flooded %.
-2. Move to **60 m** — flooded % increases (monotonic).
-3. Say: "DEM inundation from Week 6; wet cells use elevation <= stage."
+2. Move to **60 m** — flooded % **increases** (monotonic rule).
+3. Say: "DEM from Week 6; wet cells where elevation < stage."
 
 ---
 
 ## If something breaks
 
-- Run `pytest -q` in terminal (29 passed).
-- Show backup PNG: Streamlit screenshot, GitHub repo, pytest 96% coverage.
+```bash
+pytest -q    # expect 33 passed
+```
+
+Show backup PNGs:
+- `lab_reports/week7_session_b_Streamlit_page.png`
+- `lab_reports/week8_session_a_terminal.png`
+
+Mention: `docs/PHYSICAL_VALIDATION.md` lists 18 constraint checks.
 
 ---
 
 ## One-line summary
 
-"Four labs, one dashboard, tested and on GitHub."
+"Four labs, one dashboard, 33 tests, nine AI corrections documented — repo on GitHub."
