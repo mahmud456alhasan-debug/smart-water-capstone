@@ -11,7 +11,7 @@ On the repo home page, click the **gear icon** next to "About".
 **Description** (paste exactly):
 
 ```
-AI-Augmented Smart Water Decision Support Platform featuring rainfall forecasting, SCS-CN runoff modeling, reservoir optimization, flood inundation analysis, and engineering validation.
+AI-Augmented Smart Water Decision Support Platform integrating rainfall forecasting, runoff modeling, reservoir optimization, flood inundation analysis, and engineering validation.
 ```
 
 **Topics** (add each):
@@ -69,9 +69,22 @@ Click **Publish release**. Visitors will see **Releases → v1.0** instead of "N
 ## Step 4 — Populate Wiki (optional, 15 minutes)
 
 1. **Settings → General → Features → Wikis → ON**
-2. Click **Wiki** tab → **Create the first page**
-3. Copy content from `docs/wiki/Home.md`
-4. Create pages from each file in `docs/wiki/`
+2. Click **Wiki** tab → **Create the first page** — paste `docs/wiki/Home.md`
+3. Create these pages (copy from matching files in `docs/wiki/`):
+
+| Wiki page title | Source file |
+|-----------------|-------------|
+| Home | `Home.md` |
+| System-Architecture | `System-Architecture.md` |
+| Validation-Strategy | `Validation-Strategy.md` |
+| Reproducibility-Guide | `Reproducibility-Guide.md` |
+| AI-Engineering-Portfolio | `AI-Engineering-Portfolio.md` |
+| Experiment-1-Rainfall-Alert | `Experiment-1-Rainfall-Alert.md` |
+| Experiment-2-SCSCN-Runoff | `Experiment-2-SCSCN-Runoff.md` |
+| Experiment-3-Reservoir-Optimization | `Experiment-3-Reservoir-Optimization.md` |
+| Experiment-4-Flood-Inundation | `Experiment-4-Flood-Inundation.md` |
+
+4. Set **Home** as the wiki start page (Wiki → Pages → Home → set as default if prompted)
 
 ---
 
@@ -83,8 +96,9 @@ After push, confirm README shows in order:
 2. Title + one-paragraph summary
 3. Shields.io badges
 4. **Platform gallery** (2×2 screenshots)
-5. Key metrics
-6. **Key deliverables** (PDF links + release)
+5. **Results snapshot** (experiment outcomes table)
+6. Key metrics
+7. **Key deliverables** (PDF links + release)
 7. Quick start
 8. Repository structure
 9. Further documentation links

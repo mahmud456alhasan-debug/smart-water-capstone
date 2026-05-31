@@ -33,6 +33,19 @@ Integrated rainfall monitoring, runoff modeling, reservoir optimization, and flo
 
 ---
 
+## Results snapshot
+
+| Experiment | Key result |
+|------------|------------|
+| Rainfall monitoring | GREEN / YELLOW / RED classification validated; 3h/6h forecast risk pipeline |
+| SCS-CN runoff | Reference Q = **13.80 mm** verified at P = 50 mm, CN = 80 |
+| Reservoir optimization | Monte Carlo **P10 / P50 / P90** revenue and storage analysis (100 scenarios) |
+| Flood inundation | **9/9** physical validation checks passed (monotonicity, bounds, DEM consistency) |
+
+Full evidence: [submission/](submission/) · [docs/ENGINEERING.md](docs/ENGINEERING.md)
+
+---
+
 ## Key metrics
 
 | Metric | Value |
@@ -91,7 +104,7 @@ smart-water-capstone/
 └── tests/            Capstone pytest suite (88 tests)
 ```
 
-Experiment source code: local `ai_water_lab/experiment*` folders (not duplicated in this repo).
+Specialized experiment reports and reproducibility artifacts are available in [`submission/`](submission/).
 
 ---
 
