@@ -82,15 +82,22 @@ Short filenames for GitHub Releases: [`release/`](release/) · Full packages (La
 
 ## Weekly lab reports
 
-Course labs (Weeks 1–8) document the path from AI setup → TDD → specialized labs → capstone.
+Course labs (Weeks 1–8): AI setup → TDD → specialized labs → capstone demo.
 
-| | |
-|--|--|
-| **16 sessions** | Weeks 1–8, Sessions A & B |
-| **Topics** | AGENTS.md, TDD, refactoring, Labs 1–4, capstone planning & testing |
-| **Details** | **[lab_reports/README.md](lab_reports/README.md)** — full index with PDF + LaTeX links |
+[![Lab Reports](https://img.shields.io/badge/📚_Full_Lab_Index-16_Reports-informational?style=flat-square)](lab_reports/README.md)
 
-Quick links: [Week 5 Lab 1 (Rainfall)](lab_reports/Week5_SessionA_Lab1_Report.pdf) · [Week 6 Lab 3 (Reservoir)](lab_reports/Week6_SessionA_Lab3_Report.pdf) · [Week 8 Session B (Demo)](lab_reports/Week8_SessionB_Report.pdf)
+<p align="center">
+  <a href="lab_reports/README.md">
+    <img src="lab_reports/week5_session_a_lab1_streamlit.png" alt="Lab 1 rainfall dashboard" width="22%" />
+    <img src="lab_reports/week5_session_b_lab2_sensitivity.png" alt="Lab 2 runoff sensitivity" width="22%" />
+    <img src="lab_reports/week6_session_a_lab3_tradeoff.png" alt="Lab 3 reservoir trade-off" width="22%" />
+    <img src="lab_reports/week6_session_b_lab4_dem.png" alt="Lab 4 flood DEM" width="22%" />
+  </a>
+</p>
+
+**[📚 Open lab reports page →](lab_reports/README.md)** — snapshots, week-by-week gallery, PDF + LaTeX links, appendix code
+
+Quick PDFs: [Week 5 Lab 1 🌧️](lab_reports/Week5_SessionA_Lab1_Report.pdf) · [Week 6 Lab 3 ⚖️](lab_reports/Week6_SessionA_Lab3_Report.pdf) · [Week 8 Demo 🚀](lab_reports/Week8_SessionB_Report.pdf)
 
 ---
 
