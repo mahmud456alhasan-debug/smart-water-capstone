@@ -34,3 +34,6 @@ htmlcov/
 # Secrets
 .env
 *.pem
+
+# Assignment 2 — MNIST dataset (auto-download)
+assignment2/cnn_mnist/data/

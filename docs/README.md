@@ -11,6 +11,9 @@ Process and engineering documents for Smart Water Lab. The [main README](../READ
 | [../README.md](../README.md) | Homepage — gallery, metrics, deliverables, quick start |
 | [../submission/README.md](../submission/README.md) | Formal experiment reports (PDF + LaTeX) |
 | [../lab_reports/README.md](../lab_reports/README.md) | Weekly lab reports (Weeks 1–8) |
+| [../assignment2/README.md](../assignment2/README.md) | Assignment 2 — CNN MNIST + PDF |
+| [../assignment3/README.md](../assignment3/README.md) | Assignment 3 — Swiss Cheese |
+| [../assignment4/README.md](../assignment4/README.md) | Assignment 4 — Capstone |
 | [ENGINEERING.md](ENGINEERING.md) | Validation, AI engineering, maturity assessment |
 | [TEST_COUNTS.md](TEST_COUNTS.md) | Canonical test counts (33 / 88 / 121) |
 | [PHYSICAL_VALIDATION.md](PHYSICAL_VALIDATION.md) | **18 physical constraints** — rubric evidence |

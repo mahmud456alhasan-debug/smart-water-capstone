@@ -79,5 +79,5 @@ Full validation narrative: [docs/ENGINEERING.md](../docs/ENGINEERING.md)
 | Assignment | Package |
 |------------|---------|
 | Assignment 3 — Swiss Cheese Test Suite | [assignment3/README.md](../assignment3/README.md) |
+| Assignment 2 — CNN MNIST | [assignment2/README.md](../assignment2/README.md) |
 | Assignment 1 — Reasoning Log | lab_reports Weeks 1–2 |
-| Assignment 2 — Legacy modernization | lab_reports Week 4 Session A |

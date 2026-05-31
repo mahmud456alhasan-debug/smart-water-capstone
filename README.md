@@ -125,6 +125,7 @@ smart-water-capstone/
 ├── release/          PDFs for GitHub Releases
 ├── submission/       Experiment packages (PDF + LaTeX + figures)
 ├── lab_reports/      Weekly course labs (16 PDFs, appendix code)
+├── assignment2/      Assignment 2 — CNN MNIST + PDF report
 ├── assignment3/      Assignment 3 — Swiss Cheese test suite
 ├── assignment4/      Assignment 4 — rubric mapping & checklist
 ├── docs/             Engineering details, wiki, GitHub setup
@@ -144,6 +145,9 @@ Specialized experiment reports and reproducibility artifacts are available in [`
 | [docs/README.md](docs/README.md) | **Documentation index** — all process and engineering docs |
 | [submission/README.md](submission/README.md) | Formal experiment reports (PDF + LaTeX) |
 | [lab_reports/README.md](lab_reports/README.md) | Weekly lab reports (Weeks 1–8) |
+| [assignment2/README.md](assignment2/README.md) | **Assignment 2** — CNN MNIST + PDF |
+| [assignment3/README.md](assignment3/README.md) | Assignment 3 — Swiss Cheese test suite |
+| [assignment4/README.md](assignment4/README.md) | Assignment 4 — capstone rubric |
 | [docs/ENGINEERING.md](docs/ENGINEERING.md) | Validation and AI engineering evidence |
 | [docs/GITHUB_SETUP.md](docs/GITHUB_SETUP.md) | About section, Release v1.0, wiki |
 
