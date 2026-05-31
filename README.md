@@ -11,7 +11,7 @@ Integrated rainfall monitoring, runoff modeling, reservoir optimization, and flo
 **Mahmudul Hasan (4125999049)** · Xi'an Jiaotong University · 2026
 
 ![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)
-![Tests](https://img.shields.io/badge/Tests-88-success)
+![Tests](https://github.com/mahmud456alhasan-debug/smart-water-capstone/actions/workflows/tests.yml/badge.svg)
 ![Reports](https://img.shields.io/badge/PDF_Reports-5-orange)
 ![Lab Reports](https://img.shields.io/badge/Lab_Reports-16-blue)
 ![Validation](https://img.shields.io/badge/Validation-PASS-success)
@@ -70,7 +70,21 @@ Full evidence: [submission/](submission/) · [docs/ENGINEERING.md](docs/ENGINEER
 | 📄 | **Experiment 3** — Reservoir dispatch optimization | [PDF](submission/experiment_reports/Experiment3_Reservoir_Optimization/Experiment3_Reservoir_Optimization_Report.pdf) |
 | 📄 | **Experiment 4** — Flood inundation analysis | [PDF](submission/experiment_reports/Experiment4_Flood_Inundation/Experiment4_Flood_Inundation_Report.pdf) |
 
-**Release bundle:** [v1.0 — Smart Water Lab Submission](https://github.com/mahmud456alhasan-debug/smart-water-capstone/releases/tag/v1.0.0) · short filenames in [`release/`](release/) · LaTeX sources in [`submission/`](submission/)
+**Release bundle:** [v1.0 — Smart Water Lab Submission](https://github.com/mahmud456alhasan-debug/smart-water-capstone/releases/tag/v1.0.0) · PDFs in [`release/`](release/) · LaTeX in [`submission/`](submission/) · [Create release →](docs/GITHUB_SETUP.md#step-3--create-release-v10-5-minutes)
+
+---
+
+## Quick start
+
+```bash
+git clone https://github.com/mahmud456alhasan-debug/smart-water-capstone.git
+cd smart-water-capstone
+python3 -m pip install -r requirements.txt
+streamlit run app/main.py
+pytest -q
+```
+
+Copy `dem.npy` into `data/` for the flood tab (from Week 6 lab or local Experiment 4 output).
 
 ---
 
@@ -98,20 +112,6 @@ Complete semester progression from AI-assisted software engineering foundations 
   <strong>16 reports</strong> · 16 PDFs · LaTeX sources · appendix code<br><br>
   <a href="lab_reports/README.md"><strong>Explore the complete learning journey →</strong></a>
 </p>
-
----
-
-## Quick start
-
-```bash
-git clone https://github.com/mahmud456alhasan-debug/smart-water-capstone.git
-cd smart-water-capstone
-python3 -m pip install -r requirements.txt
-streamlit run app/main.py
-pytest -q
-```
-
-Copy `dem.npy` into `data/` for the flood tab (from Week 6 lab or local Experiment 4 output).
 
 ---
 
