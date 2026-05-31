@@ -33,8 +33,9 @@ capstone/
   AGENTS.md
   requirements.txt
   prompt_log.md
-  SCOPE.md
-  ARCHITECTURE.md
+  docs/
+    SCOPE.md
+    ARCHITECTURE.md
   app/
     main.py                 # Streamlit entry, tab layout
   src/

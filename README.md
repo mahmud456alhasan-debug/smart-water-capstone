@@ -72,7 +72,7 @@ Full evidence: [submission/](submission/) · [docs/ENGINEERING.md](docs/ENGINEER
 
 **Release bundle:** [v1.0 — Smart Water Lab Submission](https://github.com/mahmud456alhasan-debug/smart-water-capstone/releases/tag/v1.0.0) · short filenames in [`release/`](release/) · LaTeX sources in [`submission/`](submission/)
 
-**Weekly lab reports (16):** [lab_reports/README.md](lab_reports/README.md) — Weeks 1–8, PDF + LaTeX + appendix code
+**Weekly lab reports (16):** [lab_reports/README.md](lab_reports/README.md) — weekly learning journey (Weeks 1–8)
 
 ---
 
@@ -112,13 +112,11 @@ Specialized experiment reports and reproducibility artifacts are available in [`
 
 | Resource | Purpose |
 |----------|---------|
-| [docs/ENGINEERING.md](docs/ENGINEERING.md) | Validation, AI engineering, maturity assessment |
-| [lab_reports/README.md](lab_reports/README.md) | Weekly lab index with gallery and appendix folders |
-| [submission/README.md](submission/README.md) | Regenerate experiment PDFs and figures |
-| [docs/GITHUB_SETUP.md](docs/GITHUB_SETUP.md) | About section, topics, Release v1.0 |
-| [docs/wiki/](docs/wiki/) | Wiki pages — copy to GitHub Wiki |
-| [ARCHITECTURE.md](ARCHITECTURE.md) | Capstone system design |
-| [AGENTS.md](AGENTS.md) | AI collaboration protocol |
+| [docs/README.md](docs/README.md) | **Documentation index** — all process and engineering docs |
+| [submission/README.md](submission/README.md) | Formal experiment reports (PDF + LaTeX) |
+| [lab_reports/README.md](lab_reports/README.md) | Weekly lab reports (Weeks 1–8) |
+| [docs/ENGINEERING.md](docs/ENGINEERING.md) | Validation and AI engineering evidence |
+| [docs/GITHUB_SETUP.md](docs/GITHUB_SETUP.md) | About section, Release v1.0, wiki |
 
 ---
 

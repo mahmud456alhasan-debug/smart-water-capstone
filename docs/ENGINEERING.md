@@ -45,7 +45,7 @@ Six axes: technical quality, testing, physical validation, AI collaboration, rep
 | Critical AI use | 52 deliverables reviewed, 9 required human correction |
 | Threats to validity | OpenWeather sparsity, SCS-CN lumped CN, bathtub flood model, LLM hallucination risk |
 
-Full narrative: [submission/portfolio/AI_Engineering_Portfolio.md](../submission/portfolio/AI_Engineering_Portfolio.md) · Capstone reflection: [JAGGED_FRONTIER.md](../JAGGED_FRONTIER.md)
+Full narrative: [submission/portfolio/AI_Engineering_Portfolio.md](../submission/portfolio/AI_Engineering_Portfolio.md) · Capstone reflection: [JAGGED_FRONTIER.md](JAGGED_FRONTIER.md)
 
 ---
 
