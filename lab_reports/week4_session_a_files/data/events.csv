@@ -1,0 +1,6 @@
+event_id,watershed_id,rainfall_mm,land_use
+1,WS01,50,forest
+2,WS01,50,pasture
+3,WS01,50,cultivated
+4,WS01,80,residential
+5,WS01,30,paved

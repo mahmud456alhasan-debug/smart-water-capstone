@@ -1,0 +1,15 @@
+I need to integrate OpenWeather API for rainfall monitoring in week5_session_a_lab1/.
+
+Existing files: config.py, openweather_client.py, main.py
+
+Please enhance openweather_client.py to:
+1. Fetch current weather for a given city (q= parameter)
+2. Extract rainfall from rain.1h (mm/h), fallback rain.3h, missing rain -> 0 mm
+3. Handle: invalid API key (401), network errors, city not found (404), bad JSON
+4. In-memory cache with TTL from settings.cache_ttl_sec (log cache hits)
+5. Proper logging
+
+Use OPENWEATHER_API_KEY from environment only — never hard-code keys.
+Python 3.8 compatible type hints.
+
+Document in a module docstring which JSON field is used and that thresholds are mm/h.

@@ -1,0 +1,16 @@
+Implement the SCS-CN runoff calculation in week5_session_b_lab2/src/runoff.py (or enhance existing calculate_runoff).
+
+Formula:
+- S = (25400 / CN) - 254  (mm)
+- Ia = 0.2 * S
+- If P <= Ia: Q = 0
+- Else: Q = (P - Ia)^2 / (P - Ia + S)
+- Q must not exceed P
+
+Requirements:
+1. calculate_runoff(P, CN) with Python 3.8 type hints (Union, not X | Y)
+2. ValueError for P < 0 or CN outside [1, 100]
+3. Comprehensive docstring with formulas
+4. tests/test_runoff.py with edge cases: P=0, P<Ia, normal P=50 CN=80, CN=100, invalid CN, Q<=P grid
+
+Run: python3 -m pytest tests/ -v

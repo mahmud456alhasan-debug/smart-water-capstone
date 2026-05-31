@@ -9,6 +9,7 @@ Integrated rainfall monitoring, runoff modeling, reservoir optimization, and flo
 ![Python](https://img.shields.io/badge/Python-3.8+-3776AB?logo=python&logoColor=white)
 ![Tests](https://img.shields.io/badge/Tests-88-success)
 ![Reports](https://img.shields.io/badge/PDF_Reports-5-blue)
+![Lab Reports](https://img.shields.io/badge/Lab_Reports-16-informational)
 ![Validation](https://img.shields.io/badge/Validation_CLIs-4-informational)
 ![AI Review](https://img.shields.io/badge/AI_Corrections-9-orange)
 
@@ -19,6 +20,7 @@ Integrated rainfall monitoring, runoff modeling, reservoir optimization, and flo
 - [Integrated architecture](#integrated-system-architecture)
 - [Engineering outcomes](#engineering-outcomes)
 - [Submission package](#submission-package)
+- [Weekly lab reports](#weekly-lab-reports)
 - [Platform modules](#platform-modules)
 - [Validation and AI engineering](#validation-and-ai-engineering)
 - [Quick start](#quick-start)
@@ -52,6 +54,7 @@ End-to-end decision-support workflow: **weather data → rainfall alert → SCS-
 |--------|------:|
 | Specialized experiments | 4 |
 | PDF reports + case study | **5** |
+| Weekly lab reports | **16** |
 | Automated tests | **88** |
 | Validation CLI scripts | 4 |
 | AI outputs reviewed / corrected | 52 / **9** |
@@ -74,6 +77,20 @@ End-to-end decision-support workflow: **weather data → rainfall alert → SCS-
 | Experiment 4 | Flood inundation analysis | [PDF](submission/experiment_reports/Experiment4_Flood_Inundation/Experiment4_Flood_Inundation_Report.pdf) |
 
 Short filenames for GitHub Releases: [`release/`](release/) · Full packages (LaTeX + PDF + figures): [`submission/`](submission/) — see [submission README](submission/README.md) for `.tex` paths
+
+---
+
+## Weekly lab reports
+
+Course labs (Weeks 1–8) document the path from AI setup → TDD → specialized labs → capstone.
+
+| | |
+|--|--|
+| **16 sessions** | Weeks 1–8, Sessions A & B |
+| **Topics** | AGENTS.md, TDD, refactoring, Labs 1–4, capstone planning & testing |
+| **Details** | **[lab_reports/README.md](lab_reports/README.md)** — full index with PDF + LaTeX links |
+
+Quick links: [Week 5 Lab 1 (Rainfall)](lab_reports/Week5_SessionA_Lab1_Report.pdf) · [Week 6 Lab 3 (Reservoir)](lab_reports/Week6_SessionA_Lab3_Report.pdf) · [Week 8 Session B (Demo)](lab_reports/Week8_SessionB_Report.pdf)
 
 ---
 
@@ -131,8 +148,9 @@ Copy `dem.npy` into `data/` for the flood tab (from Week 6 lab or local Experime
 ```text
 smart-water-capstone/
 ├── assets/           README showcase figures
-├── release/          PDFs with short names (for GitHub Releases)
-├── submission/       Full LaTeX + screenshots + appendix code
+├── lab_reports/      Weekly lab PDFs + LaTeX (Weeks 1–8)  ← course labs
+├── release/          PDFs with short names (GitHub Releases)
+├── submission/       Specialized experiment packages
 ├── docs/             Wiki pages + GitHub setup guide
 ├── app/              Streamlit capstone dashboard
 ├── src/              weather · runoff · reservoir · flood modules
@@ -147,7 +165,8 @@ Experiment source code: local `ai_water_lab/experiment*` folders (not duplicated
 
 | Resource | Purpose |
 |----------|---------|
-| [`docs/GITHUB_SETUP.md`](docs/GITHUB_SETUP.md) | **About description, topics, Release v1.0** |
+| [`lab_reports/README.md`](lab_reports/README.md) | **Weekly lab reports** (16 PDFs, full index) |
+| [`docs/GITHUB_SETUP.md`](docs/GITHUB_SETUP.md) | About description, topics, Release v1.0 |
 | [`docs/wiki/`](docs/wiki/) | Wiki pages — copy to GitHub Wiki |
 | [`submission/README.md`](submission/README.md) | Regenerate PDFs and figures |
 | [`ARCHITECTURE.md`](ARCHITECTURE.md) | Capstone system design |

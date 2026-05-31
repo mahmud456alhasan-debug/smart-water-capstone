@@ -1,0 +1,10 @@
+Now implement calculate_runoff(P, CN) in src/runoff.py that will pass all tests in tests/test_runoff.py.
+
+Requirements:
+- Python 3.8 compatible type hints (use Union/Optional, not X | Y)
+- Follow SCS-CN exactly: S = 25400/CN - 254, Ia = 0.2*S, Q=0 if P<=Ia, else Q=(P-Ia)^2/(P-Ia+S), enforce Q <= P
+- Handle all edge cases in the tests
+- Docstring with formula explanation
+- Make all tests pass
+
+[PASTE YOUR FULL tests/test_runoff.py FILE HERE BEFORE SENDING]

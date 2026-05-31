@@ -1,0 +1,272 @@
+% Week 3 Session A — Agile scaffolding practice
+% All lab reports in this series include an abstract.
+%
+% Build: pdflatex Week3_SessionA_Report.tex from Lab-reports/ (run twice)
+% Screenshots (same folder):
+%   week3_session_a_opencode1.png .. opencode4.png  (one prompt, scroll steps)
+%   week3_session_a_terminal.png
+% Code copies for appendix: week3_session_a_files/ (sync from ai_water_lab/week3_session_a/)
+%
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\newcommand{\opencodefig}[1]{%
+  \includegraphics[width=\linewidth,height=0.68\textheight,keepaspectratio]{#1}%
+}
+\newcommand{\terminalfig}[1]{%
+  \includegraphics[width=0.92\linewidth,height=0.42\textheight,keepaspectratio]{#1}%
+}
+\usepackage{booktabs}
+\usepackage{xurl}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{fvextra}
+\usepackage[most]{tcolorbox}
+
+\newcommand{\studentname}{Mahmudul Hasan}
+\newcommand{\studentid}{4125999049}
+\newcommand{\reportdate}{May 20, 2026}
+
+\makeatletter
+\g@addto@macro\UrlBreaks{\do\ }
+\makeatother
+
+\newcommand{\LabCodeRoot}{week3_session_a_files}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  breakatwhitespace=true,
+  columns=fullflexible,
+  keepspaces=true,
+  frame=none,
+  xleftmargin=0.5em,
+  xrightmargin=0.5em,
+}
+
+\newcommand{\codebox}[3]{%
+\begin{tcolorbox}[
+  enhanced,
+  colback=gray!6,
+  colframe=black!55,
+  title={#1},
+  fonttitle=\bfseries\ttfamily\footnotesize,
+  arc=1.5mm,
+  boxrule=0.7pt,
+  breakable,
+  width=\linewidth,
+  before skip=0.8em,
+  after skip=0.8em,
+]
+\lstinputlisting[language=#2,breaklines=true,breakatwhitespace=false]{\LabCodeRoot/#3}
+\end{tcolorbox}%
+}
+
+\newcommand{\textfilebox}[2]{%
+\begin{tcolorbox}[
+  enhanced,
+  colback=gray!6,
+  colframe=black!55,
+  title={#1},
+  fonttitle=\bfseries\ttfamily\footnotesize,
+  arc=1.5mm,
+  boxrule=0.7pt,
+  breakable,
+  width=\linewidth,
+  before skip=0.8em,
+  after skip=0.8em,
+]
+\VerbatimInput[fontsize=\footnotesize,breaklines=true,breakanywhere=true]{\LabCodeRoot/#2}
+\end{tcolorbox}%
+}
+
+\title{Lab Report: Week 3 Session A\\Agile Scaffolding Practice}
+\author{\studentname \quad (Student ID: \studentid)}
+\date{\reportdate}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This report documents Week~3 Session~A on \textbf{agile scaffolding}: a hydrology user story was turned into a technical specification, then OpenCode Desktop generated a complete Python package in \texttt{week3\_session\_a/} from one scaffold prompt. The project includes SCS-CN core logic, CSV loaders, visualization, a four-subcommand CLI, 18 unit tests, \texttt{requirements.txt}, and \texttt{README.md}. OpenCode fixed Python~3.8 type-hint compatibility and incorrect test expectations during generation. Local verification: 18 tests passed; \texttt{single 80 85} gave $Q=43.55$~mm; batch and plot commands succeeded. Four OpenCode screenshots (\texttt{opencode1}--\texttt{opencode4}) document \emph{one} long chat session (scroll steps). Full source, data, config, scaffold prompt, and \texttt{prompt\_log.md} appear in Appendix~\ref{app:files}--\ref{app:promptlog}.
+\end{abstract}
+
+\section{Introduction}
+An empty repository plus a short user story invites the \textbf{cold-start} problem: missing tests, ad-hoc layout, or wrong hydrology. \textbf{Scaffolding} uses AI to supply directories, modules, and stubs that engineers refine with domain data and verification. Work was done in \texttt{ai\_water\_lab/week3\_session\_a/}, separate from the Week~2 flood-monitoring stack in \texttt{week2\_session\_a/}.
+
+\section{Objectives}
+\begin{itemize}[noitemsep]
+  \item Convert a user story to a brief technical specification.
+  \item Generate project scaffolding with AI from that spec.
+  \item Customize and validate the AI-generated structure.
+  \item Reflect on what scaffolding does and does not solve.
+\end{itemize}
+
+\section{Methods}
+
+\subsection{Story $\rightarrow$ specification}
+The user story was expanded into actor, inputs ($P$, CN or land-use table, optional watershed id), outputs ($Q$, tables/plots, assumptions), quality bar (edge-case tests, validation), and explicit SCS-CN formulas for cross-check with Week~1 Session~B and Week~2 Session~A ($P=80$~mm, $\mathrm{CN}=85$).
+
+\subsection{Scaffold prompt (Exercise 1)}
+One prompt (\texttt{scaffold\_prompt.txt}, Appendix~\ref{app:scaffold}) requested: directory structure, \texttt{scs\_cn} module, data loaders, visualization, tests, \texttt{requirements.txt}, \texttt{README.md}, production error handling, and use of existing \texttt{data/cn\_lookup.csv} and \texttt{data/sample\_rainfall.csv}.
+
+\subsection{Customization (Exercise 2)}
+README was updated with author name and student ID; commands use \texttt{python3}; a virtual environment was created after installing \texttt{python3.8-venv}; \texttt{runoff\_curves.png} was produced via the plot CLI.
+
+\subsection{Documentation (Exercise 3)}
+\texttt{prompt\_log.md} records spec, prompt, matches, fixes, and cold-start reflection (Appendix~\ref{app:promptlog}).
+
+\section{Results}
+
+\subsection{Project file inventory}
+Table~\ref{tab:files} lists all submitted project files (full listings in the appendix).
+
+\begin{table}[htbp]
+  \centering
+  \caption{Generated and customized files in \texttt{week3\_session\_a/}.}
+  \label{tab:files}
+  \small
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    Path & Role \\
+    \midrule
+    \texttt{src/scs\_cn.py} & Scalar/vector SCS-CN, \texttt{summarize\_runoff} \\
+    \texttt{src/data\_loader.py} & CN lookup and rainfall CSV loaders \\
+    \texttt{src/visualization.py} & Runoff curves and bar charts \\
+    \texttt{src/cli.py} & CLI: \texttt{single}, \texttt{batch}, \texttt{table}, \texttt{plot} \\
+    \texttt{src/\_\_init\_\_.py} & Package marker (empty) \\
+    \texttt{tests/test\_scs\_cn.py} & 18 pytest cases \\
+    \texttt{tests/\_\_init\_\_.py} & Test package marker (empty) \\
+    \texttt{data/cn\_lookup.csv} & Land-use $\rightarrow$ CN table \\
+    \texttt{data/sample\_rainfall.csv} & Five sample watershed events \\
+    \texttt{requirements.txt} & numpy, pandas, matplotlib, pytest \\
+    \texttt{README.md} & Setup, usage, assumptions \\
+    \texttt{scaffold\_prompt.txt} & Prompt sent to OpenCode \\
+    \texttt{prompt\_log.md} & AI interaction log \\
+    \texttt{runoff\_curves.png} & Plot output (Exercise 2) \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{OpenCode session (one prompt, four screenshots)}
+Figures~\ref{fig:oc1}--\ref{fig:oc4} are consecutive scroll captures of the \textbf{same} scaffold prompt session (not four separate prompts).
+
+\begin{figure}[htbp]
+  \centering
+  \opencodefig{week3_session_a_opencode1.png}
+  \caption{OpenCode step 1/4: scaffold prompt and start of generation.}
+  \label{fig:oc1}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \opencodefig{week3_session_a_opencode2.png}
+  \caption{OpenCode step 2/4: creating \texttt{src/}, \texttt{tests/}, and modules.}
+  \label{fig:oc2}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \opencodefig{week3_session_a_opencode3.png}
+  \caption{OpenCode step 3/4: Python~3.8 fixes and test corrections.}
+  \label{fig:oc3}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \opencodefig{week3_session_a_opencode4.png}
+  \caption{OpenCode step 4/4: project summary; 18 tests pass.}
+  \label{fig:oc4}
+\end{figure}
+
+\subsection{Terminal verification}
+\begin{figure}[htbp]
+  \centering
+  \terminalfig{week3_session_a_terminal.png}
+  \caption{Terminal: \texttt{pytest} (18 passed), \texttt{single 80 85}, and \texttt{batch}.}
+  \label{fig:terminal}
+\end{figure}
+
+Key numeric results:
+\begin{itemize}[noitemsep]
+  \item \texttt{python3 -m pytest tests/ -v} --- 18 passed ($\approx 0.33$~s).
+  \item \texttt{python3 -m src.cli single 80 85} --- $Q = 43.55$~mm.
+  \item \texttt{python3 -m src.cli batch} --- runoff for five land-use events on watershed WS01.
+\end{itemize}
+
+\section{Analysis and validation}
+
+\textbf{Hydrology:} $Q = 43.55$~mm for $P=80$~mm, $\mathrm{CN}=85$ matches prior course checks ($\approx 43.6$~mm).
+
+\textbf{AI during scaffold:} Incompatible \texttt{X | Y} type hints were fixed for Python~3.8; some test expected values were wrong until recalculated.
+
+\textbf{Cold-start:} Scaffolding delivered layout, CLI, tests, and README quickly; the author still supplied CSV domain data, ran \texttt{pytest}, and verified a reference case in the terminal.
+
+\section{Discussion}
+\begin{enumerate}[noitemsep]
+  \item Four screenshots appropriately document one long OpenCode reply.
+  \item Customization was modest (README, \texttt{python3}, plot PNG, venv) because the scaffold matched the written spec.
+  \item Scaffolding is faster than manual cold start; hydrologic trust still requires local tests.
+  \item Stating Python version and spec bullets in the first prompt reduced rework.
+\end{enumerate}
+
+\section{Problems encountered}
+\texttt{python} was not on PATH (use \texttt{python3}). \texttt{python3-venv} was required before \texttt{.venv} could be created. No fake API keys appeared in this project.
+
+\section{Lessons learned}
+Story$\rightarrow$spec before scaffolding; review every generated path; terminal verification is mandatory; keep \texttt{prompt\_log.md} and screenshots as an audit trail.
+
+\section{Conclusion}
+Week~3 Session~A objectives were met. Submitted artifacts: full \texttt{week3\_session\_a/} tree (Appendix~\ref{app:files}), \texttt{prompt\_log.md}, four OpenCode screenshots (one session), and terminal screenshot.
+
+\appendix
+\section{Submitted project files}
+\label{app:files}
+
+\subsection{Core module: \texttt{src/scs\_cn.py}}
+\label{app:scs_cn}
+\codebox{\texttt{src/scs\_cn.py} (full file)}{Python}{src/scs_cn.py}
+
+\subsection{Data loaders: \texttt{src/data\_loader.py}}
+\label{app:data_loader}
+\codebox{\texttt{src/data\_loader.py} (full file)}{Python}{src/data_loader.py}
+
+\subsection{Visualization: \texttt{src/visualization.py}}
+\label{app:viz}
+\codebox{\texttt{src/visualization.py} (full file)}{Python}{src/visualization.py}
+
+\subsection{CLI: \texttt{src/cli.py}}
+\label{app:cli}
+\codebox{\texttt{src/cli.py} (full file)}{Python}{src/cli.py}
+
+\subsection{Tests: \texttt{tests/test\_scs\_cn.py}}
+\label{app:tests}
+\codebox{\texttt{tests/test\_scs\_cn.py} (full file)}{Python}{tests/test_scs_cn.py}
+
+\subsection{Configuration and documentation}
+\label{app:config}
+
+\textfilebox{\texttt{requirements.txt} (full file)}{requirements.txt}
+
+\textfilebox{\texttt{README.md} (full file)}{README.md}
+
+\subsection{Scaffold prompt: \texttt{scaffold\_prompt.txt}}
+\label{app:scaffold}
+\textfilebox{\texttt{scaffold\_prompt.txt} (full file)}{scaffold_prompt.txt}
+
+\subsection{Data files}
+\label{app:data}
+
+\textfilebox{\texttt{data/cn\_lookup.csv} (full file)}{data/cn_lookup.csv}
+
+\textfilebox{\texttt{data/sample\_rainfall.csv} (full file)}{data/sample_rainfall.csv}
+
+\section{Submitted prompt log: \texttt{prompt\_log.md}}
+\label{app:promptlog}
+\textfilebox{\texttt{prompt\_log.md} (full file)}{prompt_log.md}
+
+\end{document}

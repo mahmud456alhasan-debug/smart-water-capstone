@@ -1,0 +1,172 @@
+% Week 2 Session B — Context engineering with AGENTS.md
+% All lab reports in this series include an abstract.
+%
+% Build: pdflatex Week2_SessionB_Report.tex from Lab-reports/
+% Same folder: week2_session_b_opencode.png, week2_session_b_opencode2.png,
+%   week2_session_b_opencode3.png, prompt_log_week2_session_b_latex.md
+%
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\newcommand{\opencodefig}[1]{%
+  \includegraphics[width=\linewidth,height=0.68\textheight,keepaspectratio]{#1}%
+}
+\usepackage{booktabs}
+\usepackage{xurl}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{fvextra}
+\usepackage[most]{tcolorbox}
+
+\newcommand{\studentname}{Mahmudul Hasan}
+\newcommand{\studentid}{4125999049}
+\newcommand{\reportdate}{May 17, 2026}
+
+\makeatletter
+\g@addto@macro\UrlBreaks{\do\ }
+\makeatother
+
+\newcommand{\LabCodeRoot}{.}
+
+\title{Lab Report: Week 2 Session B\\Context Engineering with AGENTS.md}
+\author{\studentname \quad (Student ID: \studentid)}
+\date{\reportdate}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This report documents Week~2 Session~B on \textbf{context engineering} using \texttt{AGENTS.md} with OpenCode Desktop. Exercise~1 generated project context from the real urban flood-warning codebase in \texttt{week2\_session\_a/} (FastAPI, Open-Meteo) rather than the lab template (Streamlit, OpenWeather). Exercise~2 compared the same prompt \emph{Write a function to fetch weather data} without project context (empty folder, sync \texttt{requests}, dict) versus with \texttt{AGENTS.md} (async \texttt{aiohttp}, \texttt{WeatherData}, multi-zone fetch). Evidence: three OpenCode screenshots and the prompt log in Appendix~\ref{app:promptlog}.
+\end{abstract}
+
+\section{Introduction}
+Large language models load only a limited context per chat. \texttt{AGENTS.md} is a project-level instruction file that tells coding agents which stack, layout, and conventions to follow. This session practiced creating, testing, and refining that file for a rainfall / flood-monitoring project developed in Week~2 Session~A.
+
+\section{Objectives}
+\begin{itemize}[noitemsep]
+  \item Create an effective \texttt{AGENTS.md} for a rainfall monitoring project.
+  \item Understand how context shapes AI-generated code.
+  \item Compare outputs with and without \texttt{AGENTS.md}.
+  \item Build a reusable prompting and documentation workflow.
+\end{itemize}
+
+\section{Methods}
+
+\subsection{Exercise 1: Create AGENTS.md}
+The lab prompt requested Streamlit, OpenWeather, and pandas. OpenCode was run with the \texttt{ai\_water\_lab} tree open. The agent scanned \texttt{week2\_session\_a/} and wrote \texttt{week2\_session\_b/AGENTS.md} aligned to the \textbf{actual} stack: FastAPI, Open-Meteo, TimescaleDB, Redis, zone-based flood model, and alert routing. Figure~\ref{fig:agents-create} shows the session.
+
+\subsection{Exercise 2: Test effectiveness}
+The same user message was used twice:
+
+\emph{Write a function to fetch weather data}
+
+\begin{itemize}[noitemsep]
+  \item \textbf{Without context:} new chat in an \textbf{empty folder} (no \texttt{AGENTS.md}, no repo files). The agent asked for language and path, then produced \texttt{fetch\_weather\_demo.py} after a follow-up specification.
+  \item \textbf{With context:} project open with \texttt{AGENTS.md} and existing code; the agent created \texttt{weather\_fetcher.py} using async Open-Meteo access and project conventions.
+\end{itemize}
+
+\subsection{Exercise 3: Refine AGENTS.md}
+After testing, the file was refined with clearer Do/Don't rules, explicit mapping between \texttt{week2\_session\_b/} (documentation) and \texttt{week2\_session\_a/} (code), and shorter scannable sections.
+
+\section{Results}
+
+\subsection{Exercise 1: AGENTS.md creation}
+The generated \texttt{AGENTS.md} includes project overview, tech stack table, directory structure, key functions (\texttt{data\_pipeline.py}, \texttt{flood\_model.py}, \texttt{alert\_router.py}, etc.), data formats, Open-Meteo endpoint parameters, run commands, and conventions (async I/O, UTC timestamps, WMO-style thresholds). The agent explicitly noted the mismatch between the lab prompt and the real codebase and documented the real implementation.
+
+\begin{figure}[htbp]
+  \centering
+  \opencodefig{week2_session_b_opencode.png}
+  \caption{OpenCode: AGENTS.md generation prompt; exploration of \texttt{week2\_session\_a/} and creation of \texttt{AGENTS.md}.}
+  \label{fig:agents-create}
+\end{figure}
+
+\subsection{Exercise 2: With AGENTS.md}
+With project context, OpenCode produced \texttt{weather\_fetcher.py} with \texttt{fetch\_weather()} and \texttt{fetch\_all\_zones()}, using \texttt{aiohttp}, a \texttt{WeatherData} dataclass, Open-Meteo, timeouts, and UTC timestamps (Figure~\ref{fig:with-agents}).
+
+\begin{figure}[htbp]
+  \centering
+  \opencodefig{week2_session_b_opencode2.png}
+  \caption{With \texttt{AGENTS.md}: ``Write a function to fetch weather data'' yields \texttt{weather\_fetcher.py} aligned with project conventions.}
+  \label{fig:with-agents}
+\end{figure}
+
+\subsection{Exercise 2: Without AGENTS.md}
+In an empty folder, the first reply only asked for language and file location. After a specification prompt, the agent wrote synchronous code with \texttt{requests}, returning a plain \texttt{dict} and a NYC demo in \texttt{\_\_main\_\_} (Figure~\ref{fig:without-agents}).
+
+\begin{figure}[htbp]
+  \centering
+  \opencodefig{week2_session_b_opencode3.png}
+  \caption{Without project context: empty folder, clarifying exchange, then \texttt{fetch\_weather\_demo.py} (sync \texttt{requests}, dict return).}
+  \label{fig:without-agents}
+\end{figure}
+
+Table~\ref{tab:compare} summarizes the comparison.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Same prompt, different context.}
+  \label{tab:compare}
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    Aspect & Without context & With AGENTS.md \\
+    \midrule
+    HTTP & \texttt{requests} (sync) & \texttt{aiohttp} (async) \\
+    Return type & \texttt{dict} & \texttt{WeatherData} dataclass \\
+    Multi-zone & No & \texttt{fetch\_all\_zones()} \\
+    Integration & Standalone demo & Matches flood-warning stack \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Analysis and validation}
+
+\textbf{AGENTS.md value:} The with-context run adopted async patterns and typed models consistent with \texttt{AGENTS.md} and \texttt{data\_pipeline.py}. The without-context run was valid Python but generic; it required a second, more detailed prompt and did not reference zones, stations, or project modules.
+
+\textbf{Lab vs.\ implementation:} Documenting the real FastAPI/Open-Meteo system is preferable to forcing incorrect Streamlit/OpenWeather text from the handout. The comparison test still satisfies the learning goal: context steers design choices.
+
+\textbf{Limits:} \texttt{AGENTS.md} must be maintained as code evolves. Opening the same directory after files exist can prevent a clean ``without'' retest---an empty folder (or explicit ``ignore existing files'') is needed for baseline comparisons.
+
+\section{Discussion}
+\begin{enumerate}[noitemsep]
+  \item Scanning the repo before writing \texttt{AGENTS.md} produced more accurate context than trusting the lab prompt alone.
+  \item The with-context fetcher matched conventions; the without-context version showed that agents default to simpler sync patterns when unstated.
+  \item Both runs used Open-Meteo; the main gain from context was architecture (async, dataclass, multi-zone), not API choice alone.
+  \item Future work: add a short Do/Don't block and link to \texttt{docs/} for long examples to save context window space.
+\end{enumerate}
+
+\section{Problems encountered}
+A second chat in the project folder only fixed a missing \texttt{import asyncio} because \texttt{weather\_fetcher.py} already existed---not a fresh generation. The empty-folder workflow required two user messages (clarification, then specification) before code appeared.
+
+\section{Lessons learned}
+\texttt{AGENTS.md} is project memory for agents: it improved alignment of generated code with the urban flood-warning stack. Comparisons should use a true baseline (empty directory) when possible. Human review remains necessary for imports, API details, and keeping documentation synchronized with code.
+
+\section{Conclusion}
+Week~2 Session~B objectives were met: \texttt{AGENTS.md} was created from the real codebase, tested with a standard fetch-weather prompt, compared against an empty-folder baseline, and refined with conventions and Do/Don't guidance. Submitted artifacts: \texttt{AGENTS.md}, \texttt{prompt\_log.md}, \texttt{weather\_fetcher.py} (optional), and OpenCode screenshots.
+
+\appendix
+
+\section{Submitted prompt log: \texttt{prompt\_log.md}}
+\label{app:promptlog}
+\begin{tcolorbox}[
+  enhanced,
+  colback=gray!6,
+  colframe=black!55,
+  title={\texttt{prompt\_log.md} \mdseries (full file)},
+  fonttitle=\bfseries\ttfamily\footnotesize,
+  arc=1.5mm,
+  boxrule=0.7pt,
+  breakable,
+  width=\linewidth,
+  before skip=0.8em,
+  after skip=0.8em,
+]
+\VerbatimInput[
+  fontsize=\footnotesize,
+  breaklines=true,
+]{\LabCodeRoot/prompt_log_week2_session_b_latex.md}
+\end{tcolorbox}
+
+\end{document}

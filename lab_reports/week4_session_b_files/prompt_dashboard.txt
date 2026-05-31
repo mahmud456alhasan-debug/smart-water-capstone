@@ -1,0 +1,16 @@
+Create a Streamlit dashboard dashboard.py for week4_session_b rainfall monitoring.
+
+Read data from data/monitoring_log.csv (columns: timestamp_utc, rainfall_mm, runoff_mm, cn, alert_level, alert_message, api_source).
+
+Show:
+1. Current rainfall — large metric (latest row rainfall_mm)
+2. Alert status — color-coded by alert_level (OK=green, WATCH=orange, ALERT=red)
+3. Historical chart — rainfall_mm and runoff_mm over time (line chart)
+4. Last update timestamp — latest timestamp_utc
+5. System health — row count, last api_source, message if CSV empty
+
+Use pandas. No API keys in this file. Professional layout (columns, headers).
+
+Run with: streamlit run dashboard.py
+
+Import paths: same folder as main.py, read CSV via config.load_settings().csv_path if helpful.

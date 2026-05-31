@@ -1,0 +1,181 @@
+% Week 8 Session B — Final Demo & Defense Preparation
+% Upload: Week8_SessionB_Report.tex, week8_session_b_github1.png, week8_session_b_github2.png
+%         week8_session_b_files/
+%
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\newcommand{\ghfig}[1]{%
+  \includegraphics[width=\linewidth,height=0.46\textheight,keepaspectratio]{#1}%
+}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{xurl}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{fvextra}
+\usepackage[most]{tcolorbox}
+
+\newcommand{\studentname}{Mahmudul Hasan}
+\newcommand{\studentid}{4125999049}
+\newcommand{\reportdate}{May 22, 2026}
+\newcommand{\capstonerepo}{https://github.com/mahmud456alhasan-debug/smart-water-capstone}
+
+\makeatletter
+\g@addto@macro\UrlBreaks{\do\ }
+\makeatother
+
+\newcommand{\LabCodeRoot}{week8_session_b_files}
+
+\newcommand{\filebox}[2]{%
+\begin{tcolorbox}[
+  enhanced,
+  colback=gray!6,
+  colframe=black!55,
+  title={#1},
+  fonttitle=\bfseries\ttfamily\footnotesize,
+  arc=1.5mm,
+  boxrule=0.7pt,
+  breakable,
+  width=\linewidth,
+  before skip=0.8em,
+  after skip=0.8em,
+]
+\VerbatimInput[fontsize=\footnotesize,breaklines=true,breakanywhere=true]{\LabCodeRoot/#2}
+\end{tcolorbox}%
+}
+
+\title{Lab Report: Week 8 Session B\\Final Demo \& Defense Preparation}
+\author{\studentname \quad (Student ID: \studentid)}
+\date{\reportdate}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This report documents Week~8 Session~B: \textbf{final demo and defense preparation} for the Smart Water capstone. Deliverables include a 5-minute \texttt{PRESENTATION\_OUTLINE.md}, \texttt{DEMO\_SCRIPT.md} for live Streamlit rehearsal, \texttt{JAGGED\_FRONTIER.md} reflection, and \texttt{DELIVERABLES\_CHECKLIST.md}. GitHub commit \texttt{1ada4e6} (\emph{Week 8 Session B: presentation and jagged frontier deliverables}) is on \texttt{main}. Evidence: Figures~\ref{fig:github-a}--\ref{fig:github-b}. The integrated app runs via \texttt{streamlit run app/main.py}; tests: 29 passed, 96\% coverage (Session~8A).
+\end{abstract}
+
+\section{Introduction}
+Week~8 Session~B follows implementation (Week~7B) and validation (Week~8A). The focus shifts from writing code to \textbf{communicating} the capstone: a timed presentation, rehearsed demo, organized submission package, and reflection on AI strengths and limits (Jagged Frontier).
+
+\section{Objectives}
+\begin{itemize}[noitemsep]
+  \item Prepare a 5-minute presentation structure (Exercise~1).
+  \item Practice live demo flow (Exercise~2).
+  \item Organize all capstone deliverables (Exercise~3).
+  \item Final review before defense (Exercise~4).
+\end{itemize}
+
+\section{Exercise 1: Presentation preparation}
+
+\subsection{Five-minute outline}
+\begin{table}[htbp]
+  \centering
+  \caption{Presentation timing (\texttt{PRESENTATION\_OUTLINE.md}).}
+  \label{tab:timing}
+  \begin{tabular}{@{}clc@{}}
+    \toprule
+    Block & Content & Minutes \\
+    \midrule
+    1 & Problem and integrated dashboard goal & 1 \\
+    2 & Live Streamlit demo (four tabs) & 2 \\
+    3 & AI collaboration (\texttt{prompt\_log}, \texttt{AGENTS.md}) & 1 \\
+    4 & Tool evaluation and Jagged Frontier & 1 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\textbf{Problem statement (summary):} Separate Week~3--6 lab scripts for rainfall, SCS-CN runoff, reservoir dispatch, and DEM flood mapping are unified in one Streamlit teaching dashboard with documented AI-assisted development.
+
+\subsection{Demo script}
+\texttt{DEMO\_SCRIPT.md} defines tab order: (1)~Weather/Alerts with RED at 22~mm/h peak; (2)~Runoff with $Q \le P$ check; (3)~Reservoir schedule $\approx$\$708{,}849 PASS; (4)~Flood map with monotonic flooded \% vs.\ stage. Backup screenshots from Weeks~7--8 if live demo fails.
+
+\section{Exercise 2: Practice demo}
+
+\textbf{Command:}
+\begin{verbatim}
+cd ai_water_lab/capstone
+streamlit run app/main.py
+\end{verbatim}
+\textbf{URL:} \texttt{http://localhost:8501}
+
+Rehearsal checklist: start app before class; test screen sharing; keep \texttt{week7\_session\_b\_Streamlit\_page.png} and \texttt{week8\_session\_a\_terminal.png} as backups.
+
+\section{Exercise 3: Deliverables organization}
+
+\begin{table}[htbp]
+  \centering
+  \caption{Capstone deliverables checklist (from \texttt{DELIVERABLES\_CHECKLIST.md}).}
+  \label{tab:deliver}
+  \small
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    Item & Status \\
+    \midrule
+    GitHub repository & On \texttt{main}, 6+ commits \\
+    \texttt{AGENTS.md} & Present \\
+    \texttt{prompt\_log.md} & Sessions 7A, 7B, 8A, 8B \\
+    \texttt{JAGGED\_FRONTIER.md} & Present \\
+    \texttt{README.md} & Setup and run commands \\
+    Working Streamlit app & Four tabs implemented \\
+    \texttt{pytest} & 29 passed, 96\% \texttt{src/} coverage \\
+    Presentation files & Outline + demo script \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{GitHub evidence}
+Figures~\ref{fig:github-a} and~\ref{fig:github-b} show commit \texttt{1ada4e6} adding Session~B files and the README with setup instructions.
+
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}[t]{\linewidth}
+    \centering
+    \ghfig{week8_session_b_github1.png}
+    \caption{Repository tree: \texttt{DELIVERABLES\_CHECKLIST.md}, \texttt{DEMO\_SCRIPT.md}, \texttt{JAGGED\_FRONTIER.md}, \texttt{PRESENTATION\_OUTLINE.md}; commit history Weeks 7--8.}
+    \label{fig:github-a}
+  \end{subfigure}\\[0.6em]
+  \begin{subfigure}[t]{\linewidth}
+    \centering
+    \ghfig{week8_session_b_github2.png}
+    \caption{Rendered \texttt{README.md}: install, \texttt{streamlit run app/main.py}, \texttt{pytest -q}, planning artifacts.}
+    \label{fig:github-b}
+  \end{subfigure}
+  \caption{GitHub evidence for Exercise~3 (deliverables on \url{\capstonerepo}).}
+  \label{fig:github-all}
+\end{figure}
+
+\section{Exercise 4: Final review}
+
+\textbf{Defense readiness:} Presentation outline and demo script complete; physical validation and tests from Session~8A reduce demo risk; Jagged Frontier documents where human review remains essential.
+
+\textbf{AI tools:} Primary development via \textbf{Cursor Agent}; OpenCode not required. Optional cross-check with ChatGPT/Gemini for architecture (Week~7A) per course guidance.
+
+\section{Jagged Frontier summary}
+AI excelled at scaffolding, pytest boilerplate, and Streamlit layout. AI struggled with SCS-CN edge cases (false assumption $P{=}5$~mm always below $I_a$), mixed storage/flow units without explicit prompts, and git authentication prompts. Swiss Cheese layers (review, 29 tests, \texttt{validation.py}, integration tests) compensated. Full text in Appendix~\ref{app:jagged}.
+
+\section{Discussion}
+\begin{enumerate}[noitemsep]
+  \item Session~B materials turn a code repo into a defensible capstone story.
+  \item Two GitHub screenshots document deliverables without requiring a separate Streamlit capture for this session.
+  \item Live defense remains the primary assessment; written prep reduces timing overrun.
+\end{enumerate}
+
+\section{Conclusion}
+Week~8 Session~B objectives were met: 5-minute presentation plan, demo script, deliverables checklist, Jagged Frontier reflection, and GitHub push (\texttt{1ada4e6}). The capstone is ready for live demonstration and course submission via \url{\capstonerepo}.
+
+\appendix
+
+\section{Jagged Frontier reflection}
+\label{app:jagged}
+\filebox{\texttt{JAGGED\_FRONTIER.md} (full file)}{JAGGED_FRONTIER.md}
+
+\section{Prompt log (Session 8B excerpt)}
+\label{app:promptlog}
+\filebox{\texttt{prompt\_log.md} (Session 8B section)}{prompt_log_session8b.md}
+
+\end{document}

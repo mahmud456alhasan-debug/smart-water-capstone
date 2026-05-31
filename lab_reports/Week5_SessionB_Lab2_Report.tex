@@ -1,0 +1,236 @@
+% Week 5 Session B Lab 2 — SCS-CN runoff modeling
+% Build: pdflatex Week5_SessionB_Lab2_Report.tex from Lab-reports/ (twice)
+% Screenshots:
+%   week5_session_b_lab2_terminal1.png  (pytest)
+%   week5_session_b_lab2_terminal2.png  (sensitivity_analysis.py)
+%   week5_session_b_lab2_terminal3.png  (validate_reference.py)
+%   week5_session_b_lab2_sensitivity.png (plot)
+% Code: week5_session_b_lab2_files/
+%
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\newcommand{\termfig}[1]{%
+  \includegraphics[width=\linewidth,height=0.42\textheight,keepaspectratio]{#1}%
+}
+\newcommand{\plotfig}[1]{%
+  \includegraphics[width=\linewidth,height=0.55\textheight,keepaspectratio]{#1}%
+}
+\usepackage{booktabs}
+\usepackage{xurl}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{fvextra}
+\usepackage[most]{tcolorbox}
+\usepackage{subcaption}
+
+\newcommand{\studentname}{Mahmudul Hasan}
+\newcommand{\studentid}{4125999049}
+\newcommand{\reportdate}{May 21, 2026}
+
+\makeatletter
+\g@addto@macro\UrlBreaks{\do\ }
+\makeatother
+
+\newcommand{\LabCodeRoot}{week5_session_b_lab2_files}
+
+\newcommand{\filebox}[2]{%
+\begin{tcolorbox}[
+  enhanced,
+  colback=gray!6,
+  colframe=black!55,
+  title={#1},
+  fonttitle=\bfseries\ttfamily\footnotesize,
+  arc=1.5mm,
+  boxrule=0.7pt,
+  breakable,
+  width=\linewidth,
+  before skip=0.8em,
+  after skip=0.8em,
+]
+\VerbatimInput[fontsize=\footnotesize,breaklines=true,breakanywhere=true]{\LabCodeRoot/#2}
+\end{tcolorbox}%
+}
+
+\title{Lab Report: Week 5 Session B Lab 2\\SCS-CN Runoff Modeling}
+\author{\studentname \quad (Student ID: \studentid)}
+\date{\reportdate}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This report documents Week~5 Session~B Lab~2: implementation of the \textbf{SCS-CN} direct runoff method in Python, parameter sensitivity over curve numbers CN$\in\{60,70,80,90,95\}$ and rainfall $P\in[0,100]$~mm, and domain validation ($Q\le P$, $Q=0$ when $P\le I_a$, higher CN $\Rightarrow$ more runoff). The function \texttt{calculate\_runoff(P, CN)} reuses the Week~3 Session~B TDD implementation in \texttt{week5\_session\_b\_lab2/}. All \textbf{7 pytest} cases passed; \texttt{sensitivity\_analysis.py} saved \texttt{figures/runoff\_sensitivity.png} and passed physical checks; reference cases $Q(50,80)\approx 13.80$~mm and $Q(80,85)\approx 43.55$~mm match course expectations. Evidence: three terminal screenshots and the sensitivity figure; source in Appendix~\ref{app:runoff}--\ref{app:promptlog}.
+\end{abstract}
+
+\section{Introduction}
+The Soil Conservation Service Curve Number (SCS-CN) method estimates rainfall excess (direct runoff) from total storm depth and a land-use--dependent curve number. This lab translates the metric formulas into tested Python code, explores sensitivity of $Q$ to CN, and verifies hydrologic plausibility---skills that complement Week~5 Session~A Lab~1 (live rainfall from an API) with \textbf{process-based} runoff depth in millimetres.
+
+\section{Objectives}
+\begin{itemize}[noitemsep]
+  \item Implement \texttt{calculate\_runoff(P, CN)} with boundary conditions and validation.
+  \item Run comprehensive pytest edge cases (Exercise~1).
+  \item Produce sensitivity plots and a pandas DataFrame (Exercise~2).
+  \item Validate $Q\le P$, zero runoff below $I_a$, and CN ordering (Exercise~3).
+  \item Document work in \texttt{prompt\_log.md} (Exercise~4).
+\end{itemize}
+
+\section{Methods}
+
+\subsection{SCS-CN formulation (Exercise 1)}
+All depths in \textbf{millimetres (mm)}:
+\begin{align*}
+S &= \frac{25400}{\mathrm{CN}} - 254, \qquad I_a = 0.2\,S, \\
+Q &= \begin{cases}
+0 & \text{if } P \le I_a, \\
+\dfrac{(P-I_a)^2}{P - I_a + S} & \text{otherwise},
+\end{cases}
+\end{align*}
+with $Q$ clipped to $[0,P]$. CN is validated in $[1,100]$ to avoid division by zero on $S$. Implementation: \texttt{src/runoff.py} (developed in Week~3 Session~B via TDD; reused here).
+
+\subsection{Tests (Exercise 1)}
+\texttt{tests/test\_runoff.py} --- seven cases: normal ($P{=}50$, CN${=}80$), $P{=}0$, $P<I_a$, CN${=}100$ (impervious), negative $P$, invalid CN, and grid check $Q\le P$.
+
+\subsection{Sensitivity analysis (Exercise 2)}
+\texttt{sensitivity\_analysis.py} builds a wide DataFrame (\texttt{rainfall\_mm}, \texttt{Q\_CN60}, \ldots), saves \texttt{figures/sensitivity\_data.csv}, plots rainfall vs.\ $Q$ for each CN with a dashed $Q=P$ upper bound, and runs embedded domain checks.
+
+\subsection{Reference validation (Exercise 3)}
+\texttt{validate\_reference.py} spot-checks course reference points; \texttt{sensitivity\_analysis.domain\_checks()} asserts $Q\le P$ and monotonic increase of $Q$ with CN at $P{=}50$~mm.
+
+\section{Results}
+
+\subsection{File inventory}
+\begin{table}[htbp]
+  \centering
+  \caption{Submitted files in \texttt{week5\_session\_b\_lab2/}.}
+  \label{tab:files}
+  \small
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    File & Role \\
+    \midrule
+    \texttt{src/runoff.py} & SCS-CN \texttt{calculate\_runoff} \\
+    \texttt{tests/test\_runoff.py} & pytest suite (7 tests) \\
+    \texttt{sensitivity\_analysis.py} & DataFrame, plot, domain checks \\
+    \texttt{validate\_reference.py} & Hand-check reference cases \\
+    \texttt{figures/runoff\_sensitivity.png} & Sensitivity figure \\
+    \texttt{prompt\_log.md}, \texttt{prompt\_*.txt} & Documentation \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Terminal verification}
+Figures~\ref{fig:pytest}--\ref{fig:validate} show the three commands required for submission evidence.
+
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}[t]{\linewidth}
+    \centering
+    \termfig{week5_session_b_lab2_terminal1.png}
+    \caption{\texttt{python3 -m pytest tests/ -v} --- 7 passed.}
+    \label{fig:pytest}
+  \end{subfigure}\\[0.6em]
+  \begin{subfigure}[t]{\linewidth}
+    \centering
+    \termfig{week5_session_b_lab2_terminal2.png}
+    \caption{\texttt{python3 sensitivity\_analysis.py} --- plot saved; checks PASS.}
+    \label{fig:sensitivity-term}
+  \end{subfigure}\\[0.6em]
+  \begin{subfigure}[t]{\linewidth}
+    \centering
+    \termfig{week5_session_b_lab2_terminal3.png}
+    \caption{\texttt{python3 validate\_reference.py} --- four reference cases OK.}
+    \label{fig:validate}
+  \end{subfigure}
+  \caption{Terminal evidence for Exercises~1--3.}
+  \label{fig:terminal-all}
+\end{figure}
+
+Key numeric outputs from \texttt{sensitivity\_analysis.py} at $P{=}50$~mm:
+\begin{verbatim}
+Q values: {60: 1.4, 70: 5.81, 80: 13.8, 90: 27.11, 95: 36.9}
+Check 3: P=80 CN=85 -> Q=43.55 mm (course reference ~43.6)
+\end{verbatim}
+
+\subsection{Sensitivity figure (Exercise 2)}
+Figure~\ref{fig:plot} shows runoff depth vs.\ rainfall for CN = 60, 70, 80, 90, 95. All curves lie at or below the $Q=P$ line; higher CN yields greater runoff for the same $P$, consistent with more impervious catchments.
+
+\begin{figure}[htbp]
+  \centering
+  \plotfig{week5_session_b_lab2_sensitivity.png}
+  \caption{SCS-CN sensitivity: runoff $Q$ (mm) vs.\ rainfall $P$ (mm) by curve number.}
+  \label{fig:plot}
+\end{figure}
+
+\subsection{Validation checklist}
+\begin{table}[htbp]
+  \centering
+  \caption{Exercise 3--4 validation summary.}
+  \label{tab:validation}
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    Check & Outcome \\
+    \midrule
+    pytest 7/7 & PASS (0.01~s) \\
+    $Q \le P$ for all $P$, CN & PASS \\
+    $Q=0$ when $P < I_a$ (e.g.\ $P{=}10$, CN${=}80$) & PASS \\
+    Higher CN $\Rightarrow$ higher $Q$ at $P{=}50$~mm & PASS \\
+    $Q(80,85) \approx 43.55$~mm & Matches course reference \\
+    $Q(50,100)=50$~mm (impervious) & PASS \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Analysis and validation}
+
+\textbf{Relation to Week~3 Session~B:} The same \texttt{calculate\_runoff} logic was first built under TDD (Red--Green--Refactor). Week~5 Lab~2 adds \textbf{sensitivity visualization} and explicit domain scripts rather than new formula changes.
+
+\textbf{YELLOW/RED rainfall alerts (Week~5 Lab~1):} Lab~1 used OpenWeather mm/h thresholds; Lab~2 uses cumulative storm depth $P$ in mm for the SCS-CN equation---different physical quantities, both valid in a Smart Water course.
+
+\textbf{CN bounds:} Minimum CN${=}1$ prevents singular $S$; CN${=}100$ gives $S{=}0$, $I_a{=}0$, so $Q{=}P$ for storms exceeding zero depth---a useful impervious limit test.
+
+\textbf{Optional OpenCode:} Prompts \texttt{prompt\_implement.txt} and \texttt{prompt\_sensitivity.txt} are available; baseline code and tests were already complete from Week~3, so OpenCode was not required for a passing run.
+
+\section{Discussion}
+\begin{enumerate}[noitemsep]
+  \item A single pytest screenshot plus sensitivity and validate screenshots give clear, gradable evidence without rerunning commands.
+  \item The sensitivity plot makes the CN effect visible; the $Q=P$ reference line reinforces the physical cap enforced in code.
+  \item Grid test \texttt{test\_runoff\_never\_exceeds\_rainfall} catches formula slips that hand checks might miss.
+  \item Live YELLOW/RED wet-weather cases are not needed here; dry API cities in Lab~1 and formula-based Lab~2 cover complementary validation styles.
+\end{enumerate}
+
+\section{Problems encountered}
+None blocking: pytest and scripts ran on Python~3.8.10 with pytest~4.6.9. All sampled cities in Lab~1 were dry (GREEN); Lab~2 does not depend on weather API data.
+
+\section{Lessons learned}
+Keeping $P$, $S$, $I_a$, and $Q$ in mm avoids unit bugs. Tests written before or alongside implementation (Week~3 TDD) make sensitivity scripts safe to extend. Document reference pairs such as $(P,CN)=(80,85)$ in \texttt{prompt\_log.md} so graders can compare to published examples quickly.
+
+\section{Conclusion}
+Week~5 Session~B Lab~2 objectives were met: SCS-CN implementation with tests, sensitivity figure for CN 60--95, and domain validation including course reference runoff $\approx 43.55$~mm at $P{=}80$~mm, CN${=}85$. Submitted: \texttt{week5\_session\_b\_lab2/}, \texttt{prompt\_log.md}, terminal screenshots (Figures~\ref{fig:pytest}--\ref{fig:validate}), and sensitivity plot (Figure~\ref{fig:plot}).
+
+\appendix
+
+\section{Runoff module: \texttt{runoff.py}}
+\label{app:runoff}
+\filebox{\texttt{src/runoff.py} (full file)}{runoff.py}
+
+\section{Tests: \texttt{test\_runoff.py}}
+\label{app:tests}
+\filebox{\texttt{tests/test\_runoff.py} (full file)}{test_runoff.py}
+
+\section{Sensitivity script: \texttt{sensitivity\_analysis.py}}
+\label{app:sensitivity}
+\filebox{\texttt{sensitivity\_analysis.py} (full file)}{sensitivity_analysis.py}
+
+\section{Reference checks: \texttt{validate\_reference.py}}
+\label{app:validate}
+\filebox{\texttt{validate\_reference.py} (full file)}{validate_reference.py}
+
+\section{Submitted prompt log: \texttt{prompt\_log.md}}
+\label{app:promptlog}
+\filebox{\texttt{prompt\_log.md} (full file)}{prompt_log.md}
+
+\end{document}

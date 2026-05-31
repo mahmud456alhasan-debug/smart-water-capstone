@@ -1,0 +1,25 @@
+Implement reservoir optimization in week6_session_a_lab3/reservoir_optimizer.py for Week 6 Lab 3.
+
+UNIT CONVENTION (must follow):
+- Storage S in MCM
+- Inflow and release as m³/s; convert to MCM/day: volume_mcm = flow_m3s * 0.0864
+- Water balance: S_next = S + inflow_vol - release_vol (all MCM for that day)
+
+Problem:
+- V_min=50 MCM, V_max=200 MCM, S0=120 MCM
+- Daily inflow m³/s: [20, 18, 25, 22, 19, 21, 23]
+- Release bounds: 10 to Q_max m³/s (Q_max=150)
+- Eco minimum release: 10 m³/s (parameter eco_flow_m3s)
+- Maximize hydropower revenue: revenue = price[$/MWh] * energy_MWh
+  energy from release: power_MW = HEAD*ETA*9.81e-3*Q, energy = power*24
+  HEAD=80 m, ETA=0.85
+- Prices USD/MWh: [45, 42, 50, 48, 44, 46, 52]
+
+Requirements:
+1. optimize_day(storage_mcm, inflow_m3s, price, eco_flow_m3s) using scipy.optimize.minimize_scalar (bounded)
+2. optimize_horizon() loops 7 days, carries storage forward
+3. validate_schedule() checks storage bounds, release bounds, eco flow, water balance
+4. main() prints table and validation PASS/FAIL
+5. Python 3.8, type hints with Union not |
+
+Run: python3 reservoir_optimizer.py

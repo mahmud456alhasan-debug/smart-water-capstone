@@ -1,0 +1,152 @@
+% Week 7 Session B — Capstone Core Development
+% Overleaf: upload Week7_SessionB_Report.tex, week7_session_b_Streamlit_page.png, week7_session_b_files/
+%
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\newcommand{\appfig}[1]{%
+  \includegraphics[width=\linewidth,height=0.62\textheight,keepaspectratio]{#1}%
+}
+\usepackage{booktabs}
+\usepackage{xurl}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{fvextra}
+\usepackage[most]{tcolorbox}
+
+\newcommand{\studentname}{Mahmudul Hasan}
+\newcommand{\studentid}{4125999049}
+\newcommand{\reportdate}{May 22, 2026}
+\newcommand{\capstonerepo}{https://github.com/mahmud456alhasan-debug/smart-water-capstone}
+
+\makeatletter
+\g@addto@macro\UrlBreaks{\do\ }
+\makeatother
+
+\newcommand{\LabCodeRoot}{week7_session_b_files}
+
+\newcommand{\filebox}[2]{%
+\begin{tcolorbox}[
+  enhanced,
+  colback=gray!6,
+  colframe=black!55,
+  title={#1},
+  fonttitle=\bfseries\ttfamily\footnotesize,
+  arc=1.5mm,
+  boxrule=0.7pt,
+  breakable,
+  width=\linewidth,
+  before skip=0.8em,
+  after skip=0.8em,
+]
+\VerbatimInput[fontsize=\footnotesize,breaklines=true,breakanywhere=true]{\LabCodeRoot/#2}
+\end{tcolorbox}%
+}
+
+\title{Lab Report: Week 7 Session B\\Capstone Core Development}
+\author{\studentname \quad (Student ID: \studentid)}
+\date{\reportdate}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This report documents Week~7 Session~B: implementation of the \textbf{Smart Water Integrated Dashboard} capstone. Core features include CSV rainfall loading with threshold alerts, SCS-CN runoff with \texttt{Q <= P} validation, seven-day reservoir dispatch (total revenue \textbf{\$708,849.26}, validation PASS), and DEM-based flood inundation maps. \texttt{pytest -q} reports \textbf{2 passed}; Streamlit runs at \texttt{localhost:8501}. Code pushed to \url{\capstonerepo} (commit \texttt{408f211}). Evidence: Figure~\ref{fig:streamlit} and appendix \texttt{prompt\_log.md}. OpenCode was not used.
+\end{abstract}
+
+\section{Introduction}
+Session~B follows Session~A planning (\texttt{SCOPE.md}, \texttt{ARCHITECTURE.md}) by replacing scaffold stubs with working modules under \texttt{src/} and a four-tab Streamlit UI in \texttt{app/main.py}.
+
+\section{Objectives}
+\begin{itemize}[noitemsep]
+  \item Implement data loading, algorithms, and UI (Exercise~1).
+  \item Document AI interactions in \texttt{prompt\_log.md} (Exercise~2).
+  \item Self-review tests and physical checks (Exercise~3).
+\end{itemize}
+
+\section{Exercise 1: Core features}
+
+\subsection{Step 1: Data loading}
+\texttt{src/weather/load.py} loads \texttt{data/sample\_rainfall.csv} with columns \texttt{datetime}, \texttt{rainfall\_mm}. Validation raises if columns are missing.
+
+\subsection{Step 2: Core algorithms}
+\begin{table}[htbp]
+  \centering
+  \caption{Implemented modules (reused from Weeks 3--6).}
+  \label{tab:modules}
+  \small
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    Module & Function \\
+    \midrule
+    \texttt{src/weather/alerts.py} & GREEN / AMBER / RED vs.\ mm/h thresholds \\
+    \texttt{src/runoff/scs\_cn.py} & SCS-CN runoff; enforce $Q \le P$ \\
+    \texttt{src/reservoir/optimizer.py} & \texttt{scipy.optimize.minimize\_scalar} horizon \\
+    \texttt{src/flood/inundation.py} & Wet mask, depth, \texttt{data/dem.npy} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\textbf{Unit tests:} \texttt{tests/test\_runoff.py}, \texttt{tests/test\_flood.py}. Fixed \texttt{ModuleNotFoundError} via \texttt{pytest.ini} (\texttt{pythonpath = .}) and \texttt{conftest.py}.
+
+\textbf{Terminal:} \texttt{pytest -q} $\rightarrow$ \texttt{2 passed in 0.10s}.
+
+\subsection{Step 3: Streamlit UI}
+\texttt{streamlit run app/main.py} exposes four tabs: Weather \& Alerts, Runoff (SCS-CN), Reservoir, Flood map. Figure~\ref{fig:streamlit} shows the Weather tab: peak 22~mm/h triggers a \textbf{RED} alert with default red threshold 20~mm/h.
+
+\begin{figure}[htbp]
+  \centering
+  \appfig{week7_session_b_Streamlit_page.png}
+  \caption{Streamlit dashboard (Weather \& Alerts tab) at \texttt{http://localhost:8501}.}
+  \label{fig:streamlit}
+\end{figure}
+
+\section{Exercise 2: Prompt log}
+Session~B entries in \texttt{prompt\_log.md} record the pytest path fix, module wiring prompts, run commands, GitHub push, and screenshot filename. Full file in Appendix~\ref{app:promptlog}.
+
+\section{Exercise 3: Code review}
+\begin{itemize}[noitemsep]
+  \item Runoff satisfies $Q \le P$ for tested storms.
+  \item Reservoir schedule matches Week~6 Lab~3 revenue and PASS validation.
+  \item Flood uses \texttt{elevation <= flood\_level}; DEM bundled in repo.
+  \item No API keys or tokens committed.
+\end{itemize}
+
+\section{Exercise 4: Repository update}
+\textbf{URL:} \url{\capstonerepo}
+
+\textbf{Commit:} \texttt{Week 7 Session B: Streamlit dashboard and pytest fix} (\texttt{408f211})
+
+Session~A planning commits remain on \texttt{main}; Session~B adds \texttt{app/main.py}, \texttt{src/} implementations, \texttt{data/dem.npy}, and test configuration.
+
+\section{Discussion}
+\begin{enumerate}[noitemsep]
+  \item Reusing lab code in \texttt{src/} packages kept the one-hour lab feasible.
+  \item \texttt{pythonpath} configuration is required for both \texttt{pytest} and Streamlit imports.
+  \item One dashboard screenshot plus passing tests meets optional submission evidence.
+\end{enumerate}
+
+\section{Lessons learned}
+Configure \texttt{pytest.ini} when using a \texttt{src/} layout. Restart Streamlit after replacing stub tabs. Push to GitHub after each lab session; document commits in \texttt{prompt\_log.md}.
+
+\section{Conclusion}
+Week~7 Session~B objectives were met: working capstone dashboard, unit tests passing, code on GitHub, and documented AI collaboration. Next: Week~8 testing/validation and presentation.
+
+\appendix
+
+\section{Streamlit entry: \texttt{app/main.py}}
+\label{app:main}
+\filebox{\texttt{app/main.py} (full file)}{main.py}
+
+\section{Runoff module: \texttt{src/runoff/scs\_cn.py}}
+\label{app:runoff}
+\filebox{\texttt{runoff\_scs\_cn.py} (excerpt file)}{runoff_scs_cn.py}
+
+\section{Submitted prompt log: \texttt{prompt\_log.md}}
+\label{app:promptlog}
+\filebox{\texttt{prompt\_log.md} (full file, Sessions A + B)}{prompt_log.md}
+
+\end{document}

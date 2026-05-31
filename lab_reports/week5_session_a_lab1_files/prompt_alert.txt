@@ -1,0 +1,15 @@
+Implement and refine alert logic in week5_session_a_lab1/alerts.py (Exercise 2).
+
+Requirements:
+- check_alert(rainfall_mm_h, settings) -> AlertResult
+- GREEN: rainfall < 10 mm/h
+- YELLOW: 10 <= rainfall <= 20 mm/h  
+- RED: rainfall > 20 mm/h
+- Short message templates for each level
+- log_alert() with timestamp, city, level, value
+- append_alert_history() to data/alert_history.csv
+- load_alert_history() for dashboard
+
+Thresholds configurable via GREEN_MAX_MM_H and YELLOW_MAX_MM_H env vars.
+
+Wire main.py if needed. Python 3.8.

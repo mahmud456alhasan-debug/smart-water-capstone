@@ -1,0 +1,6 @@
+timestamp_utc,rainfall_mm,runoff_mm,cn,alert_level,alert_message,api_source
+2026-05-20T20:12:37.703668+00:00,0.0,0.0,80.0,OK,Conditions normal,open-meteo
+2026-05-20T20:23:33.786015+00:00,0.0,0.0,80.0,OK,Conditions normal,open-meteo
+2026-05-20T20:39:22.900086+00:00,0.0,0.0,80.0,OK,Conditions normal,open-meteo
+2026-05-20T20:39:27.083734+00:00,0.0,0.0,80.0,OK,Conditions normal,open-meteo
+2026-05-20T20:39:35.893605+00:00,0.0,0.0,80.0,OK,Conditions normal,open-meteo

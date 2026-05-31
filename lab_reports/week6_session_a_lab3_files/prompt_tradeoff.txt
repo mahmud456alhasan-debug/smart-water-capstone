@@ -1,0 +1,12 @@
+Enhance tradeoff_analysis.py in week6_session_a_lab3/ for Exercise 3.
+
+Requirements:
+- Vary ecological minimum: 5, 8, 10, 12, 15 m³/s
+- For each, call optimize_horizon(eco_flow_m3s=...) from reservoir_optimizer
+- Record total_revenue_usd and feasible flag; handle infeasible with try/except
+- Save figures/tradeoff_data.csv and figures/tradeoff_revenue.png (150 DPI)
+- Plot: eco flow (m³/s) vs total revenue (thousand USD), mark baseline eco=10
+
+Run: python3 tradeoff_analysis.py
+
+Python 3.8 compatible.

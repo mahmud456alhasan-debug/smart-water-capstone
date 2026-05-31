@@ -1,0 +1,16 @@
+I have these components in week4_session_b/ for a rainfall monitoring system:
+
+1. weather_client.py — fetch_precipitation_mm(settings), Open-Meteo default (no API key), optional OpenWeather via OPENWEATHER_API_KEY env
+2. rainfall_processor.py — process_reading(rainfall_mm, cn) → rainfall_mm, runoff_mm (SCS-CN)
+3. alert_system.py — evaluate_alerts(processed, settings) → AlertResult level OK/WATCH/ALERT
+4. storage.py — append_reading(settings, processed, alert_level, message, api_source) → CSV at data/monitoring_log.csv
+5. config.py — load_settings() from environment
+
+Please enhance main.py (and modules if needed) to integrate with:
+- Clear main application flow and logging
+- Error handling at component boundaries (WeatherAPIError, StorageError)
+- Configuration via config.py only (no hard-coded API keys)
+- Graceful degradation if API fails (log error, exit code 1, user-visible DEGRADED message — optional: append last cached row if you add cache)
+- Retry with backoff on weather fetch (use settings.api_max_retries)
+
+Python 3.8 compatible. Keep files in this folder. Document data flow in a short comment at top of main.py.

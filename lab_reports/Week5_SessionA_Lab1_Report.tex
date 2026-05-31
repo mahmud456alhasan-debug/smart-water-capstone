@@ -1,0 +1,231 @@
+% Week 5 Session A Lab 1 — Rainfall forecasting & alert system
+% Build: pdflatex Week5_SessionA_Lab1_Report.tex from Lab-reports/ (twice)
+% Screenshots:
+%   week5_session_a_lab1_terminal.png
+%   week5_session_a_lab1_streamlit.png
+% Code: week5_session_a_lab1_files/
+%
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\newcommand{\termfig}[1]{%
+  \includegraphics[width=\linewidth,height=0.72\textheight,keepaspectratio]{#1}%
+}
+\newcommand{\streamlitfig}[1]{%
+  \includegraphics[width=\linewidth,height=0.58\textheight,keepaspectratio]{#1}%
+}
+\usepackage{booktabs}
+\usepackage{xurl}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{fvextra}
+\usepackage[most]{tcolorbox}
+
+\newcommand{\studentname}{Mahmudul Hasan}
+\newcommand{\studentid}{4125999049}
+\newcommand{\reportdate}{May 21, 2026}
+
+\makeatletter
+\g@addto@macro\UrlBreaks{\do\ }
+\makeatother
+
+\newcommand{\LabCodeRoot}{week5_session_a_lab1_files}
+
+\newcommand{\filebox}[2]{%
+\begin{tcolorbox}[
+  enhanced,
+  colback=gray!6,
+  colframe=black!55,
+  title={#1},
+  fonttitle=\bfseries\ttfamily\footnotesize,
+  arc=1.5mm,
+  boxrule=0.7pt,
+  breakable,
+  width=\linewidth,
+  before skip=0.8em,
+  after skip=0.8em,
+]
+\VerbatimInput[fontsize=\footnotesize,breaklines=true,breakanywhere=true]{\LabCodeRoot/#2}
+\end{tcolorbox}%
+}
+
+\title{Lab Report: Week 5 Session A Lab 1\\Rainfall Forecasting \& Alert System}
+\author{\studentname \quad (Student ID: \studentid)}
+\date{\reportdate}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This report documents Week~5 Session~A Lab~1: a \textbf{rainfall forecasting and alert system} using the OpenWeather \textbf{Current Weather API} (\texttt{2.5/weather}), threshold-based alerts (GREEN / YELLOW / RED in mm/h), and a Streamlit monitoring dashboard. Work was completed in \texttt{week5\_session\_a\_lab1/} with API keys stored only in the environment variable \texttt{OPENWEATHER\_API\_KEY}. After initial \texttt{401 Unauthorized} (key activation delay), five cities were fetched successfully (0.00~mm/h, GREEN). Invalid-key handling was verified with \texttt{OPENWEATHER\_API\_KEY=bad}. Evidence: terminal screenshot (401, multi-city runs, alert history CSV) and Streamlit screenshot; full source in Appendix~\ref{app:weather}--\ref{app:promptlog}.
+\end{abstract}
+
+\section{Introduction}
+Hydrological monitoring often combines \textbf{external weather APIs}, \textbf{domain thresholds}, and a \textbf{user-facing dashboard}. This lab practices integrating those pieces with AI-assisted development while validating rainfall semantics: OpenWeather may expose \texttt{rain.1h}, \texttt{rain.3h}, or no rain field when conditions are dry---missing rain must be treated as 0~mm/h for consistent alerting. The implementation builds on prior course work (Week~4 integration patterns) but uses city-based OpenWeather queries as specified in the lab guide.
+
+\section{Objectives}
+\begin{itemize}[noitemsep]
+  \item Integrate OpenWeather API for current rainfall by city.
+  \item Implement GREEN / YELLOW / RED threshold alerting with history.
+  \item Build a Streamlit dashboard with refresh and alert display.
+  \item Validate behavior including API failure and dry conditions.
+\end{itemize}
+
+\section{Methods}
+
+\subsection{API and rainfall extraction (Exercise 1)}
+\textbf{Endpoint:} \texttt{https://api.openweathermap.org/data/2.5/weather?q=\{city\}\&units=metric\&appid=KEY}.
+
+\textbf{Rain field:} Prefer \texttt{rain.1h} (mm in last hour); fallback \texttt{rain.3h}; if absent, rainfall = 0~mm/h (dry).
+
+\textbf{Client features:} \texttt{openweather\_client.py} --- \texttt{fetch\_current\_weather()}, in-memory cache (TTL from \texttt{CACHE\_TTL\_SEC}), logging, errors for 401 (invalid key), 404 (city not found), network/JSON failures.
+
+\textbf{Configuration:} \texttt{config.py} --- \texttt{load\_settings()} reads \texttt{OPENWEATHER\_API\_KEY} (required), default city, thresholds, cache TTL. No secrets in source files.
+
+\subsection{Alert logic (Exercise 2)}
+\texttt{alerts.py} --- \texttt{check\_alert(rainfall\_mm\_h, settings)}:
+\begin{itemize}[noitemsep]
+  \item GREEN: rainfall $< 10$~mm/h
+  \item YELLOW: $10 \le$ rainfall $\le 20$~mm/h
+  \item RED: rainfall $> 20$~mm/h
+\end{itemize}
+\texttt{append\_alert\_history()} writes to \texttt{data/alert\_history.csv}. \texttt{main.py} orchestrates fetch $\rightarrow$ alert $\rightarrow$ history.
+
+\subsection{Dashboard (Exercise 3)}
+\texttt{dashboard.py} --- Streamlit UI: city input, Refresh (bypasses cache on refresh), large rainfall metric, color-coded alert, last update, history table from CSV. Launched with \texttt{python3 -m streamlit run dashboard.py}.
+
+\subsection{Validation (Exercise 4)}
+Dry multi-city CLI runs; invalid API key (401); CSV history inspection; dashboard at \texttt{http://localhost:8501}.
+
+\section{Results}
+
+\subsection{File inventory}
+\begin{table}[htbp]
+  \centering
+  \caption{Submitted files in \texttt{week5\_session\_a\_lab1/}.}
+  \label{tab:files}
+  \small
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    File & Role \\
+    \midrule
+    \texttt{openweather\_client.py} & API + cache + rain extraction \\
+    \texttt{alerts.py} & Threshold alerts + CSV history \\
+    \texttt{config.py} & Environment settings \\
+    \texttt{main.py} & CLI pipeline \\
+    \texttt{dashboard.py} & Streamlit monitor \\
+    \texttt{data/alert\_history.csv} & Alert log \\
+    \texttt{prompt\_*.txt}, \texttt{prompt\_log.md} & Documentation \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Terminal verification}
+Figure~\ref{fig:terminal} shows the full CLI session: initial \texttt{401 Invalid API key} (key not yet active), successful fetches after activation, five cities, and \texttt{alert\_history.csv}.
+
+\begin{figure}[htbp]
+  \centering
+  \termfig{week5_session_a_lab1_terminal.png}
+  \caption{Terminal: 401 before key activation; successful runs (Dhaka, Beijing, Delhi, Moscow, Islamabad); alert history CSV.}
+  \label{fig:terminal}
+\end{figure}
+
+Representative successful output:
+\begin{verbatim}
+Dhaka,BD: rain=0.00 mm/h (few clouds) -> GREEN
+\end{verbatim}
+
+Additional test:
+\begin{verbatim}
+OPENWEATHER_API_KEY=bad python3 main.py Dhaka,BD
+API ERROR: Invalid API key (401 Unauthorized)
+\end{verbatim}
+
+\subsection{Alert history}
+After five CLI runs, \texttt{alert\_history.csv} contained five rows (all GREEN, 0.00~mm/h) with UTC timestamps and city names---confirming Exercise~2 persistence.
+
+\subsection{Streamlit dashboard}
+Figure~\ref{fig:streamlit} shows the monitoring UI at \texttt{localhost:8501}: current rainfall, alert status, and history aligned with CSV data.
+
+\begin{figure}[htbp]
+  \centering
+  \streamlitfig{week5_session_a_lab1_streamlit.png}
+  \caption{Streamlit dashboard: city selector, rainfall metric, color-coded alert, history table.}
+  \label{fig:streamlit}
+\end{figure}
+
+Table~\ref{tab:validation} maps lab checklist items to outcomes.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Exercise 4 validation checklist.}
+  \label{tab:validation}
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    Check & Outcome \\
+    \midrule
+    Dry city $\rightarrow$ GREEN & Five cities at 0.00~mm/h, GREEN \\
+    Invalid API key & 401 user-visible (before activation and with \texttt{bad} key) \\
+    CSV append & Five history rows \\
+    Dashboard & Runs; reflects stored history \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Analysis and validation}
+
+\textbf{Domain note:} All test cities returned dry conditions (no \texttt{rain} object), correctly mapped to 0~mm/h and GREEN. YELLOW/RED would appear when \texttt{rain.1h} exceeds 10 and 20~mm/h---logic is in \texttt{check\_alert()} and can be tested with instructor fixtures or rainy-period cities.
+
+\textbf{API key lifecycle:} OpenWeather free keys often return 401 until activated; documenting 401 $\rightarrow$ success in one terminal screenshot satisfies both error-handling and operational verification.
+
+\textbf{Security:} Key supplied only via \texttt{export OPENWEATHER\_API\_KEY}; not committed to repository or report.
+
+\textbf{Comparison to Week~4B:} Week~4 used Open-Meteo without a key; Week~5 Lab~1 requires OpenWeather city queries and explicit mm/h thresholds for operational alerting.
+
+\section{Discussion}
+\begin{enumerate}[noitemsep]
+  \item Treating missing \texttt{rain} as zero is essential---otherwise dry weather would be undefined.
+  \item A single terminal screenshot spanning 401 and success is efficient evidence for graders.
+  \item Streamlit reads CSV only---appropriate separation from live API except on Refresh.
+  \item Optional OpenCode prompts (\texttt{prompt\_weather\_api.txt}, etc.) are available; baseline code ran without further AI edits.
+\end{enumerate}
+
+\section{Problems encountered}
+\texttt{streamlit: command not found} on first launch---resolved with \texttt{python3 -m streamlit run}. New API key returned 401 until activation (~15+ minutes). No YELLOW/RED cases during testing because all sampled cities were dry.
+
+\section{Lessons learned}
+Document the exact JSON rain field and mm/h units in \texttt{prompt\_log.md}. Test invalid keys explicitly. Use environment variables for secrets. Plan time for OpenWeather key activation before the lab deadline.
+
+\section{Conclusion}
+Week~5 Session~A Lab~1 objectives were met: OpenWeather integration, threshold alerts with CSV history, Streamlit dashboard, and validation including 401 handling and multi-city dry runs. Submitted artifacts: \texttt{week5\_session\_a\_lab1/}, \texttt{prompt\_log.md}, terminal and Streamlit screenshots.
+
+\appendix
+
+\section{Weather client: \texttt{openweather\_client.py}}
+\label{app:weather}
+\filebox{\texttt{openweather\_client.py} (full file)}{openweather_client.py}
+
+\section{Alerts: \texttt{alerts.py}}
+\label{app:alerts}
+\filebox{\texttt{alerts.py} (full file)}{alerts.py}
+
+\section{CLI: \texttt{main.py}}
+\label{app:main}
+\filebox{\texttt{main.py} (full file)}{main.py}
+
+\section{Dashboard: \texttt{dashboard.py}}
+\label{app:dashboard}
+\filebox{\texttt{dashboard.py} (full file)}{dashboard.py}
+
+\section{Configuration: \texttt{config.py}}
+\label{app:config}
+\filebox{\texttt{config.py} (full file)}{config.py}
+
+\section{Submitted prompt log: \texttt{prompt\_log.md}}
+\label{app:promptlog}
+\filebox{\texttt{prompt\_log.md} (full file)}{prompt_log.md}
+
+\end{document}

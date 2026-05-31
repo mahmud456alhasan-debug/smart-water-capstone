@@ -1,0 +1,21 @@
+I need to implement the SCS-CN runoff formula for Python 3.8.
+
+Conventions (use in test comments and expected values):
+- S = 25400 / CN - 254   (mm)
+- Ia = 0.2 * S           (mm)
+- If P <= Ia: Q = 0
+- Else: Q = (P - Ia)^2 / (P - Ia + S)
+- Clip so 0 <= Q <= P
+- CN must be in [1, 100]; P >= 0; invalid inputs should raise ValueError
+
+Before writing the function, write comprehensive pytest tests in tests/test_runoff.py that cover:
+1. Normal case: P=50 mm, CN=80 (hand-calculate expected Q)
+2. Edge case: P=0 (no rainfall)
+3. Edge case: P < Ia (no runoff) — e.g. P=10, CN=80
+4. Boundary: CN=100 (impervious) with P=50
+5. Invalid: negative P (should raise error)
+6. Physical validation: Q should never exceed P (loop over several P, CN pairs)
+
+Import from: from src.runoff import calculate_runoff
+
+Write ONLY the test file — do NOT create src/runoff.py yet. The function does not exist; pytest must fail with ImportError or test failures (Red phase).

@@ -1,0 +1,256 @@
+% Week 3 Session B — Test-Driven Development practice
+% All lab reports in this series include an abstract.
+%
+% Build: pdflatex Week3_SessionB_Report.tex from Lab-reports/ (run twice)
+% Screenshots (same folder):
+%   week3_session_b_opencode_red.png, week3_session_b_opencode_green.png,
+%   week3_session_b_opencode_refactor.png
+%   week3_session_b_terminal_red.png, week3_session_b_terminal_green.png,
+%   week3_session_b_terminal_refactor.png
+% Code copies: week3_session_b_files/
+%
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\newcommand{\opencodefig}[1]{%
+  \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{#1}%
+}
+\newcommand{\terminalfig}[1]{%
+  \includegraphics[width=0.92\linewidth,height=0.38\textheight,keepaspectratio]{#1}%
+}
+\usepackage{booktabs}
+\usepackage{xurl}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{fvextra}
+\usepackage[most]{tcolorbox}
+
+\newcommand{\studentname}{Mahmudul Hasan}
+\newcommand{\studentid}{4125999049}
+\newcommand{\reportdate}{May 21, 2026}
+
+\makeatletter
+\g@addto@macro\UrlBreaks{\do\ }
+\makeatother
+
+\newcommand{\LabCodeRoot}{week3_session_b_files}
+
+\newcommand{\filebox}[2]{%
+\begin{tcolorbox}[
+  enhanced,
+  colback=gray!6,
+  colframe=black!55,
+  title={#1},
+  fonttitle=\bfseries\ttfamily\footnotesize,
+  arc=1.5mm,
+  boxrule=0.7pt,
+  breakable,
+  width=\linewidth,
+  before skip=0.8em,
+  after skip=0.8em,
+]
+\VerbatimInput[fontsize=\footnotesize,breaklines=true,breakanywhere=true]{\LabCodeRoot/#2}
+\end{tcolorbox}%
+}
+
+\title{Lab Report: Week 3 Session B\\Test-Driven Development Practice}
+\author{\studentname \quad (Student ID: \studentid)}
+\date{\reportdate}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This report documents Week~3 Session~B on \textbf{test-driven development (TDD)} with OpenCode Desktop: Red (failing tests before implementation), Green (minimum code to pass), and Refactor (improve structure while tests stay green). The SCS-CN function \texttt{calculate\_runoff(P, CN)} was developed in \texttt{week3\_session\_b/} separately from the Session~A scaffold. Red phase produced \texttt{ModuleNotFoundError}; Green and Refactor each yielded \textbf{7 passed} tests. Sanity checks $Q(50,80)\approx 13.80$~mm and $Q(80,85)\approx 43.55$~mm match earlier course labs. Evidence: six screenshots (OpenCode and terminal per phase) and full source in Appendix~\ref{app:files}--\ref{app:promptlog}.
+\end{abstract}
+
+\section{Introduction}
+TDD treats tests as a \textbf{contract} for correct behavior: write tests first (Red), implement until they pass (Green), then refactor without changing outputs. This reduces wrong formulas and plausible-but-false AI outputs. Session~B applies TDD to the same SCS-CN physics as Session~A, but in a fresh folder \texttt{week3\_session\_b/} with tests written \emph{before} \texttt{src/runoff.py} existed.
+
+\section{Objectives}
+\begin{itemize}[noitemsep]
+  \item Apply the Red $\rightarrow$ Green $\rightarrow$ Refactor cycle with AI assistance.
+  \item Write comprehensive pytest tests before implementation.
+  \item Use tests to validate AI-generated hydrology code.
+  \item Document the process in \texttt{prompt\_log.md}.
+\end{itemize}
+
+\section{Methods}
+
+\subsection{Conventions (all phases)}
+$S = 25400/\mathrm{CN} - 254$~mm, $I_a = 0.2S$, $Q=0$ if $P \le I_a$, else $Q=(P-I_a)^2/(P-I_a+S)$, with $0 \le Q \le P$. Invalid $P<0$ or $\mathrm{CN}\notin[1,100]$ raise \texttt{ValueError}. Python~3.8 compatible hints (\texttt{Union}, not \texttt{X | Y}).
+
+\subsection{Exercise 1: Red phase}
+Prompt \texttt{prompt\_red.txt} asked OpenCode for \texttt{tests/test\_runoff.py} only---seven cases: normal ($P=50$, $\mathrm{CN}=80$), $P=0$, $P<I_a$, $\mathrm{CN}=100$, negative $P$, invalid $\mathrm{CN}$, and a $7\times7$ grid asserting $Q \le P$. No \texttt{src/runoff.py} was created.
+
+\subsection{Exercise 2: Green phase}
+Prompt \texttt{prompt\_green.txt} included the full test file; OpenCode implemented \texttt{src/runoff.py} to satisfy all tests.
+
+\subsection{Exercise 3: Refactor phase}
+Prompt \texttt{prompt\_refactor.txt} requested readability and clearer errors without changing numerical results; \texttt{pytest} was run after refactoring.
+
+\section{Results}
+
+\subsection{Submitted file inventory}
+\begin{table}[htbp]
+  \centering
+  \caption{Files in \texttt{week3\_session\_b/}.}
+  \label{tab:files}
+  \small
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    Path & Role \\
+    \midrule
+    \texttt{tests/test\_runoff.py} & Seven pytest cases (written in Red) \\
+    \texttt{src/runoff.py} & SCS-CN implementation (Green, refactored) \\
+    \texttt{prompt\_red.txt}, \texttt{prompt\_green.txt}, \texttt{prompt\_refactor.txt} & AI prompts \\
+    \texttt{prompt\_log.md} & TDD documentation \\
+    \texttt{requirements.txt} & pytest dependency \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Red phase}
+Terminal and OpenCode confirm collection failure: \texttt{ModuleNotFoundError: No module named 'src.runoff'} (Figures~\ref{fig:red-oc}--\ref{fig:red-term}).
+
+\begin{figure}[htbp]
+  \centering
+  \opencodefig{week3_session_b_opencode_red.png}
+  \caption{OpenCode Red: generated \texttt{test\_runoff.py}; confirmed import error.}
+  \label{fig:red-oc}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \terminalfig{week3_session_b_terminal_red.png}
+  \caption{Terminal Red: \texttt{pytest -v} --- \texttt{ModuleNotFoundError} (expected).}
+  \label{fig:red-term}
+\end{figure}
+
+\subsection{Green phase}
+All seven tests passed on first implementation (Figures~\ref{fig:green-oc}--\ref{fig:green-term}). Hand-checked: $Q(50,80)\approx 13.80$~mm; $Q(80,85)\approx 43.55$~mm.
+
+\begin{figure}[htbp]
+  \centering
+  \opencodefig{week3_session_b_opencode_green.png}
+  \caption{OpenCode Green: \texttt{src/runoff.py} created; 7 tests pass.}
+  \label{fig:green-oc}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \terminalfig{week3_session_b_terminal_green.png}
+  \caption{Terminal Green: \texttt{7 passed}.}
+  \label{fig:green-term}
+\end{figure}
+
+\subsection{Refactor phase}
+Refactoring introduced named constants, validation helpers, and \texttt{\_compute\_runoff}; public \texttt{calculate\_runoff} became a short validate$\rightarrow$compute$\rightarrow$clamp pipeline. Tests remained green (Figures~\ref{fig:ref-oc}--\ref{fig:ref-term}).
+
+\begin{table}[htbp]
+  \centering
+  \caption{Refactoring changes (behavior unchanged).}
+  \label{tab:refactor}
+  \small
+  \begin{tabular}{@{}p{0.32\linewidth}p{0.58\linewidth}@{}}
+    \toprule
+    Change & Rationale \\
+    \midrule
+    \texttt{\_RETENTION\_FACTOR}, etc. & Remove magic numbers \\
+    \texttt{\_validate\_positive\_rainfall}, \texttt{\_validate\_curve\_number} & Separate validation; clearer errors \\
+    \texttt{\_compute\_runoff} & Pure math on validated floats \\
+    \texttt{effective\_rainfall} & Clearer than repeated $P-I_a$ \\
+    Short \texttt{calculate\_runoff} & Readable public API \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+  \centering
+  \opencodefig{week3_session_b_opencode_refactor.png}
+  \caption{OpenCode Refactor: structural improvements; tests still pass.}
+  \label{fig:ref-oc}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \terminalfig{week3_session_b_terminal_refactor.png}
+  \caption{Terminal Refactor: \texttt{7 passed} after refactor.}
+  \label{fig:ref-term}
+\end{figure}
+
+Table~\ref{tab:tdd} summarizes the TDD cycle.
+
+\begin{table}[htbp]
+  \centering
+  \caption{TDD cycle outcomes.}
+  \label{tab:tdd}
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    Phase & \texttt{src/runoff.py} & \texttt{pytest} \\
+    \midrule
+    Red & Absent & Import error \\
+    Green & Present (monolithic) & 7 passed \\
+    Refactor & Helpers + constants & 7 passed \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Analysis and validation}
+
+\textbf{Tests as contract:} The normal-case expected value ($\approx 13.80$~mm) and impervious case ($Q=P$ when $\mathrm{CN}=100$) encode physics; a wrong $S$ formula or missing $P \le I_a$ branch would fail immediately.
+
+\textbf{AI role:} OpenCode generated correct tests and implementation; refactor improved maintainability without changing outputs. Local \texttt{pytest} was still run to verify agent claims.
+
+\textbf{Session A vs.\ B:} Session~A scaffolded a full project with tests after code; Session~B enforced tests-first TDD in an empty implementation folder.
+
+\textbf{Hallucination check:} Pre-written tests constrained the Green-phase formula; Red prevented shipping untested code.
+
+\section{Discussion}
+\begin{enumerate}[noitemsep]
+  \item Red phase failure was intentional and gradable evidence, not an environment bug.
+  \item Green passed on the first try because tests fully specified behavior.
+  \item Refactor improved error messages (e.g.\ ``got \{CN\}'') useful for debugging bad inputs.
+  \item Next time: add one extra hand-calculated case in tests when trusting a new AI model.
+\end{enumerate}
+
+\section{Problems encountered}
+Using a virtual environment from \texttt{week3\_session\_a} for \texttt{week3\_session\_b} worked but is optional; system \texttt{python3} and \texttt{pytest} were sufficient. Initial confusion that Red ``errors'' needed fixing was resolved by understanding TDD phase goals.
+
+\section{Lessons learned}
+TDD with AI still requires human verification: run \texttt{pytest} locally, keep tests unchanged during Refactor unless physics intentionally changes, and document each phase in \texttt{prompt\_log.md} with screenshots.
+
+\section{Conclusion}
+Week~3 Session~B objectives were met: Red, Green, and Refactor with SCS-CN runoff, seven passing tests throughout Green and Refactor, and documented prompts and outcomes. Submitted artifacts: \texttt{week3\_session\_b/}, \texttt{prompt\_log.md}, and phase screenshots.
+
+\appendix
+\section{Submitted project files}
+\label{app:files}
+
+\subsection{\texttt{tests/test\_runoff.py} (Red phase)}
+\label{app:tests}
+\filebox{\texttt{tests/test\_runoff.py} (full file)}{tests/test_runoff.py}
+
+\subsection{\texttt{src/runoff.py} (Green + Refactor)}
+\label{app:runoff}
+\filebox{\texttt{src/runoff.py} (full file)}{src/runoff.py}
+
+\subsection{Prompts}
+\label{app:prompts}
+
+\filebox{\texttt{prompt\_red.txt}}{prompt_red.txt}
+
+\filebox{\texttt{prompt\_green.txt}}{prompt_green.txt}
+
+\filebox{\texttt{prompt\_refactor.txt}}{prompt_refactor.txt}
+
+\filebox{\texttt{requirements.txt}}{requirements.txt}
+
+\section{Submitted prompt log: \texttt{prompt\_log.md}}
+\label{app:promptlog}
+\filebox{\texttt{prompt\_log.md} (full file)}{prompt_log.md}
+
+\end{document}

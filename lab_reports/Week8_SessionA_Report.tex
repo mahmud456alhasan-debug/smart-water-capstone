@@ -1,0 +1,152 @@
+% Week 8 Session A — Testing & Validation
+% Upload: Week8_SessionA_Report.tex, week8_session_a_terminal.png, week8_session_a_files/
+%
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\newcommand{\termfig}[1]{%
+  \includegraphics[width=\linewidth,height=0.55\textheight,keepaspectratio]{#1}%
+}
+\usepackage{booktabs}
+\usepackage{xurl}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{fvextra}
+\usepackage[most]{tcolorbox}
+
+\newcommand{\studentname}{Mahmudul Hasan}
+\newcommand{\studentid}{4125999049}
+\newcommand{\reportdate}{May 22, 2026}
+\newcommand{\capstonerepo}{https://github.com/mahmud456alhasan-debug/smart-water-capstone}
+
+\makeatletter
+\g@addto@macro\UrlBreaks{\do\ }
+\makeatother
+
+\newcommand{\LabCodeRoot}{week8_session_a_files}
+
+\newcommand{\filebox}[2]{%
+\begin{tcolorbox}[
+  enhanced,
+  colback=gray!6,
+  colframe=black!55,
+  title={#1},
+  fonttitle=\bfseries\ttfamily\footnotesize,
+  arc=1.5mm,
+  boxrule=0.7pt,
+  breakable,
+  width=\linewidth,
+  before skip=0.8em,
+  after skip=0.8em,
+]
+\VerbatimInput[fontsize=\footnotesize,breaklines=true,breakanywhere=true]{\LabCodeRoot/#2}
+\end{tcolorbox}%
+}
+
+\title{Lab Report: Week 8 Session A\\Testing \& Validation}
+\author{\studentname \quad (Student ID: \studentid)}
+\date{\reportdate}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This report documents Week~8 Session~A on the Smart Water capstone: \textbf{29 pytest cases}, \textbf{96\%} statement coverage on \texttt{src/}, a physical validation module (\texttt{src/validation.py}), and integration workflows (Swiss Cheese Model). A hallucination in an edge-case assumption ($P{=}5$~mm always below $I_a$ for high CN) was corrected after tests failed. Evidence: Figure~\ref{fig:terminal} (\texttt{pytest --cov}). Repository: \url{\capstonerepo}.
+\end{abstract}
+
+\section{Introduction}
+After Week~7 implementation, the capstone had only two unit tests (27\% coverage). Session~A expands testing across runoff, weather, reservoir, flood, validation, and integration layers per the lab guide.
+
+\section{Objectives}
+\begin{itemize}[noitemsep]
+  \item Comprehensive unit tests (Exercise~1).
+  \item Swiss Cheese verification layers (Exercise~2).
+  \item Find and fix AI/human test assumptions (Exercise~3).
+  \item Document in \texttt{prompt\_log.md} (Exercise~4).
+\end{itemize}
+
+\section{Exercise 1: Comprehensive tests}
+
+\subsection{Test inventory}
+\begin{table}[htbp]
+  \centering
+  \caption{Test modules and focus.}
+  \label{tab:tests}
+  \small
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    File & Coverage \\
+    \midrule
+    \texttt{test\_runoff.py} & Normal storm, $P{=}0$, $Q \le P$, invalid CN/$P$ \\
+    \texttt{test\_weather.py} & CSV load, missing columns, GREEN/AMBER/RED \\
+    \texttt{test\_flood.py} & Mask, depth, DEM bounds, monotonicity \\
+    \texttt{test\_reservoir.py} & Revenue $\approx$\$708{,}849, storage PASS \\
+    \texttt{test\_validation.py} & Physical check failures \\
+    \texttt{test\_integration.py} & Rainfall$\rightarrow$alert, full workflows \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Coverage results}
+Before Session~8: \textbf{2 passed}, \textbf{27\%} coverage. After: \textbf{29 passed in 0.63s}, \textbf{96\%} on \texttt{src/} (201 statements, 8 missed---mostly DEM auto-generate branch and rare optimizer error paths).
+
+\begin{figure}[htbp]
+  \centering
+  \termfig{week8_session_a_terminal.png}
+  \caption{Terminal: \texttt{pytest -q --cov=src --cov-report=term-missing} --- 29 passed, 96\% total coverage.}
+  \label{fig:terminal}
+\end{figure}
+
+\section{Exercise 2: Swiss Cheese Model}
+
+\begin{table}[htbp]
+  \centering
+  \caption{Verification layers applied.}
+  \label{tab:cheese}
+  \begin{tabular}{@{}cl@{}}
+    \toprule
+    Layer & Action \\
+    \midrule
+    1 & Manual code review (units, Week~6 reservoir logic) \\
+    2 & 29 unit tests, all passing \\
+    3 & \texttt{src/validation.py}: $Q \le P$, storage $[50,200]$ MCM, flood monotonicity \\
+    4 & \texttt{tests/test\_integration.py}: CSV$\rightarrow$alert, DEM$\rightarrow$stats, reservoir PASS \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Exercise 3: Hallucination / assumption fix}
+
+\textbf{Issue:} Test assumed 5~mm rainfall always yields zero runoff for CN${=}95$. High CN lowers $I_a$, so computed $Q \approx 0.34$~mm.
+
+\textbf{Fix:} Use $P{=}2$~mm with CN${=}80$ for a true below-$I_a$ case.
+
+\textbf{Lesson:} Physical edge cases must use formula-derived $I_a$, not intuition.
+
+\section{Exercise 4: Repository}
+Updated tests and \texttt{src/validation.py} committed to \url{\capstonerepo}. \texttt{prompt\_log.md} includes Session~8 entries (Appendix~\ref{app:promptlog}).
+
+\section{Discussion}
+\begin{enumerate}[noitemsep]
+  \item Coverage jumped from 27\% to 96\% by testing weather and reservoir modules, not only runoff stubs.
+  \item Integration tests catch tab-level workflows without running Streamlit headless.
+  \item One failing test is valuable---it exposed a weak edge-case assumption, not production code failure.
+\end{enumerate}
+
+\section{Conclusion}
+Week~8 Session~A met the lab guide: broad pytest suite, $>$80\% coverage, Swiss Cheese layers, documented fix, and terminal evidence. Capstone remains deployable via \texttt{streamlit run app/main.py} with validated hydrologic constraints.
+
+\appendix
+
+\section{Physical validation: \texttt{validation.py}}
+\label{app:validation}
+\filebox{\texttt{src/validation.py} (full file)}{validation.py}
+
+\section{Submitted prompt log (excerpt)}
+\label{app:promptlog}
+\filebox{\texttt{prompt\_log.md} (Session 8 section)}{prompt_log_session8.md}
+
+\end{document}

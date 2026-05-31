@@ -1,0 +1,185 @@
+% Week 2 Session A — Chain-of-Thought prompting practice
+% All lab reports in this series include an abstract.
+%
+% Build: pdflatex Week2_SessionA_Report.tex from Lab-reports/
+% Same folder: week2_session_a_opencode.png, week2_session_a_opencode2.png,
+%   week2_session_a_opencode3.jpg, week2_session_a_terminal.png,
+%   prompt_log_week2_session_a.md
+%
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+% Tall OpenCode screenshots: limit height so each figure fits on one page
+\newcommand{\opencodefig}[1]{%
+  \includegraphics[width=\linewidth,height=0.68\textheight,keepaspectratio]{#1}%
+}
+\newcommand{\terminalfig}[1]{%
+  \includegraphics[width=0.92\linewidth,height=0.38\textheight,keepaspectratio]{#1}%
+}
+\usepackage{booktabs}
+\usepackage{xurl}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{fvextra}
+\usepackage[most]{tcolorbox}
+
+\newcommand{\studentname}{Mahmudul Hasan}
+\newcommand{\studentid}{4125999049}
+\newcommand{\reportdate}{May 17, 2026}
+
+\makeatletter
+\g@addto@macro\UrlBreaks{\do\ }
+\makeatother
+
+\newcommand{\LabCodeRoot}{.}
+
+\title{Lab Report: Week 2 Session A\\Chain-of-Thought Prompting Practice}
+\author{\studentname \quad (Student ID: \studentid)}
+\date{\reportdate}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This report documents Week~2 Session~A: advanced \textbf{chain-of-thought (CoT)} prompting with OpenCode Desktop on (1)~a five-step rainfall monitoring system design and (2)~line-by-line debugging of a self-prepared SCS-CN script. A shorter design prompt produced a large implementation stack; CoT debugging identified four formula errors. Local runs gave $Q \approx 0.002$~mm (buggy) and $Q = 43.6$~mm (fixed) for $P=80$~mm, $\mathrm{CN}=85$, contradicting an incorrect closing estimate in the AI chat. Evidence: four screenshots and \path{prompt_log.md} in Appendix~\ref{app:promptlog}.
+\end{abstract}
+
+\section{Introduction}
+Week~2 Session~A extends Week~1 by using CoT for \emph{complex design} and \emph{debugging}, not only single-formula calculations. Work was completed in \path{ai_water_lab/week2_session_a/} with OpenCode Desktop (OpenCode Zen). Exercise~1 compares a structured five-step design prompt with a one-line urban flood-warning prompt. Exercise~2 uses a student-authored \path{buggy_rainfall.py} (instructor directed the class to prepare their own buggy code) and CoT-assisted repair verified in the terminal.
+
+\section{Objectives}
+\begin{itemize}[noitemsep]
+  \item Practice CoT for multi-step hydrological system design.
+  \item Compare CoT vs.\ shorter prompting on the same design goal.
+  \item Debug Python using CoT (line-by-line explanation and fixes).
+  \item Document outcomes in a prompt log and personal prompting strategy.
+\end{itemize}
+
+\section{Methods}
+
+\subsection{Exercise 1: Rainfall monitoring design}
+The CoT prompt asked for reasoning on: data requirements, real-time API, storage structure, flood alert thresholds, and visualization (with code suggestions where appropriate). A follow-up used: \emph{Design a rainfall monitoring system for urban flood warning.}
+
+\subsection{Exercise 2: Debugging with CoT}
+A short SCS-CN script with intentional errors was written for practice. Before AI assistance, four bugs were hypothesized (wrong $S$ formula, wrong $I_a$, missing $P \le I_a$ branch, wrong denominator). OpenCode received:
+
+\emph{This code has bugs. Walk through it line by line, explain what each part should do, identify what's wrong, and suggest fixes.}
+
+Fixes were implemented in \path{rainfall_fixed.py} and tested with \texttt{python3}.
+
+\section{Results}
+
+\subsection{Exercise 1: CoT design response}
+OpenCode recommended core and derived rainfall fields, Open-Meteo for prototyping, TimescaleDB hypertables, tiered WMO/NWS-style alert levels, and a Plotly/Grafana visualization path with an API$\rightarrow$fetcher$\rightarrow$database$\rightarrow$alert pipeline. Figure~\ref{fig:cot-design} shows the CoT exchange.
+
+\begin{figure}[htbp]
+  \centering
+  \opencodefig{week2_session_a_opencode.png}
+  \caption{OpenCode: five-step CoT prompt for rainfall monitoring system design (Exercise~1).}
+  \label{fig:cot-design}
+\end{figure}
+
+\subsection{Exercise 1: Short prompt response}
+The short prompt generated a multi-file urban flood stack (\path{docker-compose.yml}, FastAPI, zone-based flood model, alert router, etc.) rather than a stepwise design narrative. Figure~\ref{fig:short-design} documents this response.
+
+\begin{figure}[htbp]
+  \centering
+  \opencodefig{week2_session_a_opencode2.png}
+  \caption{OpenCode: short prompt \emph{Design a rainfall monitoring system for urban flood warning} (Exercise~1 comparison).}
+  \label{fig:short-design}
+\end{figure}
+
+\subsection{Exercise 2: CoT debugging}
+OpenCode identified the same four bugs as the pre-AI list and supplied a corrected \texttt{calculate\_runoff} function. Figure~\ref{fig:debug} shows the session.
+
+\begin{figure}[htbp]
+  \centering
+  \opencodefig{week2_session_a_opencode3.jpg}
+  \caption{OpenCode: CoT line-by-line debug of \texttt{buggy\_rainfall.py} (Exercise~2).}
+  \label{fig:debug}
+\end{figure}
+
+\subsection{Exercise 2: Terminal verification}
+Local execution confirmed the failure mode and fix (Figure~\ref{fig:terminal}):
+
+\begin{itemize}[noitemsep]
+  \item \path{buggy_rainfall.py}: $Q \approx 0.0019$~mm (unrealistic for $P=80$~mm).
+  \item \path{rainfall_fixed.py}: $Q = 43.6$~mm (consistent with Week~1 Session~B SCS-CN check).
+\end{itemize}
+
+\begin{figure}[htbp]
+  \centering
+  \terminalfig{week2_session_a_terminal.png}
+  \caption{Terminal: before/after fix for $P=80$~mm, $\mathrm{CN}=85$.}
+  \label{fig:terminal}
+\end{figure}
+
+Table~\ref{tab:prompts} summarizes Exercise~1 prompting styles.
+
+\begin{table}[htbp]
+  \centering
+  \caption{CoT vs.\ short prompt for rainfall monitoring design.}
+  \label{tab:prompts}
+  \begin{tabular}{@{}p{0.22\linewidth}p{0.34\linewidth}p{0.34\linewidth}@{}}
+    \toprule
+    Aspect & CoT (5 steps) & Short (one line) \\
+    \midrule
+    Output & Design rationale per step & Many code files + Docker stack \\
+    Audit trail & Strong & Weaker unless you inspect each file \\
+    Best use & Planning, reports, grading & Rapid prototype after design is fixed \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Analysis and validation}
+
+\textbf{Design (Exercise~1):} Recommendations are physically plausible for a conceptual monitoring system. Thresholds and APIs must still be checked against course labs (e.g.\ OpenWeatherMap in Week~1 Session~A; 20~mm/h alert in Week~5 Lab~1). Open-Meteo is reasonable for keyless prototyping.
+
+\textbf{Debugging (Exercise~2):} All four intentional bugs were found by both the author and OpenCode. The AI's closing remark that the fully buggy script might yield $\approx 48.9$~mm on this input was \textbf{not} supported by the terminal ($\approx 0.002$~mm), because an inflated $S$ from multiplication dominates the denominator---an example of why local verification is required.
+
+\textbf{Prompting strategy:} CoT improved traceability for design and debugging. Short prompts can accelerate coding but may skip explicit reasoning.
+
+\section{Discussion}
+\begin{enumerate}[noitemsep]
+  \item CoT produced clearer structure for the five design questions; the short prompt jumped to implementation.
+  \item For hydrology coursework, CoT debugging plus terminal tests caught an AI numeric slip that line-by-step reasoning alone might miss.
+  \item Limits of AI output include unverified production claims (Docker stack) and occasional wrong numeric summaries.
+  \item Next time: specify deliverable type in the prompt (design memo vs.\ code only) and always run corrected scripts locally.
+\end{enumerate}
+
+\section{Problems encountered}
+No instructor buggy file was distributed; the class was told to create their own. The main extra step was renaming screenshots and copying \path{prompt_log.md} for the report appendix.
+
+\section{Lessons learned}
+Numbered CoT prompts align AI answers with lab rubrics. Comparing prompt styles on the same topic clarifies when to ask for reasoning first and code second. A prompt log plus screenshots and terminal output provides defensible evidence for grading.
+
+\section{Conclusion}
+Week~2 Session~A objectives were met: CoT system design, CoT vs.\ short comparison, CoT debugging of SCS-CN code, and documentation in \path{prompt_log.md}. Course submission: \path{prompt_log.md}, \path{buggy_rainfall.py}, \path{rainfall_fixed.py}, and screenshots as specified in the lab guide.
+
+\appendix
+
+\section{Submitted prompt log: \texttt{prompt\_log.md}}
+\label{app:promptlog}
+\begin{tcolorbox}[
+  enhanced,
+  colback=gray!6,
+  colframe=black!55,
+  title={\texttt{prompt\_log.md} \mdseries (full file)},
+  fonttitle=\bfseries\ttfamily\footnotesize,
+  arc=1.5mm,
+  boxrule=0.7pt,
+  breakable,
+  width=\linewidth,
+  before skip=0.8em,
+  after skip=0.8em,
+]
+\VerbatimInput[
+  fontsize=\footnotesize,
+  breaklines=true,
+]{\LabCodeRoot/prompt_log_week2_session_a_latex.md}
+\end{tcolorbox}
+
+\end{document}

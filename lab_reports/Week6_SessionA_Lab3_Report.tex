@@ -1,0 +1,228 @@
+% Week 6 Session A Lab 3 — Water Resources Optimization
+% Build: pdflatex Week6_SessionA_Lab3_Report.tex from Lab-reports/ (twice)
+% Screenshots:
+%   week6_session_a_lab3_terminal1.png  (reservoir_optimizer.py)
+%   week6_session_a_lab3_terminal2.png  (tradeoff_analysis.py)
+%   week6_session_a_lab3_terminal3.png  (validate_constraints.py)
+%   week6_session_a_lab3_tradeoff.png (optional plot)
+% Code: week6_session_a_lab3_files/
+%
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\newcommand{\termfig}[1]{%
+  \includegraphics[width=\linewidth,height=0.42\textheight,keepaspectratio]{#1}%
+}
+\newcommand{\plotfig}[1]{%
+  \includegraphics[width=\linewidth,height=0.50\textheight,keepaspectratio]{#1}%
+}
+\usepackage{booktabs}
+\usepackage{xurl}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{fvextra}
+\usepackage[most]{tcolorbox}
+\usepackage{subcaption}
+
+\newcommand{\studentname}{Mahmudul Hasan}
+\newcommand{\studentid}{4125999049}
+\newcommand{\reportdate}{May 21, 2026}
+
+\makeatletter
+\g@addto@macro\UrlBreaks{\do\ }
+\makeatother
+
+\newcommand{\LabCodeRoot}{week6_session_a_lab3_files}
+
+\newcommand{\filebox}[2]{%
+\begin{tcolorbox}[
+  enhanced,
+  colback=gray!6,
+  colframe=black!55,
+  title={#1},
+  fonttitle=\bfseries\ttfamily\footnotesize,
+  arc=1.5mm,
+  boxrule=0.7pt,
+  breakable,
+  width=\linewidth,
+  before skip=0.8em,
+  after skip=0.8em,
+]
+\VerbatimInput[fontsize=\footnotesize,breaklines=true,breakanywhere=true]{\LabCodeRoot/#2}
+\end{tcolorbox}%
+}
+
+\title{Lab Report: Week 6 Session A Lab 3\\Water Resources Optimization}
+\author{\studentname \quad (Student ID: \studentid)}
+\date{\reportdate}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This report documents Week~6 Session~A Lab~3: \textbf{reservoir dispatch optimization} with \texttt{scipy.optimize.minimize\_scalar}, a seven-day release schedule maximizing hydropower revenue under storage and ecological constraints, and a trade-off sweep over ecological minimum release (5--15~m$^3$/s). Storage is tracked in \textbf{MCM}; inflow and release rates are in \textbf{m$^3$/s}, converted to daily volumes with factor 0.0864~MCM/(m$^3$/s)/day. The baseline schedule yields total revenue \textbf{\$708,849.26} with \textbf{Validation: PASS} and minimum storage slack 0.000~MCM on day~7. Evidence: three terminal screenshots and trade-off figure; code in \texttt{week6\_session\_a\_lab3/} (Appendix~\ref{app:optimizer}--\ref{app:promptlog}). OpenCode was not required by the lab guide; work used local Python and provided starter code.
+\end{abstract}
+
+\section{Introduction}
+Reservoir operators balance \textbf{hydropower revenue}, \textbf{storage limits}, and \textbf{downstream ecological flows}. This lab formulates a simplified daily dispatch problem, implements it with SciPy, and explores how tightening the ecological minimum release affects total revenue over a fixed seven-day inflow series---connecting optimization theory to water-resources practice after rainfall--runoff modeling (Week~5) and integration labs (Week~4).
+
+\section{Objectives}
+\begin{itemize}[noitemsep]
+  \item Formulate objectives, constraints, and decision variables (Exercise~1).
+  \item Implement \texttt{optimize\_day} and a seven-day horizon with \texttt{scipy.optimize} (Exercise~2).
+  \item Analyze ecological-flow vs.\ revenue trade-offs (Exercise~3).
+  \item Validate storage, release, eco, and mass-balance constraints (Exercise~4).
+\end{itemize}
+
+\section{Methods}
+
+\subsection{Unit convention}
+Following the lab guide warning on mixed units:
+\begin{itemize}[noitemsep]
+  \item Storage $S$ in MCM; inflow $I$ and release $Q$ as m$^3$/s.
+  \item Daily volume: $V_{\mathrm{MCM}} = Q_{\mathrm{m^3/s}} \times 86400 / 10^6 = 0.0864\,Q$.
+  \item Balance: $S_{t+1} = S_t + V_{\mathrm{in}} - V_{\mathrm{out}}$.
+\end{itemize}
+
+\subsection{Problem data (Exercise 1)}
+$V_{\min}=50$, $V_{\max}=200$, $S_0=120$~MCM; inflows (m$^3$/s) $[20,18,25,22,19,21,23]$; prices (\$/MWh) $[45,42,50,48,44,46,52]$; release bounds $[10,150]$~m$^3$/s; default eco minimum 10~m$^3$/s.
+
+\subsection{Objective and optimizer (Exercises 1--2)}
+Maximize daily revenue $R = p \times E$, with $E = P_{\mathrm{MW}} \times 24$, $P_{\mathrm{MW}} = H \eta k Q$ ($H{=}80$~m, $\eta{=}0.85$, $k{=}9.81\times10^{-3}$). Each day solves one bounded scalar problem with \texttt{minimize\_scalar} on release $Q$, penalizing end-of-storage outside $[V_{\min},V_{\max}]$. \texttt{feasible\_release\_bounds()} tightens $Q$ so $S_{t+1}$ stays feasible (critical on day~7 when storage nears $V_{\min}$).
+
+\subsection{Trade-off analysis (Exercise 3)}
+\texttt{tradeoff\_analysis.py} re-runs \texttt{optimize\_horizon(eco\_flow\_m3s)} for eco $\in\{5,8,10,12,15\}$~m$^3$/s, records total revenue and feasibility, saves \texttt{figures/tradeoff\_revenue.png}.
+
+\subsection{Validation (Exercise 4)}
+\texttt{validate\_schedule()} checks end storage, release bounds, eco minimum, and water balance per day.
+
+\section{Results}
+
+\subsection{File inventory}
+\begin{table}[htbp]
+  \centering
+  \caption{Submitted files in \texttt{week6\_session\_a\_lab3/}.}
+  \label{tab:files}
+  \small
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    File & Role \\
+    \midrule
+    \texttt{reservoir\_optimizer.py} & Daily + horizon optimization, validation \\
+    \texttt{tradeoff\_analysis.py} & Eco-flow sweep and plot \\
+    \texttt{validate\_constraints.py} & Exercise~4 summary \\
+    \texttt{figures/tradeoff\_revenue.png} & Trade-off figure \\
+    \texttt{prompt\_log.md}, \texttt{README.md} & Documentation \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Terminal verification}
+Figures~\ref{fig:opt}--\ref{fig:val} show the three commands required for submission.
+
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}[t]{\linewidth}
+    \centering
+    \termfig{week6_session_a_lab3_terminal1.png}
+    \caption{\texttt{python3 reservoir\_optimizer.py} --- 7-day schedule, \$708,849 total, PASS.}
+    \label{fig:opt}
+  \end{subfigure}\\[0.5em]
+  \begin{subfigure}[t]{\linewidth}
+    \centering
+    \termfig{week6_session_a_lab3_terminal2.png}
+    \caption{\texttt{python3 tradeoff\_analysis.py} --- eco 5--15, feasible, figure saved.}
+    \label{fig:trade-term}
+  \end{subfigure}\\[0.5em]
+  \begin{subfigure}[t]{\linewidth}
+    \centering
+    \termfig{week6_session_a_lab3_terminal3.png}
+    \caption{\texttt{python3 validate\_constraints.py} --- PASS, slack 0.000 MCM.}
+    \label{fig:val}
+  \end{subfigure}
+  \caption{Terminal evidence for Exercises~1--4.}
+  \label{fig:terminal-all}
+\end{figure}
+
+\subsection{Seven-day schedule (highlights)}
+Days 1--6 release at the upper bound 150~m$^3$/s to draw down storage while capturing high prices. Day~7: $S_{\mathrm{start}}{=}53.04$~MCM, inflow 23~m$^3$/s, optimal release \textbf{58.19}~m$^3$/s (storage-feasible cap), $S_{\mathrm{end}}{=}50.00$~MCM exactly at $V_{\min}$.
+
+\subsection{Trade-off figure (Exercise 3)}
+Figure~\ref{fig:tradeoff} plots ecological minimum vs.\ total revenue (thousand USD). Revenues are nearly identical ($\approx\$708{,}849$) for eco 5--15~m$^3$/s because, for this inflow series, \textbf{storage limits} bind before the eco minimum on high-release days---not because ecology is unimportant, but because the optimizer already cannot release below the storage-derived cap on day~7.
+
+\begin{figure}[htbp]
+  \centering
+  \plotfig{week6_session_a_lab3_tradeoff.png}
+  \caption{Trade-off: ecological minimum release (m$^3$/s) vs.\ total 7-day revenue (thousand USD).}
+  \label{fig:tradeoff}
+\end{figure}
+
+If \texttt{week6\_session\_a\_lab3\_tradeoff.png} is missing on Overleaf, use \texttt{week6\_session\_a\_lab3\_files/figures/tradeoff\_revenue.png}.
+
+\subsection{Validation checklist}
+\begin{table}[htbp]
+  \centering
+  \caption{Exercise 4 checklist (from terminal and \texttt{validate\_schedule}).}
+  \label{tab:validation}
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    Check & Outcome \\
+    \midrule
+    Storage in $[50,200]$ MCM each day & PASS \\
+    Release in $[10,150]$ m$^3$/s & PASS \\
+    Release $\ge$ eco minimum (10 m$^3$/s baseline) & PASS \\
+    Water balance per day & PASS \\
+    Scalar objective stated (max revenue, eco as bound) & Documented in \texttt{prompt\_log.md} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Analysis and validation}
+
+\textbf{Multi-objective reduction:} Ecology enters as a \textbf{lower bound} on $Q$, not a weighted sum---consistent with the lab guide's scalar formulation after Exercise~1.
+
+\textbf{Day~7 binding:} Minimum storage slack 0.000~MCM shows the schedule uses available storage headroom fully; without \texttt{feasible\_release\_bounds}, releases at 150~m$^3$/s would violate $V_{\min}$---a common pitfall when mixing MCM storage with m$^3$/s flows.
+
+\textbf{Flat trade-off curve:} Instructors should interpret similar revenues across eco scenarios as a \textbf{modeling outcome for this dry drawdown trajectory}, not as proof that eco flow never affects revenue. A wetter period or lower starting storage would likely separate curves more.
+
+\textbf{Tools:} \texttt{LabGuide\_Week6\_SessionA\_Lab3.md} does not mandate OpenCode; local terminal execution satisfies submission requirements.
+
+\section{Discussion}
+\begin{enumerate}[noitemsep]
+  \item Converting flows to MCM/day before updating storage prevented the unit errors warned in the lab guide.
+  \item \texttt{minimize\_scalar} per day is adequate for teaching; a full 7$\times$1 vector solve would couple days explicitly.
+  \item Three terminal screenshots clearly map to Exercises~1--2, 3, and 4 without OpenCode overhead.
+  \item The operational balance paragraph in \texttt{tradeoff\_analysis.py} defends $\sim$10~m$^3$/s as a reasonable default when storage is not the binding constraint.
+\end{enumerate}
+
+\section{Problems encountered}
+Initial runs failed on day~7 with ``No feasible release'' when only policy bounds $[10,150]$ were used---fixed by adding storage-derived release limits. No OpenCode or API keys required.
+
+\section{Lessons learned}
+Document unit conventions in \texttt{prompt\_log.md} before coding. Check end-of-horizon storage slack, not only average releases. When trade-off curves look flat, diagnose which constraint is active (storage vs.\ eco). Terminal screenshots of \texttt{reservoir\_optimizer.py}, \texttt{tradeoff\_analysis.py}, and \texttt{validate\_constraints.py} are sufficient evidence when the lab guide does not require OpenCode.
+
+\section{Conclusion}
+Week~6 Session~A Lab~3 objectives were met: formulated reservoir dispatch with SciPy, produced a feasible seven-day schedule (total revenue \$708,849.26), swept ecological flow requirements, and passed constraint validation. Submitted: \texttt{week6\_session\_a\_lab3/}, \texttt{prompt\_log.md}, terminal screenshots (Figures~\ref{fig:opt}--\ref{fig:val}), and trade-off plot (Figure~\ref{fig:tradeoff}).
+
+\appendix
+
+\section{Optimizer: \texttt{reservoir\_optimizer.py}}
+\label{app:optimizer}
+\filebox{\texttt{reservoir\_optimizer.py} (full file)}{reservoir_optimizer.py}
+
+\section{Trade-off script: \texttt{tradeoff\_analysis.py}}
+\label{app:tradeoff}
+\filebox{\texttt{tradeoff\_analysis.py} (full file)}{tradeoff_analysis.py}
+
+\section{Validation script: \texttt{validate\_constraints.py}}
+\label{app:validate}
+\filebox{\texttt{validate\_constraints.py} (full file)}{validate_constraints.py}
+
+\section{Submitted prompt log: \texttt{prompt\_log.md}}
+\label{app:promptlog}
+\filebox{\texttt{prompt\_log.md} (full file)}{prompt_log.md}
+
+\end{document}

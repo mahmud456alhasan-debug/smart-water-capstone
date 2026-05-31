@@ -1,0 +1,19 @@
+As a hydrologist, I want to calculate SCS-CN runoff for different land use types so that I can estimate flood risk for my watershed.
+
+Please generate a complete Python project structure in THIS folder (week3_session_a) including:
+1. Directory structure
+2. Main module with SCS-CN calculation function
+3. Data loading utilities
+4. Visualization components
+5. Test file structure
+6. requirements.txt
+7. README.md with setup instructions
+
+Make it production-ready with proper error handling and documentation.
+
+Technical spec to follow:
+- Inputs: rainfall depth P (mm), curve number CN per land use (optional watershed id)
+- Outputs: runoff depth Q (mm), tables or plots, documented assumptions
+- SCS-CN: S = 25400/CN - 254, Ia = 0.2*S, Q = 0 if P < Ia, else Q = (P-Ia)^2/(P-Ia+S), enforce Q <= P
+- Tests: P=0, P<Ia, normal case (e.g. P=50 CN=80), invalid CN, Q <= P
+- Use numpy/pandas/matplotlib as needed; no fake API keys

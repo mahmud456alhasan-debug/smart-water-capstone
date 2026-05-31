@@ -1,0 +1,16 @@
+Please refactor this legacy hydrology script:
+
+[PASTE FULL legacy_hydrology.py HERE]
+
+Modernization requirements:
+1. Python 3.8+ with type hints (use Union/Optional — my system is 3.8.10, not 3.12)
+2. Replace callback-style fetch_rainfall with async/await (aiohttp or asyncio + thread pool for I/O)
+3. Add comprehensive error handling (no bare except; meaningful messages)
+4. Improve variable names; extract functions (no 80-line god function)
+5. Docstrings on all public functions
+6. Use NumPy for vectorised runoff where it helps (optional for batch paths)
+7. Keep EXACT same printed output and TOTAL Q for data/events.csv as legacy when network returns fallback rainfall (same row Q values)
+
+Save as hydrology_modern.py in week4_session_a/. Keep legacy_hydrology.py unchanged.
+
+Provide a short bullet summary of code smells fixed and structural changes.

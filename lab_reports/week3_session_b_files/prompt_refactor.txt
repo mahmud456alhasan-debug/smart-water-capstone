@@ -1,0 +1,14 @@
+Review this calculate_runoff function and refactor for readability and better error messages.
+
+Rules:
+- Do NOT change numerical outputs (tests are the contract)
+- Python 3.8 type hints only
+- After each change, all tests in tests/test_runoff.py must still pass
+
+Focus on:
+- Code readability
+- Clear error messages
+- Small helper functions if useful (e.g. validation)
+- More Pythonic patterns
+
+[PASTE YOUR CURRENT src/runoff.py HERE BEFORE SENDING]

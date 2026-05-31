@@ -1,0 +1,17 @@
+Review week4_session_b/ integrated rainfall monitor and strengthen error handling (Exercise 2).
+
+Failure modes to cover:
+- API unavailable / timeout / HTTP errors → retry with backoff, then degraded message
+- Invalid JSON or missing precipitation field → WeatherAPIError with clear log
+- CSV permission / disk errors → StorageError, do not crash silently
+- Invalid env config (bad float for LAT) → fail fast with readable message
+
+Requirements:
+- try/except at boundaries only (weather_client, storage, main orchestration)
+- Custom exceptions: WeatherAPIError, StorageError (extend if needed)
+- Log each retry attempt
+- Fallback: if API fails after retries, print DEGRADED and return non-zero exit; do not write corrupt rows
+
+Run: python3 main.py must still work when network is OK.
+
+Paste current main.py and weather_client.py after your edits in the summary.

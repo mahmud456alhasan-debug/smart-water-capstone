@@ -1,0 +1,222 @@
+% Week 6 Session B Lab 4 — Flood Inundation Analysis
+% Build: pdflatex Week6_SessionB_Lab4_Report.tex from Lab-reports/ (twice)
+% Assets:
+%   week6_session_b_lab4_terminal.png  (all four commands, one screenshot)
+%   week6_session_b_lab4_dem.png
+%   week6_session_b_lab4_comparison.png
+%   week6_session_b_lab4_monotonic.png
+% Code: week6_session_b_lab4_files/ (ASCII-safe for VerbatimInput)
+%
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\newcommand{\termfig}[1]{%
+  \includegraphics[width=\linewidth,height=0.55\textheight,keepaspectratio]{#1}%
+}
+\newcommand{\plotfig}[1]{%
+  \includegraphics[width=\linewidth,height=0.42\textheight,keepaspectratio]{#1}%
+}
+\newcommand{\plotfigwide}[1]{%
+  \includegraphics[width=\linewidth,height=0.38\textheight,keepaspectratio]{#1}%
+}
+\usepackage{booktabs}
+\usepackage{xurl}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{fvextra}
+\usepackage[most]{tcolorbox}
+
+\newcommand{\studentname}{Mahmudul Hasan}
+\newcommand{\studentid}{4125999049}
+\newcommand{\reportdate}{May 21, 2026}
+
+\makeatletter
+\g@addto@macro\UrlBreaks{\do\ }
+\makeatother
+
+\newcommand{\LabCodeRoot}{week6_session_b_lab4_files}
+
+\newcommand{\filebox}[2]{%
+\begin{tcolorbox}[
+  enhanced,
+  colback=gray!6,
+  colframe=black!55,
+  title={#1},
+  fonttitle=\bfseries\ttfamily\footnotesize,
+  arc=1.5mm,
+  boxrule=0.7pt,
+  breakable,
+  width=\linewidth,
+  before skip=0.8em,
+  after skip=0.8em,
+]
+\VerbatimInput[fontsize=\footnotesize,breaklines=true,breakanywhere=true]{\LabCodeRoot/#2}
+\end{tcolorbox}%
+}
+
+\title{Lab Report: Week 6 Session B Lab 4\\Flood Inundation Analysis}
+\author{\studentname \quad (Student ID: \studentid)}
+\date{\reportdate}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This report documents Week~6 Session~B Lab~4: \textbf{synthetic DEM} generation, \textbf{flat-water inundation} mapping, depth statistics, and a \textbf{rising-stage} sensitivity over flood levels 40--60~m. A 100$\times$100 grid with 1~m cells and random seed 42 yields elevations 35.96--68.81~m. Wet cells use \texttt{elevation <= flood\_level}; depth is \texttt{max(0, flood\_level - elevation)} on wet cells only. At 40, 50, and 60~m, flooded area is 2.41\%, 25.25\%, and 82.93\% with mean wet depth 1.18, 4.86, and 8.33~m. Exercise~4 swept levels in 1~m steps: \textbf{Monotonicity check: PASS}. Evidence: one combined terminal screenshot (Figure~\ref{fig:terminal}), three figures, and code in \texttt{week6\_session\_b\_lab4/} (Appendix~\ref{app:core}--\ref{app:promptlog}). OpenCode was not required.
+\end{abstract}
+
+\section{Introduction}
+Flood risk screening often starts from a digital elevation model (DEM) and a assumed water surface elevation. This lab practices GIS-style inundation on a \textbf{synthetic terrain}: generate DEM data, apply a simple depth rule, visualize extent, and verify that flooded area grows monotonically as stage rises---after reservoir optimization (Week~6 Session~A Lab~3) and hydrologic modeling (Weeks~3--5).
+
+\section{Objectives}
+\begin{itemize}[noitemsep]
+  \item Process (synthetic) DEM data for spatial analysis (Exercise~1).
+  \item Implement \texttt{simulate\_flood} and area/depth statistics (Exercise~2).
+  \item Create publication-style inundation maps (Exercise~3).
+  \item Simulate rising water levels and check monotonic flooded area (Exercise~4).
+\end{itemize}
+
+\section{Methods}
+
+\subsection{Flood level definition}
+Following the lab guide, \texttt{flood\_level} is \textbf{absolute stage} (m) in the same vertical datum as the DEM---not depth above a channel thalweg unless redefined.
+
+\subsection{Inundation rules}
+\begin{itemize}[noitemsep]
+  \item \textbf{Wet mask:} \texttt{dem <= flood\_level} (inclusive at the water surface).
+  \item \textbf{Depth:} \texttt{max(0, flood\_level - dem)} on wet cells; \texttt{0} elsewhere.
+  \item \textbf{Grid:} 100$\times$100 cells, \textbf{1~m} spacing; seed \texttt{42} for reproducibility.
+\end{itemize}
+
+\subsection{Scripts}
+\begin{table}[htbp]
+  \centering
+  \caption{Submitted files in \texttt{week6\_session\_b\_lab4/}.}
+  \label{tab:files}
+  \small
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    File & Role \\
+    \midrule
+    \texttt{flood\_inundation.py} & Core \texttt{simulate\_flood}, stats, monotonicity check \\
+    \texttt{generate\_dem.py} & Exercise~1: DEM + heatmap \\
+    \texttt{run\_flood\_tests.py} & Exercise~2: levels 40, 50, 60~m \\
+    \texttt{visualize\_floods.py} & Exercise~3: side-by-side maps (300 DPI) \\
+    \texttt{rising\_water.py} & Exercise~4: 40--60~m sweep + plot \\
+    \texttt{data/dem.npy}, \texttt{figures/*.png} & Saved outputs \\
+    \texttt{prompt\_log.md} & AI interaction log \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Results}
+
+\subsection{Terminal verification}
+Figure~\ref{fig:terminal} shows one screenshot with all four commands (\texttt{generate\_dem.py}, \texttt{run\_flood\_tests.py}, \texttt{visualize\_floods.py}, \texttt{rising\_water.py}), matching the lab guide's optional single-screenshot submission style.
+
+\begin{figure}[htbp]
+  \centering
+  \termfig{week6_session_b_lab4_terminal.png}
+  \caption{Terminal evidence: DEM saved (35.96--68.81~m), flood table at 40/50/60~m, comparison figure saved, monotonicity \textbf{PASS}.}
+  \label{fig:terminal}
+\end{figure}
+
+\subsection{Exercise 2: flood levels}
+\begin{table}[htbp]
+  \centering
+  \caption{Flooded area and mean depth on wet cells (from \texttt{run\_flood\_tests.py}).}
+  \label{tab:levels}
+  \begin{tabular}{@{}rrrr@{}}
+    \toprule
+    Flood level (m) & Flooded (\%) & Mean depth (m) & Wet cells \\
+    \midrule
+    40 & 2.41 & 1.183 & 241 \\
+    50 & 25.25 & 4.863 & 2525 \\
+    60 & 82.93 & 8.329 & 8293 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Flooded fraction increases sharply between 50 and 60~m because most valley cells lie below 60~m but many ridges remain dry until stage approaches the DEM maximum.
+
+\subsection{Exercise 1: DEM}
+\begin{figure}[htbp]
+  \centering
+  \plotfig{week6_session_b_lab4_dem.png}
+  \caption{Synthetic DEM heatmap (\texttt{figures/dem\_heatmap.png}).}
+  \label{fig:dem}
+\end{figure}
+
+If \texttt{week6\_session\_b\_lab4\_dem.png} is missing on Overleaf, use \texttt{week6\_session\_b\_lab4\_files/figures/dem\_heatmap.png}.
+
+\subsection{Exercise 3: inundation maps}
+\begin{figure}[htbp]
+  \centering
+  \plotfigwide{week6_session_b_lab4_comparison.png}
+  \caption{Side-by-side inundation at 40, 50, and 60~m (grayscale DEM, blue depth overlay).}
+  \label{fig:comparison}
+\end{figure}
+
+\subsection{Exercise 4: rising water}
+\begin{figure}[htbp]
+  \centering
+  \plotfig{week6_session_b_lab4_monotonic.png}
+  \caption{Flooded domain percentage vs.\ flood level (40--60~m, step 1~m).}
+  \label{fig:monotonic}
+\end{figure}
+
+At 40~m flooded area is 2.41\%; at 60~m it is 82.93\%. \texttt{check\_monotonic\_area} reports \textbf{PASS} for the 1~m step series.
+
+\section{Analysis and validation}
+
+\textbf{Inclusive wet mask:} Using \texttt{<=} matches a flat water surface touching cell centers at exactly stage elevation; switching to \texttt{<} would shrink area slightly---document the choice in \texttt{prompt\_log.md}.
+
+\textbf{Monotonicity:} For a fixed DEM and non-decreasing \texttt{flood\_level}, the wet-cell count cannot shrink; PASS confirms implementation consistency.
+
+\textbf{Mean depth:} Averaged over \textbf{wet cells only}, so it rises with stage both because deeper inundation and because lower-elevation cells join the wet set.
+
+\textbf{Visualization warning:} \texttt{visualize\_floods.py} may emit a harmless \texttt{tight\_layout} warning with three subplots; the 300~DPI PNG still saves correctly (\texttt{bbox\_inches=tight}).
+
+\section{Discussion}
+\begin{enumerate}[noitemsep]
+  \item A single terminal screenshot is sufficient when figures carry the visual evidence (lab guide: screenshot optional).
+  \item Synthetic DEM with valleys and hills makes inundation statistics interpretable without downloading real GIS tiles.
+  \item The 50--60~m jump in flooded percent shows sensitivity to vertical datum choice in real projects.
+  \item No OpenCode required; generic AI prompts from the lab guide suffice for scaffolding.
+\end{enumerate}
+
+\section{Problems encountered}
+Only a matplotlib \texttt{tight\_layout} user warning on the three-panel figure; output file verified on disk. No API keys or external DEM download needed.
+
+\section{Lessons learned}
+Document \texttt{flood\_level} definition and wet/dry convention before coding. Fix the random seed early. Use one terminal screenshot plus saved PNGs for submission. If monotonicity fails, inspect mask logic and level ordering before adjusting terrain.
+
+\section{Conclusion}
+Week~6 Session~B Lab~4 objectives were met: synthetic DEM, inundation logic, comparison maps, and monotonic rising-stage analysis with documented results in \texttt{prompt\_log.md}. Submitted: \texttt{week6\_session\_b\_lab4/}, Figure~\ref{fig:terminal}, and Figures~\ref{fig:dem}--\ref{fig:monotonic}.
+
+\appendix
+
+\section{Core logic: \texttt{flood\_inundation.py}}
+\label{app:core}
+\filebox{\texttt{flood\_inundation.py} (full file)}{flood_inundation.py}
+
+\section{DEM generator: \texttt{generate\_dem.py}}
+\label{app:dem}
+\filebox{\texttt{generate\_dem.py} (full file)}{generate_dem.py}
+
+\section{Visualization: \texttt{visualize\_floods.py}}
+\label{app:viz}
+\filebox{\texttt{visualize\_floods.py} (full file)}{visualize_floods.py}
+
+\section{Rising water: \texttt{rising\_water.py}}
+\label{app:rising}
+\filebox{\texttt{rising\_water.py} (full file)}{rising_water.py}
+
+\section{Submitted prompt log: \texttt{prompt\_log.md}}
+\label{app:promptlog}
+\filebox{\texttt{prompt\_log.md} (full file)}{prompt_log.md}
+
+\end{document}

@@ -1,0 +1,6 @@
+land_use,cn,description
+forest,70,Woods good condition
+pasture,80,Pasture fair condition
+cultivated,85,Cultivated straight row
+residential,90,Urban residential
+paved,98,Paved areas

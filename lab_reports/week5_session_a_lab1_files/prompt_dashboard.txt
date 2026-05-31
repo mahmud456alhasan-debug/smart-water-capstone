@@ -1,0 +1,16 @@
+Enhance dashboard.py for Week 5 Lab 1 rainfall monitoring.
+
+Imports: openweather_client.fetch_current_weather, alerts.check_alert, load_alert_history, config.load_settings
+
+Streamlit UI:
+1. City selector (text input)
+2. Current rainfall — large metric (mm/h)
+3. Alert status — color-coded GREEN/YELLOW/RED
+4. Refresh button — fetch new data (bypass cache on refresh)
+5. Alert history table from CSV
+6. Last update timestamp
+7. Show API errors in UI without crashing (invalid key, city not found)
+
+Professional layout (columns, headers). No API keys in source.
+
+Run: python3 -m streamlit run dashboard.py

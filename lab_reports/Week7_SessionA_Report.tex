@@ -1,0 +1,212 @@
+% Week 7 Session A — Capstone Project Planning
+% Build: pdflatex Week7_SessionA_Report.tex from Lab-reports/ (twice)
+% Screenshots: week7_session_a_github_page_a.png, week7_session_a_github_page_b.png
+% Assets: week7_session_a_files/
+%
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\newcommand{\ghfig}[1]{%
+  \includegraphics[width=\linewidth,height=0.48\textheight,keepaspectratio]{#1}%
+}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{xurl}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{fvextra}
+\usepackage[most]{tcolorbox}
+
+\newcommand{\studentname}{Mahmudul Hasan}
+\newcommand{\studentid}{4125999049}
+\newcommand{\reportdate}{May 21, 2026}
+\newcommand{\capstonerepo}{https://github.com/mahmud456alhasan-debug/smart-water-capstone}
+
+\makeatletter
+\g@addto@macro\UrlBreaks{\do\ }
+\makeatother
+
+\newcommand{\LabCodeRoot}{week7_session_a_files}
+
+\newcommand{\filebox}[2]{%
+\begin{tcolorbox}[
+  enhanced,
+  colback=gray!6,
+  colframe=black!55,
+  title={#1},
+  fonttitle=\bfseries\ttfamily\footnotesize,
+  arc=1.5mm,
+  boxrule=0.7pt,
+  breakable,
+  width=\linewidth,
+  before skip=0.8em,
+  after skip=0.8em,
+]
+\VerbatimInput[fontsize=\footnotesize,breaklines=true,breakanywhere=true]{\LabCodeRoot/#2}
+\end{tcolorbox}%
+}
+
+\title{Lab Report: Week 7 Session A\\Capstone Project Planning}
+\author{\studentname \quad (Student ID: \studentid)}
+\date{\reportdate}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This report documents Week~7 Session~A: \textbf{capstone planning} for the Smart Water Integrated Monitoring and Decision Support Dashboard. Exercises completed: project scope (\texttt{SCOPE.md}), system architecture (\texttt{ARCHITECTURE.md}), development scaffold (\texttt{app/}, \texttt{src/}, tests, sample data), and repository setup instructions. The capstone reuses Weeks~3--6 modules (SCS-CN runoff, reservoir optimization, DEM flood inundation, rainfall alerts) behind a future Streamlit UI. AI collaboration used \textbf{Cursor Agent}; OpenCode was not required. Evidence: public GitHub repository (Figures~\ref{fig:github-a}--\ref{fig:github-b}), planning files in \texttt{ai\_water\_lab/capstone/}, and \texttt{prompt\_log.md} (Appendix~\ref{app:promptlog}). Push to \texttt{main} completed successfully (30 objects).
+\end{abstract}
+
+\section{Introduction}
+Week~7 Session~A is a \textbf{planning lab}, not a full implementation sprint. The deliverable is a clear scope, architecture, scaffold, and GitHub repository so Session~B can implement core features with documented AI prompts.
+
+\section{Objectives}
+\begin{itemize}[noitemsep]
+  \item Define project scope and requirements (Exercise~1).
+  \item Design system architecture with AI assistance (Exercise~2).
+  \item Generate technical scaffold (Exercise~3).
+  \item Initialize GitHub repository (Exercise~4).
+\end{itemize}
+
+\section{Exercise 1: Project scope}
+
+\subsection{Problem and users}
+\textbf{Problem:} Separate lab scripts for rainfall, runoff, reservoir dispatch, and flood mapping should be unified for teaching and demo purposes.
+
+\textbf{Users:} Students, municipal flood-duty trainees, researchers prototyping integrated workflows.
+
+\subsection{Requirements summary}
+\begin{table}[htbp]
+  \centering
+  \caption{Functional requirements (from \texttt{SCOPE.md}).}
+  \label{tab:func}
+  \small
+  \begin{tabular}{@{}cl@{}}
+    \toprule
+    ID & Requirement \\
+    \midrule
+    F1 & Weather / alerts from CSV or optional API \\
+    F2 & SCS-CN runoff with physical checks \\
+    F3 & 7-day reservoir dispatch summary \\
+    F4 & DEM inundation vs.\ \texttt{flood\_level} \\
+    F5 & Streamlit multi-tab UI \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\textbf{Non-functional:} Python 3.8+, offline sample data, documented units, \texttt{prompt\_log.md}, modular \texttt{src/}.
+
+\textbf{Success criteria:} End-to-end demo on samples; pytest for hydrologic validity; public GitHub repo with README and \texttt{AGENTS.md}.
+
+\textbf{Out of scope:} Production Vercel deploy, licensed GIS DEM, multi-reservoir networks.
+
+\section{Exercise 2: Architecture}
+
+Logical flow: weather $\rightarrow$ runoff $\rightarrow$ reservoir $\rightarrow$ flood $\rightarrow$ Streamlit shell. Technology: Streamlit, NumPy, Pandas, SciPy, Matplotlib, pytest, GitHub. Internal Python APIs (\texttt{load\_rainfall\_csv}, \texttt{scs\_runoff\_mm}, \texttt{simulate\_flood}) rather than REST for the teaching build.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Module map to prior labs.}
+  \label{tab:reuse}
+  \small
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    Capstone module & Prior lab folder \\
+    \midrule
+    \texttt{src/weather} & \texttt{week5\_session\_a\_lab1/} \\
+    \texttt{src/runoff} & \texttt{week5\_session\_b\_lab2/}, \texttt{week3\_session\_b/} \\
+    \texttt{src/reservoir} & \texttt{week6\_session\_a\_lab3/} \\
+    \texttt{src/flood} & \texttt{week6\_session\_b\_lab4/} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Full diagram and data-flow detail: \texttt{ARCHITECTURE.md} (Appendix~\ref{app:arch}).
+
+\section{Exercise 3: Technical scaffold}
+
+Created under \texttt{ai\_water\_lab/capstone/}:
+\begin{itemize}[noitemsep]
+  \item \texttt{app/main.py} --- Streamlit stub with four tabs
+  \item \texttt{src/weather}, \texttt{src/runoff}, \texttt{src/reservoir}, \texttt{src/flood}
+  \item \texttt{tests/test\_runoff.py}, \texttt{tests/test\_flood.py}
+  \item \texttt{data/sample\_rainfall.csv}
+  \item \texttt{requirements.txt}, \texttt{README.md}, \texttt{AGENTS.md}
+\end{itemize}
+
+Week~7 Session~B will wire working logic and run \texttt{streamlit run app/main.py}.
+
+\section{Exercise 4: Repository}
+
+\textbf{Planned repository name:} \texttt{smart-water-capstone}.
+
+\textbf{Repository URL:} \url{\capstonerepo}
+
+\textbf{Branch:} \texttt{main} (tracking \texttt{origin/main})
+
+\textbf{Initial commit:} \texttt{Week 7 Session A: capstone scope and architecture} --- 30 files/objects pushed via HTTPS with personal access token.
+
+\subsection{GitHub repository evidence}
+Figures~\ref{fig:github-a} and~\ref{fig:github-b} show the public repository file tree (planning markdown, \texttt{app/}, \texttt{src/}, \texttt{tests/}, \texttt{data/}) and the rendered \texttt{README.md} setup instructions.
+
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}[t]{\linewidth}
+    \centering
+    \ghfig{week7_session_a_github_page_a.png}
+    \caption{Repository root: \texttt{smart-water-capstone}, commit on \texttt{main}, Python project layout.}
+    \label{fig:github-a}
+  \end{subfigure}\\[0.6em]
+  \begin{subfigure}[t]{\linewidth}
+    \centering
+    \ghfig{week7_session_a_github_page_b.png}
+    \caption{Rendered \texttt{README.md}: setup, Session~B run commands, planning artifacts list.}
+    \label{fig:github-b}
+  \end{subfigure}
+  \caption{GitHub evidence for Exercise~4 (repository setup and push).}
+  \label{fig:github-all}
+\end{figure}
+
+\subsection{Prompt log}
+All AI prompts for Exercises~2--3 are in \texttt{prompt\_log.md} (Appendix~\ref{app:promptlog}). Tool: Cursor Agent; no OpenCode session required.
+
+\section{Discussion}
+\begin{enumerate}[noitemsep]
+  \item Reusing four lab modules reduces capstone risk compared with a greenfield stack.
+  \item Session~A intentionally leaves Streamlit tabs as stubs so planning time stays within one hour.
+  \item \texttt{AGENTS.md} prepares Session~B agents for consistent units and file layout.
+  \item Two GitHub page screenshots (file tree + README) satisfy the lab guide's optional screenshot requirement.
+\end{enumerate}
+
+\section{Lessons learned}
+Define scope boundaries before architecture prompts. Keep CSV/sample-data defaults for reproducible grading. Document prompts in \texttt{prompt\_log.md} as you go, not after Week~8. GitHub push and one screenshot remain manual even when AI generates scaffold and report text.
+
+\section{Conclusion}
+Week~7 Session~A deliverables are complete: planning files in \texttt{ai\_water\_lab/capstone/}, public GitHub repository \url{\capstonerepo}, Figures~\ref{fig:github-all}, and prompt log appendix. Submit this report PDF and repository link to the course platform. Implementation continues in Week~7 Session~B.
+
+\appendix
+
+\section{Scope document: \texttt{SCOPE.md}}
+\label{app:scope}
+\filebox{\texttt{SCOPE.md} (full file)}{SCOPE.md}
+
+\section{Architecture: \texttt{ARCHITECTURE.md}}
+\label{app:arch}
+\filebox{\texttt{ARCHITECTURE.md} (full file)}{ARCHITECTURE.md}
+
+\section{Agent instructions: \texttt{AGENTS.md}}
+\label{app:agents}
+\filebox{\texttt{AGENTS.md} (full file)}{AGENTS.md}
+
+\section{Streamlit stub: \texttt{app/main.py}}
+\label{app:main}
+\filebox{\texttt{app/main.py} (full file)}{main.py}
+
+\section{Submitted prompt log: \texttt{prompt\_log.md}}
+\label{app:promptlog}
+\filebox{\texttt{prompt\_log.md} (full file)}{prompt_log.md}
+
+\end{document}

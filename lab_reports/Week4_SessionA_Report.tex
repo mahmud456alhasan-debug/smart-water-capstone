@@ -1,0 +1,217 @@
+% Week 4 Session A — Refactoring & migration practice
+% Build: pdflatex Week4_SessionA_Report.tex from Lab-reports/ (twice)
+% Screenshots:
+%   week4_session_a_opencode1.png, week4_session_a_opencode2.png
+%   week4_session_a_terminal.png
+% Code: week4_session_a_files/
+%
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\newcommand{\opencodefig}[1]{%
+  \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{#1}%
+}
+\newcommand{\terminalfig}[1]{%
+  \includegraphics[width=0.92\linewidth,height=0.40\textheight,keepaspectratio]{#1}%
+}
+\usepackage{booktabs}
+\usepackage{xurl}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{fvextra}
+\usepackage[most]{tcolorbox}
+
+\newcommand{\studentname}{Mahmudul Hasan}
+\newcommand{\studentid}{4125999049}
+\newcommand{\reportdate}{May 21, 2026}
+
+\makeatletter
+\g@addto@macro\UrlBreaks{\do\ }
+\makeatother
+
+\newcommand{\LabCodeRoot}{week4_session_a_files}
+
+\newcommand{\filebox}[2]{%
+\begin{tcolorbox}[
+  enhanced,
+  colback=gray!6,
+  colframe=black!55,
+  title={#1},
+  fonttitle=\bfseries\ttfamily\footnotesize,
+  arc=1.5mm,
+  boxrule=0.7pt,
+  breakable,
+  width=\linewidth,
+  before skip=0.8em,
+  after skip=0.8em,
+]
+\VerbatimInput[fontsize=\footnotesize,breaklines=true,breakanywhere=true]{\LabCodeRoot/#2}
+\end{tcolorbox}%
+}
+
+\title{Lab Report: Week 4 Session A\\Refactoring \& Migration Practice}
+\author{\studentname \quad (Student ID: \studentid)}
+\date{\reportdate}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This report documents Week~4 Session~A on \textbf{refactoring legacy hydrology code} with OpenCode Desktop. Exercise~1 identified seven code smells in \texttt{legacy\_hydrology.py} with line references. Exercise~2 modernised the script to \texttt{hydrology\_modern.py} (Python~3.8 type hints, decomposed functions, \texttt{async/await} I/O, NumPy batch runoff, explicit errors) while keeping \texttt{legacy\_hydrology.py} unchanged. Exercise~3 verified byte-identical stdout on \texttt{data/events.csv} via \texttt{compare\_outputs.py} (\texttt{MATCH: outputs identical line-by-line}). Evidence: two OpenCode screenshots (refactor session), one terminal screenshot, and full sources in Appendix~\ref{app:legacy}--\ref{app:promptlog}.
+\end{abstract}
+
+\section{Introduction}
+Legacy scripts often accumulate \textbf{code smells}: long functions, magic numbers, duplicated logic, poor naming, global state, weak error handling, and blocking I/O. AI-assisted refactoring can modernise structure quickly, but \emph{exact same functionality} must be proven on fixed inputs. This session used a practice legacy watershed runoff tool (SCS-CN per land use) in \texttt{week4\_session\_a/}, separate from Week~3 scaffolding and TDD folders.
+
+\section{Objectives}
+\begin{itemize}[noitemsep]
+  \item Identify at least five code smells with locations and rationale.
+  \item Refactor legacy code with AI (types, async, errors, naming, docstrings).
+  \item Verify refactored output matches the original on the same CSV.
+  \item Document smells, refactor decisions, and verification in \texttt{prompt\_log.md}.
+\end{itemize}
+
+\section{Methods}
+
+\subsection{Exercise 1: Code smell analysis}
+\texttt{legacy\_hydrology.py} was reviewed against the lab checklist (long function, magic numbers, duplication, naming, globals, errors, blocking I/O). Findings were recorded in \texttt{code\_smells\_worksheet.md} and \texttt{prompt\_log.md} \emph{before} any refactor.
+
+\subsection{Exercise 2: AI-powered refactoring}
+OpenCode received \texttt{prompt\_refactor.txt} with the full legacy source. Requirements: Python~3.8-compatible hints, replace callbacks with \texttt{async/await} on HTTP boundaries, comprehensive errors, descriptive names, docstrings, optional NumPy optimisation, and \textbf{identical printed output} for \texttt{data/events.csv}. Output saved as \texttt{hydrology\_modern.py}; legacy file preserved.
+
+\subsection{Exercise 3: Verification}
+Both scripts were run on the same input; stdout captured to \texttt{legacy\_out.txt} and \texttt{modern\_out.txt}; \texttt{compare\_outputs.py} performed a line-by-line diff.
+
+\section{Results}
+
+\subsection{Code smells (Exercise 1)}
+Table~\ref{tab:smells} lists seven documented smells (lab minimum: five).
+
+\begin{table}[htbp]
+  \centering
+  \caption{Code smells in \texttt{legacy\_hydrology.py}.}
+  \label{tab:smells}
+  \small
+  \begin{tabular}{@{}p{0.22\linewidth}p{0.18\linewidth}p{0.52\linewidth}@{}}
+    \toprule
+    Smell & Lines & Impact \\
+    \midrule
+    Long / god function & \texttt{process} 39--104 & Untestable mix of I/O, math, report \\
+    Magic numbers & 15--16, 85--86 & Hidden SCS-CN constants \\
+    Duplicated logic & 13--19 vs 84--92 & \texttt{calc()} never called \\
+    Poor naming & 13, 46--56 & \texttt{calc(x,y)}, \texttt{data2}, unused \texttt{hdr} \\
+    Global state & \texttt{STATE} 9--10, 41--95 & Side effects, not re-entrant \\
+    Weak errors & 29--36, 78--79, 115--116 & Bare \texttt{except}, silent fallback \\
+    Blocking I/O & 71, 33, 81 & \texttt{sleep} + sync HTTP per row \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Refactoring (Exercise 2)}
+OpenCode produced \texttt{hydrology\_modern.py} (222 lines vs.\ 117 legacy). Figures~\ref{fig:oc1}--\ref{fig:oc2} show the refactor prompt session (two scroll captures of the same conversation).
+
+\begin{figure}[htbp]
+  \centering
+  \opencodefig{week4_session_a_opencode1.png}
+  \caption{OpenCode (1/2): legacy baseline run and start of modernisation.}
+  \label{fig:oc1}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \opencodefig{week4_session_a_opencode2.png}
+  \caption{OpenCode (2/2): \texttt{hydrology\_modern.py} saved; smell-fix summary; output match confirmed.}
+  \label{fig:oc2}
+\end{figure}
+
+Table~\ref{tab:fixes} maps smells to structural fixes.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Refactoring changes (behavior preserved).}
+  \label{tab:fixes}
+  \small
+  \begin{tabular}{@{}p{0.28\linewidth}p{0.62\linewidth}@{}}
+    \toprule
+    Issue & Resolution \\
+    \midrule
+    Global \texttt{STATE} & Local \texttt{results}, \texttt{total\_q} \\
+    Callback HTTP & \texttt{fetch\_rainfall\_async}, \texttt{asyncio.gather} \\
+    God \texttt{process} & \texttt{read\_events}, \texttt{scs\_runoff}, \texttt{batch\_runoff}, \texttt{print\_report} \\
+    CN if/elif chain & \texttt{LAND\_USE\_CN} dict, \texttt{DEFAULT\_CN} \\
+    Dead \texttt{calc} & Single \texttt{scs\_runoff} \\
+    Bare \texttt{except} & Specific exception types \\
+    Silent \texttt{on\_err} & \texttt{Optional[float]}; use CSV $P$ if \texttt{None} \\
+    Per-row \texttt{sleep} & Removed \\
+    CSV lists & \texttt{DictReader} \\
+    Magic numbers & \texttt{compute\_s}, \texttt{initial\_abstraction} constants \\
+    Batch math & NumPy \texttt{batch\_runoff} after concurrent I/O \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Verification (Exercise 3)}
+Figure~\ref{fig:terminal} shows terminal confirmation.
+
+\begin{figure}[htbp]
+  \centering
+  \terminalfig{week4_session_a_terminal.png}
+  \caption{Terminal: \texttt{compare\_outputs.py} reports \texttt{MATCH: outputs identical line-by-line}.}
+  \label{fig:terminal}
+\end{figure}
+
+Both programs printed the same table and \texttt{TOTAL Q = 117.69226901292332}. Row runoff depths (5.8128, 13.8025, 19.6124, 53.8981, 24.5665~mm) match Week~3 Session~A batch results for the same events.
+
+\section{Analysis and validation}
+
+\textbf{Functionality preserved:} Line-by-line stdout equality is stronger than eyeball comparison; it catches formatting, rounding, and header differences.
+
+\textbf{Async benefit:} Legacy code used callbacks and sequential blocking HTTP with artificial delay; modern code gathers fetches concurrently. On five rows, wall time is similar; benefit grows with event count.
+
+\textbf{AI trust:} OpenCode reported a match; independent \texttt{compare\_outputs.py} confirmed it---required practice when agents claim correctness.
+
+\textbf{Python version:} Lab template mentions 3.12; implementation uses 3.8-safe \texttt{Union}/\texttt{Optional} on the student system (3.8.10).
+
+\section{Discussion}
+\begin{enumerate}[noitemsep]
+  \item Pre-documenting smells produced a clear refactor checklist for the prompt.
+  \item Two OpenCode screenshots suffice for one long refactor reply (scroll steps).
+  \item Keeping \texttt{legacy\_hydrology.py} immutable simplified grading and diff workflow.
+  \item Refactor improved maintainability without changing hydrologic outputs on the test CSV.
+\end{enumerate}
+
+\section{Problems encountered}
+No instructor legacy file was provided; the course practice script in \texttt{week4\_session\_a/} was used. Initial confusion between ``error'' (Week~3 Red) and intentional legacy smells was avoided by reading the Week~4 rubric first.
+
+\section{Lessons learned}
+Smell analysis before AI coding constrains the model to real issues. Verification must be scripted (diff tool), not only the agent's summary. Async refactors should target I/O boundaries without changing printed contracts.
+
+\section{Conclusion}
+Week~4 Session~A objectives were met: seven smells documented, AI refactor to \texttt{hydrology\_modern.py}, verified identical output, and full documentation in \texttt{prompt\_log.md}. Submitted artifacts: legacy and modern scripts, comparison helper, data CSV, prompt log, and three screenshots.
+
+\appendix
+
+\section{Legacy script: \texttt{legacy\_hydrology.py}}
+\label{app:legacy}
+\filebox{\texttt{legacy\_hydrology.py} (full file, unchanged)}{legacy_hydrology.py}
+
+\section{Modern script: \texttt{hydrology\_modern.py}}
+\label{app:modern}
+\filebox{\texttt{hydrology\_modern.py} (full file)}{hydrology_modern.py}
+
+\section{Verification helper: \texttt{compare\_outputs.py}}
+\label{app:compare}
+\filebox{\texttt{compare\_outputs.py} (full file)}{compare_outputs.py}
+
+\section{Data: \texttt{data/events.csv}}
+\label{app:data}
+\filebox{\texttt{data/events.csv} (full file)}{data/events.csv}
+
+\section{Submitted prompt log: \texttt{prompt\_log.md}}
+\label{app:promptlog}
+\filebox{\texttt{prompt\_log.md} (full file)}{prompt_log.md}
+
+\end{document}

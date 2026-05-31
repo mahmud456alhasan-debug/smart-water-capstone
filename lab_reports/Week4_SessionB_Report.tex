@@ -1,0 +1,260 @@
+% Week 4 Session B — Integration & flow practice
+% Build: pdflatex Week4_SessionB_Report.tex from Lab-reports/ (twice)
+% Screenshots:
+%   week4_session_b_opencode_ex_1.png
+%   week4_session_b_opencode_ex_2a.png, ex_2b.png, ex_2c.png (one session, scroll)
+%   week4_session_b_terminal_ex_1.png, week4_session_b_terminal_ex_2.png
+%   week4_session_b_streamlit.png
+% Code: week4_session_b_files/
+%
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\newcommand{\opencodefig}[1]{%
+  \includegraphics[width=\linewidth,height=0.62\textheight,keepaspectratio]{#1}%
+}
+\newcommand{\terminalfig}[1]{%
+  \includegraphics[width=0.92\linewidth,height=0.38\textheight,keepaspectratio]{#1}%
+}
+\newcommand{\streamlitfig}[1]{%
+  \includegraphics[width=\linewidth,height=0.55\textheight,keepaspectratio]{#1}%
+}
+\usepackage{booktabs}
+\usepackage{xurl}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{fvextra}
+\usepackage[most]{tcolorbox}
+
+\newcommand{\studentname}{Mahmudul Hasan}
+\newcommand{\studentid}{4125999049}
+\newcommand{\reportdate}{May 21, 2026}
+
+\makeatletter
+\g@addto@macro\UrlBreaks{\do\ }
+\makeatother
+
+\newcommand{\LabCodeRoot}{week4_session_b_files}
+
+\newcommand{\filebox}[2]{%
+\begin{tcolorbox}[
+  enhanced,
+  colback=gray!6,
+  colframe=black!55,
+  title={#1},
+  fonttitle=\bfseries\ttfamily\footnotesize,
+  arc=1.5mm,
+  boxrule=0.7pt,
+  breakable,
+  width=\linewidth,
+  before skip=0.8em,
+  after skip=0.8em,
+]
+\VerbatimInput[fontsize=\footnotesize,breaklines=true,breakanywhere=true]{\LabCodeRoot/#2}
+\end{tcolorbox}%
+}
+
+\title{Lab Report: Week 4 Session B\\Integration \& Flow Practice}
+\author{\studentname \quad (Student ID: \studentid)}
+\date{\reportdate}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This report documents Week~4 Session~B on \textbf{integration and flow}: wiring a rainfall monitoring pipeline (weather client, SCS-CN processor, alerts, CSV storage) with OpenCode Desktop, then hardening errors and building a Streamlit dashboard. Work was done in \texttt{week4\_session\_b/} using Open-Meteo by default (no API key). Exercise~1 integrated modules with logging, retries, and boundary exceptions; Exercise~2 added \texttt{ConfigError}, validated configuration, and tested CONFIG ERROR / DEGRADED paths; Exercise~3 delivered a dashboard reading \texttt{data/monitoring\_log.csv}. Evidence: seven screenshots (OpenCode, terminal, Streamlit) and source in Appendix~\ref{app:main}--\ref{app:promptlog}.
+\end{abstract}
+
+\section{Introduction}
+Integrated systems connect independent components through clear interfaces and error boundaries. This session practiced \textbf{staying in flow with AI}: one feature thread at a time (integrate, then errors, then UI), paste interfaces first, and verify with small terminal loops after each step. Week~4 Session~A refactored a single legacy script; Session~B builds a multi-module monitor aligned with earlier SCS-CN work (Week~3) but focused on orchestration and resilience.
+
+\section{Objectives}
+\begin{itemize}[noitemsep]
+  \item Integrate weather fetch, rainfall processing, alerts, and CSV storage.
+  \item Implement robust error handling (config, API, storage).
+  \item Build a Streamlit monitoring dashboard.
+  \item Document data flow and AI-assisted workflow in \texttt{prompt\_log.md}.
+\end{itemize}
+
+\section{Methods}
+
+\subsection{Architecture}
+Four components plus configuration:
+\begin{enumerate}[noitemsep]
+  \item \texttt{weather\_client.py} --- precipitation via Open-Meteo or OpenWeather (\texttt{OPENWEATHER\_API\_KEY})
+  \item \texttt{rainfall\_processor.py} --- SCS-CN runoff (\texttt{process\_reading})
+  \item \texttt{alert\_system.py} --- OK / WATCH / ALERT thresholds
+  \item \texttt{storage.py} --- append rows to \texttt{data/monitoring\_log.csv}
+  \item \texttt{config.py} --- \texttt{load\_settings()} from environment
+\end{enumerate}
+Orchestration: \texttt{main.py} \texttt{run\_once()}. Visualization: \texttt{dashboard.py} via \texttt{python3 -m streamlit run}.
+
+\subsection{Exercise 1: Integration}
+Prompt \texttt{prompt\_integration.txt} enhanced \texttt{main.py} and \texttt{weather\_client.py}: pipeline logging, \texttt{WeatherAPIError} $\rightarrow$ DEGRADED (exit~1), \texttt{StorageError} $\rightarrow$ WARNING (non-fatal), exponential backoff retries (\texttt{api\_max\_retries}).
+
+\subsection{Exercise 2: Error handling}
+Prompt \texttt{prompt\_errors.txt} added \texttt{ConfigError}, moved env parsing into \texttt{load\_settings()}, JSON parse guards, and \texttt{OSError} handling in storage. Tested \texttt{MONITOR\_LAT=abc}, \texttt{MONITOR\_LAT=999}, and \texttt{API\_TIMEOUT\_SEC=0.001}.
+
+\subsection{Exercise 3: Dashboard}
+Prompt \texttt{prompt\_dashboard.txt} produced a wide-layout Streamlit UI: metrics, color-coded alerts, line chart, recent table, empty-CSV handling.
+
+\subsection{Exercise 4: Verification}
+Checklist: cold-start \texttt{main.py}, failure paths, CSV growth, dashboard reflects latest row.
+
+\section{Results}
+
+\subsection{File inventory}
+\begin{table}[htbp]
+  \centering
+  \caption{Submitted files in \texttt{week4\_session\_b/}.}
+  \label{tab:files}
+  \small
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    File & Role \\
+    \midrule
+    \texttt{main.py} & Integrated pipeline \\
+    \texttt{weather\_client.py} & API + retry \\
+    \texttt{rainfall\_processor.py} & SCS-CN \\
+    \texttt{alert\_system.py} & Threshold alerts \\
+    \texttt{storage.py} & CSV append \\
+    \texttt{config.py} & Env settings + \texttt{ConfigError} \\
+    \texttt{dashboard.py} & Streamlit UI \\
+    \texttt{data/monitoring\_log.csv} & History \\
+    \texttt{prompt\_*.txt}, \texttt{prompt\_log.md} & AI workflow \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Exercise 1: Integration}
+Figure~\ref{fig:oc1} shows OpenCode integration; Figure~\ref{fig:term1} shows a successful run.
+
+\begin{figure}[htbp]
+  \centering
+  \opencodefig{week4_session_b_opencode_ex_1.png}
+  \caption{OpenCode Exercise~1: integration prompt and pipeline changes.}
+  \label{fig:oc1}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \terminalfig{week4_session_b_terminal_ex_1.png}
+  \caption{Terminal Exercise~1: logged fetch/process/alert; \texttt{OK rain=... alert=OK}; CSV append.}
+  \label{fig:term1}
+\end{figure}
+
+\subsection{Exercise 2: Errors and resilience}
+Three OpenCode screenshots (Figures~\ref{fig:oc2a}--\ref{fig:oc2c}) document one long Exercise~2 session. Figure~\ref{fig:term2} shows terminal tests (e.g.\ retries and DEGRADED).
+
+\begin{figure}[htbp]
+  \centering
+  \opencodefig{week4_session_b_opencode_ex_2a.png}
+  \caption{OpenCode Exercise~2 (1/3): error-handling prompt and \texttt{config.py} changes.}
+  \label{fig:oc2a}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \opencodefig{week4_session_b_opencode_ex_2b.png}
+  \caption{OpenCode Exercise~2 (2/3): \texttt{weather\_client} / \texttt{storage} guards.}
+  \label{fig:oc2b}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \opencodefig{week4_session_b_opencode_ex_2c.png}
+  \caption{OpenCode Exercise~2 (3/3): verification summary (config, API, normal paths).}
+  \label{fig:oc2c}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \terminalfig{week4_session_b_terminal_ex_2.png}
+  \caption{Terminal Exercise~2: \texttt{CONFIG ERROR} or \texttt{DEGRADED} after retries (failure-path tests).}
+  \label{fig:term2}
+\end{figure}
+
+Table~\ref{tab:errors} summarizes failure handling.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Error boundaries and user-visible messages.}
+  \label{tab:errors}
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    Boundary & Exception & User message / exit \\
+    \midrule
+    Config & \texttt{ConfigError} & \texttt{CONFIG ERROR}, exit 1 \\
+    Weather & \texttt{WeatherAPIError} & \texttt{DEGRADED}, exit 1 \\
+    Storage & \texttt{StorageError} & \texttt{WARNING}, continue \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Exercise 3: Streamlit dashboard}
+Figure~\ref{fig:streamlit} shows the monitoring UI after \texttt{python3 -m streamlit run dashboard.py} (Streamlit installed with \texttt{pip install --user}; module invocation used because \texttt{streamlit} was not on PATH).
+
+\begin{figure}[htbp]
+  \centering
+  \streamlitfig{week4_session_b_streamlit.png}
+  \caption{Streamlit dashboard: current rainfall, alert status, chart, health metrics.}
+  \label{fig:streamlit}
+\end{figure}
+
+\section{Analysis and validation}
+
+\textbf{Data flow:} A single \texttt{run\_once()} call exercises all components; CSV is the handoff to the dashboard---no duplicate API calls in the UI.
+
+\textbf{Open-Meteo vs.\ lab template:} The handout mentions OpenWeather; implementation defaults to Open-Meteo (keyless prototyping) with optional OpenWeather via environment---consistent with Week~2 project choices.
+
+\textbf{Resilience:} Failed API runs do not append corrupt rows when the pipeline exits before \texttt{append\_reading}. Config errors fail before network I/O.
+
+\textbf{Flow discipline:} Separate prompts (\texttt{integration}, \texttt{errors}, \texttt{dashboard}) matched the lab's one-thread-per-feature guidance and reduced context loss.
+
+\section{Discussion}
+\begin{enumerate}[noitemsep]
+  \item Exercise~1 already included retries; Exercise~2 added config validation that fixed import-time \texttt{ValueError} on bad \texttt{MONITOR\_LAT}.
+  \item Multiple OpenCode screenshots for Exercise~2 reflect scroll length, not separate prompts.
+  \item \texttt{python3 -m streamlit} is required when the Streamlit CLI is not on PATH.
+  \item Dashboard reads CSV only---appropriate separation for a monitoring view.
+\end{enumerate}
+
+\section{Problems encountered}
+\texttt{streamlit: command not found} resolved with \texttt{python3 -m streamlit run}. First-time Streamlit email prompt required pressing Enter on a blank line. Pip reported a jupyterlab version conflict unrelated to this lab.
+
+\section{Lessons learned}
+Integrate with explicit boundary messages (\texttt{CONFIG ERROR} vs.\ \texttt{DEGRADED}). Test three failure modes after AI edits. Use module-form CLI invocations on Linux lab machines. Screenshot terminal and UI as evidence alongside \texttt{prompt\_log.md}.
+
+\section{Conclusion}
+Week~4 Session~B objectives were met: integrated rainfall monitor, hardened error paths, Streamlit dashboard, and documented AI workflow. Submitted: \texttt{week4\_session\_b/} sources, \texttt{prompt\_log.md}, and seven screenshots in \texttt{Lab-reports/}.
+
+\appendix
+
+\section{Orchestration: \texttt{main.py}}
+\label{app:main}
+\filebox{\texttt{main.py} (full file)}{main.py}
+
+\section{Configuration: \texttt{config.py}}
+\label{app:config}
+\filebox{\texttt{config.py} (full file)}{config.py}
+
+\section{Weather client: \texttt{weather\_client.py}}
+\label{app:weather}
+\filebox{\texttt{weather\_client.py} (full file)}{weather_client.py}
+
+\section{Dashboard: \texttt{dashboard.py}}
+\label{app:dashboard}
+\filebox{\texttt{dashboard.py} (full file)}{dashboard.py}
+
+\section{Other modules}
+\label{app:other}
+\texttt{rainfall\_processor.py}, \texttt{alert\_system.py}, and \texttt{storage.py} are included in the course submission folder \texttt{week4\_session\_b/} (see Table~\ref{tab:files}). Full copies are available in \texttt{week4\_session\_b\_files/} on the report build machine.
+
+\section{Submitted prompt log: \texttt{prompt\_log.md}}
+\label{app:promptlog}
+\filebox{\texttt{prompt\_log.md} (full file)}{prompt_log.md}
+
+\end{document}
