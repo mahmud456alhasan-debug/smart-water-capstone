@@ -17,10 +17,14 @@
 
 | File | Purpose |
 |------|---------|
-| [RUBRIC_MAPPING.md](RUBRIC_MAPPING.md) | Every rubric criterion → evidence link |
-| [AI_FAILURES.md](AI_FAILURES.md) | All AI errors found and how they were caught |
-| [FINAL_SUBMISSION_CHECKLIST.md](FINAL_SUBMISSION_CHECKLIST.md) | LMS / demo / GitHub checklist |
-| [RUBRIC_MAPPING.pdf](RUBRIC_MAPPING.pdf) | PDF for upload (compile from `.tex`) |
+| [RUBRIC_MAPPING.pdf](RUBRIC_MAPPING.pdf) | **PDF for LMS** — rubric → evidence |
+| [AI_FAILURES.pdf](AI_FAILURES.pdf) | **PDF for LMS** — AI mistakes table |
+| [FINAL_SUBMISSION_CHECKLIST.pdf](FINAL_SUBMISSION_CHECKLIST.pdf) | **PDF for LMS** — submission checklist |
+| [RUBRIC_MAPPING.md](RUBRIC_MAPPING.md) | Markdown source |
+| [AI_FAILURES.md](AI_FAILURES.md) | Markdown source |
+| [FINAL_SUBMISSION_CHECKLIST.md](FINAL_SUBMISSION_CHECKLIST.md) | Markdown source |
+
+**Formal capstone reports (5 PDFs):** [submission/](../submission/) — portfolio + Experiments 1–4
 
 ---
 
@@ -53,6 +57,18 @@ cd smart-water-capstone
 python3 -m pip install -r requirements.txt
 streamlit run app/main.py
 pytest -q
+```
+
+---
+
+## Regenerate PDFs
+
+```bash
+cd assignment4
+pdflatex RUBRIC_MAPPING.tex && pdflatex RUBRIC_MAPPING.tex
+pdflatex AI_FAILURES.tex && pdflatex AI_FAILURES.tex
+pdflatex FINAL_SUBMISSION_CHECKLIST.tex && pdflatex FINAL_SUBMISSION_CHECKLIST.tex
+rm -f *.aux *.log *.out
 ```
 
 ---

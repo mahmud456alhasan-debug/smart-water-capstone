@@ -1,0 +1,38 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{parskip}
+
+\title{AI Failures We Found\\Assignment 4 --- Smart Water Lab}
+\author{Mahmudul Hasan (4125999049)}
+\date{2026}
+
+\begin{document}
+\maketitle
+
+\section{Master table}
+
+\begin{tabular}{@{}p{3.2cm}p{3.2cm}p{2.8cm}p{3.5cm}@{}}
+\toprule
+AI output & Why wrong & How detected & Fix \\
+\midrule
+\texttt{S=25400*CN-254} & Uses $\times$ not $\div$ & Terminal Q$\approx$0.002 vs 43.6~mm & Division form in \texttt{scs\_cn.py} \\
+``P=5, CN=95 $\Rightarrow$ Q=0'' & Ia$\approx$2.67~mm & Demo script AssertionError & Regression test \\
+Runoff without Q$\le$P cap & Water balance & Parametrized pytest & \texttt{min(Q,P)} \\
+Missing API \texttt{rain} field & Crashes & 50-city pytest & Return 0~mm/h \\
+SLSQP infeasible start & Storage bounds & \texttt{validate\_schedule} & trust-constr \\
+Flood depth no floor & Negative depth & Physical checklist & \texttt{max(0,$\cdot$)} \\
+\bottomrule
+\end{tabular}
+
+\section{Statistics}
+52 AI outputs reviewed; \textbf{9} corrections; capstone \textbf{33} pytest; experiments \textbf{88} pytest; total \textbf{121}.
+
+\section{Evidence}
+Case B: \texttt{assignment3/evidence/buggy\_rainfall.py}. Case A: \texttt{assignment3/scripts/demo\_wrong\_assumption\_fails.py}.
+
+\section{Repository}
+\url{https://github.com/mahmud456alhasan-debug/smart-water-capstone}
+
+\end{document}

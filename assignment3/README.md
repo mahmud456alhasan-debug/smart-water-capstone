@@ -15,8 +15,8 @@ Assignment 3 is **not** “write some pytest files.” It proves you used **laye
 | [evidence/](evidence/) | **buggy_rainfall.py** + **rainfall_fixed.py** in repo |
 | [SWISS_CHEESE_REPORT.md](SWISS_CHEESE_REPORT.md) | Full narrative: layers, test strategy, evidence |
 | [HALLUCINATION_CASE_STUDY.md](HALLUCINATION_CASE_STUDY.md) | Primary case study (AI claim → test → failure → fix) |
-| [SWISS_CHEESE_REPORT.pdf](SWISS_CHEESE_REPORT.pdf) | PDF for LMS upload (compile from `.tex`) |
-| [HALLUCINATION_CASE_STUDY.pdf](HALLUCINATION_CASE_STUDY.pdf) | PDF case study (compile from `.tex`) |
+| [SWISS_CHEESE_REPORT.pdf](SWISS_CHEESE_REPORT.pdf) | **PDF for LMS upload** |
+| [HALLUCINATION_CASE_STUDY.pdf](HALLUCINATION_CASE_STUDY.pdf) | **PDF for LMS upload** |
 
 ---
 
@@ -88,4 +88,5 @@ pytest -q --cov=src --cov-report=term-missing
 cd assignment3
 pdflatex SWISS_CHEESE_REPORT.tex && pdflatex SWISS_CHEESE_REPORT.tex
 pdflatex HALLUCINATION_CASE_STUDY.tex && pdflatex HALLUCINATION_CASE_STUDY.tex
+rm -f *.aux *.log *.out
 ```
