@@ -72,7 +72,32 @@ Full evidence: [submission/](submission/) · [docs/ENGINEERING.md](docs/ENGINEER
 
 **Release bundle:** [v1.0 — Smart Water Lab Submission](https://github.com/mahmud456alhasan-debug/smart-water-capstone/releases/tag/v1.0.0) · short filenames in [`release/`](release/) · LaTeX sources in [`submission/`](submission/)
 
-**Weekly lab reports (16):** [lab_reports/README.md](lab_reports/README.md) — weekly learning journey (Weeks 1–8)
+---
+
+## Learning journey (Weeks 1–8)
+
+Complete semester progression from AI-assisted software engineering foundations to the integrated Smart Water platform.
+
+| Stage | Topics |
+|-------|--------|
+| Weeks 1–2 | AI setup, Chain-of-Thought, AGENTS.md |
+| Weeks 3–4 | Agile development, TDD, refactoring |
+| Weeks 5–6 | Rainfall, runoff, reservoir, and flood labs |
+| Weeks 7–8 | Capstone planning, implementation, testing, demo |
+
+<p align="center">
+  <a href="lab_reports/README.md">
+    <img src="lab_reports/week5_session_a_lab1_streamlit.png" alt="Week 5 Lab 1 — Rainfall alert" width="24%" />
+    <img src="lab_reports/week5_session_b_lab2_sensitivity.png" alt="Week 5 Lab 2 — SCS-CN runoff" width="24%" />
+    <img src="lab_reports/week6_session_a_lab3_tradeoff.png" alt="Week 6 Lab 3 — Reservoir optimization" width="24%" />
+    <img src="lab_reports/week6_session_b_lab4_comparison.png" alt="Week 6 Lab 4 — Flood inundation" width="24%" />
+  </a>
+</p>
+
+<p align="center">
+  <strong>16 reports</strong> · 16 PDFs · LaTeX sources · appendix code<br><br>
+  <a href="lab_reports/README.md"><strong>Explore the complete learning journey →</strong></a>
+</p>
 
 ---
 

@@ -11,22 +11,24 @@ On the repo home page, click the **gear icon** next to "About".
 **Description** (paste exactly):
 
 ```
-AI-Augmented Smart Water Decision Support Platform integrating rainfall forecasting, runoff modeling, reservoir optimization, flood inundation analysis, and engineering validation.
+AI-Augmented Water Resources Decision Support Platform integrating rainfall monitoring, runoff modeling, reservoir optimization, flood-risk analysis, and engineering validation.
 ```
 
 **Topics** (add each):
 
 ```
+python
+streamlit
 hydrology
 water-resources
-streamlit
-python
 optimization
+monte-carlo
 flood-modeling
-rainfall-analysis
+rainfall-monitoring
 scs-cn
-engineering
+reservoir-optimization
 ai-engineering
+software-engineering
 decision-support
 pytest
 ```
@@ -99,9 +101,10 @@ After push, confirm README shows in order:
 5. **Results snapshot** (experiment outcomes table)
 6. Key metrics
 7. **Key deliverables** (PDF links + release)
-7. Quick start
-8. Repository structure
-9. Further documentation links
+8. **Learning journey** (Weeks 1–8 table + lab report preview)
+9. Quick start
+10. Repository structure
+11. Further documentation links
 
 Detailed engineering content lives in [`docs/ENGINEERING.md`](ENGINEERING.md), not the main README.
 
