@@ -11,7 +11,7 @@ Interactive **MiniMax** web application introducing Large Language Models, trans
 
 | Resource | Link |
 |----------|------|
-| **Live site** | [**LLM Universe — Large Language Models Explained**](https://d00r08r76qg9.space.minimaxi.com/) |
+| **Live site** | [**LLM Universe — Large Language Models Explained**](https://6uejb4yfj0go.space.minimax.io) |
 | Preview screenshot | [`assets/llm_universe_preview.png`](../assets/llm_universe_preview.png) |
 
 **Topic:** LLMs, AI foundations, and prompt engineering  

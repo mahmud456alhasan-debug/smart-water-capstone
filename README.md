@@ -134,16 +134,16 @@ Supporting deliverables across the semester (experiments above are the core tech
 
 | Assignment | Topic | Link |
 |------------|-------|------|
-| **1** | LLM Universe Educational Website (MiniMax) | [Live site](https://d00r08r76qg9.space.minimaxi.com/) · [assignment1/](assignment1/) |
+| **1** | LLM Universe Educational Website (MiniMax) | [Live site](https://6uejb4yfj0go.space.minimax.io) · [assignment1/](assignment1/) |
 | **2** | CNN-Based MNIST Digit Classification | [assignment2/](assignment2/) |
 | **3** | Swiss Cheese Testing & AI Failure Analysis | [assignment3/](assignment3/) |
 | **4** | Smart Water Decision Support Capstone | [assignment4/](assignment4/) |
 
 <p align="center">
-  <a href="https://d00r08r76qg9.space.minimaxi.com/">
+  <a href="https://6uejb4yfj0go.space.minimax.io">
     <img src="assets/llm_universe_preview.png" alt="Assignment 1 — LLM Universe" width="70%">
   </a><br>
-  <em>Assignment 1 — <a href="https://d00r08r76qg9.space.minimaxi.com/">LLM Universe</a> (MiniMax educational website)</em>
+  <em>Assignment 1 — <a href="https://6uejb4yfj0go.space.minimax.io">LLM Universe</a> (MiniMax educational website)</em>
 </p>
 
 ---
