@@ -30,17 +30,26 @@ PyTorch CNN (`DigitCNN`) for handwritten digit recognition — training, evaluat
 | [cnn_mnist/model.py](cnn_mnist/model.py) | `DigitCNN` architecture |
 | [cnn_mnist/mnist_cnn.py](cnn_mnist/mnist_cnn.py) | Train, test, demo CLI |
 | [cnn_mnist/mnist_cnn_model.pth](cnn_mnist/mnist_cnn_model.pth) | Pre-trained weights (~812 KB) |
-| [cnn_mnist/requirements.txt](cnn_mnist/requirements.txt) | Dependencies |
+| [cnn_mnist/requirements-cpu.txt](cnn_mnist/requirements-cpu.txt) | **Recommended** — CPU PyTorch (~200 MB, not 2.7 GB) |
+| [cnn_mnist/requirements.txt](cnn_mnist/requirements.txt) | Default (may pull GPU/CUDA wheels) |
 
 ---
 
 ## Quick start
 
+**Important:** Plain `pip install torch` pulls **CUDA/GPU packages (~2 GB+)**. For this CPU-only MNIST demo, use the CPU wheels (~200 MB):
+
 ```bash
 cd assignment2/cnn_mnist
-python3 -m pip install -r requirements.txt
 
-# Demo with pre-trained weights (downloads MNIST if needed)
+# Recommended: CPU-only install (~200 MB, one command)
+python3 -m pip install -r requirements-cpu.txt
+
+# Or manual CPU install:
+# python3 -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+# python3 -m pip install matplotlib numpy scikit-learn Pillow
+
+# Demo with pre-trained weights (downloads MNIST ~12–65 MB on first run)
 python3 mnist_cnn.py --mode demo
 
 # Train from scratch (optional)
@@ -50,7 +59,9 @@ python3 mnist_cnn.py --mode train
 python3 mnist_cnn.py --mode eval
 ```
 
-**Note:** MNIST data (~65 MB) is **not** stored in git. PyTorch downloads it automatically to `cnn_mnist/data/MNIST/` on first run.
+If you already started a GPU install, press **Ctrl+C**, then run the CPU commands above.
+
+**Note:** MNIST data (~65 MB) is **not** stored in git. PyTorch downloads it to `cnn_mnist/data/MNIST/` on first run. Weights are already in git as `mnist_cnn_model.pth` (~812 KB).
 
 ---
 

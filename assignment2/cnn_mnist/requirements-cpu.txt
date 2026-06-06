@@ -1,0 +1,8 @@
+# CPU-only PyTorch (~200 MB). Avoids nvidia-cudnn/cublas (~2.7 GB GPU stack).
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch
+torchvision
+matplotlib
+numpy
+scikit-learn
+Pillow
