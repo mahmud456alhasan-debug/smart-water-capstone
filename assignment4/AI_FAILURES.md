@@ -21,7 +21,7 @@ Full chains: [assignment3/EVIDENCE_CHAIN.md](../assignment3/EVIDENCE_CHAIN.md) �
 | SLSQP infeasible start | Storage violates bounds | `validate_schedule()` | trust-constr + feasible x₀ |
 | Fake feasible eco trade-off points | Misleading plot | Hydrology review | Mark infeasible honestly |
 | Flood depth without floor | Negative depth | Physical checklist | `max(0, ·)` |
-| Wet mask with `≤` elev | Edge cell wrong | validate_flood CLI | Strict `<` mask |
+| Wet mask at water level | `dem <= flood_level` (cell at exact stage is wet) | Code review + flood pytest | `simulate_flood()` in `src/flood/inundation.py` |
 
 ---
 

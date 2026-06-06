@@ -166,10 +166,10 @@ See **`case_study_radar.png`**: six axes (technical quality, testing, physical v
 
 ## 11. Submission checklist
 
-- [ ] Four experiment PDFs compiled (Overleaf, twice each)
-- [ ] This case study PDF compiled (`AI_Engineering_Portfolio.tex`)
-- [ ] Pipeline + radar figures included
-- [ ] All `pytest -q` green (88 tests)
+- [x] Four experiment PDFs in `submission/` and `release/`
+- [x] AI Engineering Portfolio PDF compiled
+- [x] Assignment 3 & 4 PDFs compiled
+- [x] All capstone `pytest -q` green (**33** tests in this repo)
 - [ ] Cross-check with ChatGPT, DeepSeek, Gemini (course recommendation)
 
 ---

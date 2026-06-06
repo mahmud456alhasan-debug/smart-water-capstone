@@ -21,6 +21,7 @@
 | Assignment 3 — Swiss Cheese report | `assignment3/SWISS_CHEESE_REPORT.pdf` |
 | Assignment 3 — Hallucination case study | `assignment3/HALLUCINATION_CASE_STUDY.pdf` |
 | Assignment 4 — Rubric mapping | `assignment4/RUBRIC_MAPPING.pdf` |
+| Assignment 4 — AI failures table | `assignment4/AI_FAILURES.pdf` |
 | AI Engineering Portfolio | `submission/portfolio/AI_Engineering_Portfolio.pdf` |
 | Experiment 1–4 reports | `submission/experiment_reports/*/…Report.pdf` |
 | GitHub URL | https://github.com/mahmud456alhasan-debug/smart-water-capstone |
@@ -66,4 +67,5 @@
 ```bash
 cd assignment3 && pdflatex SWISS_CHEESE_REPORT.tex && pdflatex HALLUCINATION_CASE_STUDY.tex
 cd ../assignment4 && pdflatex RUBRIC_MAPPING.tex && pdflatex RUBRIC_MAPPING.tex
+pdflatex AI_FAILURES.tex && pdflatex AI_FAILURES.tex
 ```

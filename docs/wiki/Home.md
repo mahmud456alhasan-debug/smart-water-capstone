@@ -40,7 +40,7 @@ Home
 
 | Experiment | Key result |
 |------------|------------|
-| Rainfall monitoring | GREEN/YELLOW/RED classification validated |
+| Rainfall monitoring | GREEN/YELLOW/RED classification validated *(AMBER in capstone code = YELLOW tier)* |
 | SCS-CN runoff | Reference Q = 13.80 mm verified |
 | Reservoir optimization | Monte Carlo P10/P50/P90 analysis |
 | Flood inundation | 9/9 physical validation checks passed |
@@ -49,7 +49,8 @@ Home
 
 | Item | Value |
 |------|------:|
-| Tests | 88 |
+| Tests in this repo (CI) | **33** |
+| Additional experiment tests (local) | **88** |
 | PDF reports | 5 |
 | Lab reports | 16 |
 | Validation CLIs | 4 |

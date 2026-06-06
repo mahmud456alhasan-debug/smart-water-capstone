@@ -20,7 +20,7 @@ Verified: `pytest --collect-only` on 2026-05-31.
 |-------|---------|------:|
 | Capstone pytest | `cd capstone && pytest -q` | **33** |
 
-Breakdown by file: `test_runoff.py` (10), `test_weather.py` (6), `test_flood.py` (5), `test_reservoir.py` (5), `test_integration.py` (3), `test_validation.py` (2), `conftest.py` (fixtures only).
+Breakdown by file: `test_runoff.py` (11), `test_weather.py` (6), `test_flood.py` (5), `test_reservoir.py` (5), `test_integration.py` (4), `test_validation.py` (2), `conftest.py` (fixtures only).
 
 **History:** Week 8 Session A report snapshot = **29** tests; expanded to **33** for Assignment 3 boundary + hallucination regression tests.
 
@@ -40,11 +40,13 @@ Evidence in formal reports: [`submission/portfolio/AI_Engineering_Portfolio.md`]
 
 ---
 
-## What README “88 tests” means
+## What “88 tests” means
 
-The homepage **Key metrics** row **Automated tests: 88** refers to the **four specialized experiments**, consistent with the portfolio case study.
+**88** = supplementary pytest in local experiment development folders (not run in this repo’s GitHub CI).
 
-The **capstone** suite (**33** tests) is what runs in GitHub Actions on this repository.
+**33** = automated tests in this capstone repository (`pytest -q`).
+
+See portfolio PDF for experiment-level test evidence.
 
 ---
 

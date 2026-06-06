@@ -34,7 +34,7 @@ The rubric mentions examples such as **runoff ≤ rainfall** and **pH 0–14**. 
 | 14 | Flooded fraction bounded | 0 ≤ flooded % ≤ 100 | `flood_statistics()` | `test_flood_statistics_wet_and_dry` |
 | 15 | **Monotonic inundation** | wet count non-decreasing as stage ↑ | `validate_flood_monotonic()` | `test_monotonic_wet_count`; Exp 4 **9/9 PASS** |
 | 16 | DEM elevation range | Synthetic DEM 30–80 m | `generate_dem()` | `test_generate_dem_bounds` |
-| 17 | Alert thresholds ordered | GREEN < AMBER < RED | `alert_level()` | `test_alert_green`, `test_alert_amber`, `test_alert_red` |
+| 17 | Alert thresholds ordered | GREEN < AMBER < RED *(AMBER = YELLOW in experiment reports)* | `alert_level()` | `test_alert_green`, `test_alert_amber`, `test_alert_red` |
 | 18 | Alert boundary at RED | rate ≥ red → RED | Inclusive upper tier | `test_alert_boundary_red` |
 
 ---
@@ -46,7 +46,7 @@ Layer 1 — Human / AI review     AGENTS.md validation rules; prompt_log correct
 Layer 2 — pytest (33 capstone)  tests/test_*.py
 Layer 3 — validation.py         validate_runoff_mm, validate_storage_mcm, …
 Layer 4 — Integration           tests/test_integration.py
-Layer 5 — Experiment CLIs       validate_reference, validate_flood, … (88 tests total)
+Layer 5 — Experiment CLIs       validate_reference, validate_flood, … (**88** supplementary experiment tests — not in capstone CI)
 ```
 
 ---

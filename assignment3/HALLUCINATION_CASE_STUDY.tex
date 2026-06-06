@@ -16,7 +16,7 @@ During test design (Week 8 Session A, Cursor Agent): ``For CN=95 and rainfall $P
 
 \section{Why this is wrong}
 SCS-CN initial abstraction: $I_a = 0.2 \times (25400/\mathrm{CN} - 254)$.\\
-For CN=95: $I_a \approx 5.37$~mm, so $P=5$~mm gives $Q=0$ \emph{by arithmetic}, not by a general rule. High CN \emph{lowers} $I_a$; small storms can still produce runoff when $P > I_a$.
+For CN=95: $S \approx 13.37$~mm, $I_a \approx 2.67$~mm, so $P=5$~mm gives $Q > 0$ — the verbal rule ``high CN always means zero runoff for small storms'' is wrong.
 
 \section{Tests created}
 \texttt{tests/test\_runoff.py}: \texttt{test\_runoff\_below\_initial\_abstraction}, \texttt{test\_runoff\_not\_exceed\_rainfall\_high\_cn}.\\
@@ -41,7 +41,7 @@ AI prompt & \texttt{prompt\_log.md} Week 8A \\
 Tests & \texttt{tests/test\_runoff.py} \\
 Failure documented & This file + Week 8A PDF \\
 Fix & Corrected tests + validation layer \\
-Run & \texttt{pytest -q} $\rightarrow$ 29 passed \\
+Run & \texttt{pytest -q} $\rightarrow$ 33 passed \\
 \bottomrule
 \end{tabular}
 

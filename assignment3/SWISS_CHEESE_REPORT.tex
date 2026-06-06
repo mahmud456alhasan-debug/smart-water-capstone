@@ -18,7 +18,7 @@ Use AI-generated hydrology code and prove layered verification catches at least 
 \section{Swiss Cheese layers}
 \begin{enumerate}[nosep]
   \item Human / AI review (units, formulas)
-  \item Unit \& boundary pytest (29 capstone tests)
+  \item Unit \& boundary pytest (33 capstone tests)
   \item Physical validity (\texttt{src/validation.py})
   \item Integration tests
   \item Coverage gate ($>$80\% on \texttt{src/})
@@ -38,7 +38,7 @@ Test & Category & Rule \\
 \end{tabular}
 
 \section{Results}
-\textbf{29 passed}; \textbf{96\%} coverage on \texttt{src/}. Evidence: \texttt{lab\_reports/week8\_session\_a\_terminal.png}.
+\textbf{33 passed}; \textbf{96\%} coverage on \texttt{src/}. Evidence: \texttt{lab\_reports/week8\_session\_a\_terminal.png} (Session 8A snapshot; expanded to 33 tests for Assignment 3 regression cases).
 
 \section{Hallucination (summary)}
 \textbf{AI assumption:} ``For CN=95, $P=5$~mm always gives zero runoff.''\\

@@ -12,7 +12,7 @@
 | `buggy_rainfall.py` not in repo (only local week2) | **High** | Copied to `assignment3/evidence/` |
 | README said `tests/` = 88 | **High** | Clarified: 88 = experiments, 33 = capstone |
 | EVIDENCE_CHAIN linked missing `week2_session_a_files/` | **Medium** | Links → `assignment3/evidence/` |
-| Assignment 3 .tex files stale (29 tests) | **Low** | Recompile after .tex update (optional LMS) |
+| Assignment 3 .tex files stale (29 tests) | **Low** | **Fixed** — updated to 33; PDFs recompiled |
 
 ---
 
@@ -55,7 +55,7 @@
 | Experiments not in capstone repo | Grader may not see 88 tests | Point to portfolio + local paths in TEST_COUNTS.md |
 | Case A = test-design assumption, not wrong code | Slightly weaker than Case B | Lead with Case B (`buggy_rainfall.py`) |
 | GitHub About / Release empty | Presentation | Manual — GITHUB_SETUP.md |
-| No PDF compiled for assignment3/4 | LMS upload | Run pdflatex in assignment3/ and assignment4/ |
+| No PDF compiled for assignment3/4 | LMS upload | PDFs in `assignment3/` and `assignment4/` (recompiled 2026-06) |
 
 ---
 

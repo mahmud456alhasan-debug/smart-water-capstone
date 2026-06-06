@@ -40,7 +40,7 @@ Maps course rubric criteria to **exact evidence** in this repository.
 | Runoff Q ≤ rainfall P | `validate_runoff_mm`, pytest | [src/validation.py](../src/validation.py) · [tests/test_runoff.py](../tests/test_runoff.py) |
 | Storage within bounds | V_MIN ≤ S ≤ V_MAX | `validate_storage_mcm` |
 | Flood extent monotonic with stage | Rising water → non-decreasing wet cells | `validate_flood_monotonic` · Exp 4 **9/9 PASS** |
-| Alert thresholds physically ordered | GREEN < YELLOW < RED mm/h | [tests/test_weather.py](../tests/test_weather.py) |
+| Alert thresholds physically ordered | GREEN < YELLOW < RED mm/h *(capstone code label: AMBER = YELLOW tier)* | [tests/test_weather.py](../tests/test_weather.py) |
 | Reference hand-check | Q = **13.80 mm** at P = 50, CN = 80 | Exp 2 report + `validate_reference` CLI |
 | Reservoir revenue band | Expected USD range after optimize | `validate_reservoir_result` |
 

@@ -14,7 +14,8 @@
 
 | Metric | Value |
 |--------|------:|
-| Automated tests | 88 |
+| Automated tests (this repository) | **33** |
+| Additional experiment tests (local dev folders) | **88** |
 | Validation CLIs | 4 |
 | AI corrections documented | 9 |
 | Monte Carlo scenarios | 100 |
