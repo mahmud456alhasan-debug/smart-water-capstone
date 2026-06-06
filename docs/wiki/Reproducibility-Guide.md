@@ -18,8 +18,8 @@ Copy `dem.npy` into `data/` for the flood tab.
 
 | Document | Location |
 |----------|----------|
-| AI Engineering Portfolio | `submission/portfolio/` |
-| Experiment 1–4 reports | `submission/experiment_reports/` |
+| AI Engineering Portfolio | `portfolio/` |
+| Experiment 1–4 reports | `experiment1/ … experiment4/` |
 | Release bundle (short names) | `release/` |
 | Weekly lab reports (16) | `lab_reports/` |
 

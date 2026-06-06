@@ -9,7 +9,9 @@ Process and engineering documents for Smart Water Lab. The [main README](../READ
 | Document | Purpose |
 |----------|---------|
 | [../README.md](../README.md) | Homepage — gallery, metrics, deliverables, quick start |
-| [../submission/README.md](../submission/README.md) | Formal experiment reports (PDF + LaTeX) |
+| [../experiment1/](../experiment1/) … [experiment4/](../experiment4/) | Experiment reports (PDF + LaTeX) |
+| [../portfolio/](../portfolio/) | AI Engineering Portfolio |
+| [../submission/README.md](../submission/README.md) | Submission index |
 | [../lab_reports/README.md](../lab_reports/README.md) | Weekly lab reports (Weeks 1–8) |
 | [../assignment2/README.md](../assignment2/README.md) | Assignment 2 — CNN MNIST + PDF |
 | [../assignment3/README.md](../assignment3/README.md) | Assignment 3 — Swiss Cheese |

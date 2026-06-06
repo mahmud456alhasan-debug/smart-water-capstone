@@ -45,7 +45,7 @@ Six axes: technical quality, testing, physical validation, AI collaboration, rep
 | Critical AI use | 52 deliverables reviewed, 9 required human correction |
 | Threats to validity | OpenWeather sparsity, SCS-CN lumped CN, bathtub flood model, LLM hallucination risk |
 
-Full narrative: [submission/portfolio/AI_Engineering_Portfolio.md](../submission/portfolio/AI_Engineering_Portfolio.md) · Capstone reflection: [JAGGED_FRONTIER.md](JAGGED_FRONTIER.md)
+Full narrative: [portfolio/AI_Engineering_Portfolio.md](../portfolio/AI_Engineering_Portfolio.md) · Capstone reflection: [JAGGED_FRONTIER.md](JAGGED_FRONTIER.md)
 
 ---
 
@@ -53,10 +53,10 @@ Full narrative: [submission/portfolio/AI_Engineering_Portfolio.md](../submission
 
 | Module | Capabilities | Evidence |
 |--------|--------------|----------|
-| Rainfall (Exp 1) | OpenWeather API, GREEN/YELLOW/RED alerts, 3h/6h forecast | [Experiment 1 report](../submission/experiment_reports/Experiment1_Rainfall_Alert/) |
-| Runoff (Exp 2) | SCS-CN, CN uncertainty bands, sensitivity | [Experiment 2 report](../submission/experiment_reports/Experiment2_SCSCN_Runoff/) |
-| Reservoir (Exp 3) | trust-constr optimization, eco trade-off, Monte Carlo | [Experiment 3 report](../submission/experiment_reports/Experiment3_Reservoir_Optimization/) |
-| Flood (Exp 4) | DEM inundation, level comparison, 9/9 validation PASS | [Experiment 4 report](../submission/experiment_reports/Experiment4_Flood_Inundation/) |
+| Rainfall (Exp 1) | OpenWeather API, GREEN/YELLOW/RED alerts, 3h/6h forecast | [Experiment 1 report](../experiment1/) |
+| Runoff (Exp 2) | SCS-CN, CN uncertainty bands, sensitivity | [Experiment 2 report](../experiment2/) |
+| Reservoir (Exp 3) | trust-constr optimization, eco trade-off, Monte Carlo | [Experiment 3 report](../experiment3/) |
+| Flood (Exp 4) | DEM inundation, level comparison, 9/9 validation PASS | [Experiment 4 report](../experiment4/) |
 
 ---
 
@@ -66,4 +66,6 @@ Full narrative: [submission/portfolio/AI_Engineering_Portfolio.md](../submission
 |----------|------|
 | Key deliverables (PDFs) | [README — Key deliverables](../README.md#key-deliverables) |
 | Weekly lab progression | [lab_reports/README.md](../lab_reports/README.md) |
-| Submission package | [submission/README.md](../submission/README.md) |
+| Submission index | [submission/README.md](../submission/README.md) |
+| Experiments 1–4 | [experiment1/](../experiment1/) … [experiment4/](../experiment4/) |
+| Portfolio | [portfolio/](../portfolio/) |

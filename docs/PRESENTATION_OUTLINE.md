@@ -66,7 +66,7 @@ Follow [DEMO_SCRIPT.md](DEMO_SCRIPT.md) — **15 s per tab**:
 | **OpenCode** | Week 1–2 AGENTS.md pattern | Not used for capstone code |
 
 **Close:**
-- “Repo is public; `streamlit run app/main.py`; all PDFs in `submission/`.”
+- “Repo is public; `streamlit run app/main.py`; experiment PDFs in `experiment1/`–`experiment4/`.”
 - “Physical rules in `docs/PHYSICAL_VALIDATION.md`; prompt log shows every correction.”
 
 ---

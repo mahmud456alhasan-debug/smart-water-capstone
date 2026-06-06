@@ -55,25 +55,37 @@ Water managers must act under uncertainty — heavy rain, limited storage, and f
 
 *Additional local experiment verification:* **88** supplementary pytest tests in development folders (not in this repo). See [docs/TEST_COUNTS.md](docs/TEST_COUNTS.md).
 
+### Repository layout
+
+```text
+smart-water-capstone/
+├── experiment1/ … experiment4/   Core hydrology experiments (PDF + LaTeX + code)
+├── portfolio/                    AI Engineering Portfolio
+├── assignment1/ … assignment4/   Course assignments
+├── app/ · src/ · tests/          Integrated capstone (Streamlit + 33 pytest)
+├── lab_reports/                  16 weekly lab reports
+└── docs/                           Engineering documentation
+```
+
 ---
 
 ## Core engineering experiments & reports
 
 <a id="core-engineering-experiments"></a>
 
-These four experiments are the **primary technical component** of the course project. Formal PDFs and LaTeX sources are in [`submission/`](submission/).
+These four experiments are the **primary technical component** of the course project. Each has its own folder at the repo root (`experiment1/`–`experiment4/`).
 
 | | Document | Download |
 |--|----------|----------|
-| 📘 | **AI Engineering Portfolio** — pipeline, AI statistics, threats to validity | [PDF](submission/portfolio/AI_Engineering_Portfolio.pdf) |
-| 📄 | **Experiment 1** — Rainfall Monitoring & Alert System | [PDF](submission/experiment_reports/Experiment1_Rainfall_Alert/Experiment1_Rainfall_Alert_Report.pdf) |
-| 📄 | **Experiment 2** — SCS-CN Runoff Modeling | [PDF](submission/experiment_reports/Experiment2_SCSCN_Runoff/Experiment2_SCSCN_Runoff_Report.pdf) |
-| 📄 | **Experiment 3** — Reservoir Dispatch Optimization | [PDF](submission/experiment_reports/Experiment3_Reservoir_Optimization/Experiment3_Reservoir_Optimization_Report.pdf) |
-| 📄 | **Experiment 4** — Flood Inundation Analysis | [PDF](submission/experiment_reports/Experiment4_Flood_Inundation/Experiment4_Flood_Inundation_Report.pdf) |
+| 📘 | **AI Engineering Portfolio** — pipeline, AI statistics, threats to validity | [PDF](portfolio/AI_Engineering_Portfolio.pdf) |
+| 📄 | **Experiment 1** — Rainfall Monitoring & Alert System | [PDF](experiment1/Experiment1_Rainfall_Alert_Report.pdf) · [folder](experiment1/) |
+| 📄 | **Experiment 2** — SCS-CN Runoff Modeling | [PDF](experiment2/Experiment2_SCSCN_Runoff_Report.pdf) · [folder](experiment2/) |
+| 📄 | **Experiment 3** — Reservoir Dispatch Optimization | [PDF](experiment3/Experiment3_Reservoir_Optimization_Report.pdf) · [folder](experiment3/) |
+| 📄 | **Experiment 4** — Flood Inundation Analysis | [PDF](experiment4/Experiment4_Flood_Inundation_Report.pdf) · [folder](experiment4/) |
 
 All four modules are integrated in the capstone app: `streamlit run app/main.py`
 
-➡️ Full package: [submission/](submission/) · Release: [v1.0](https://github.com/mahmud456alhasan-debug/smart-water-capstone/releases/tag/v1.0.0) · [`release/`](release/)
+➡️ Release: [v1.0](https://github.com/mahmud456alhasan-debug/smart-water-capstone/releases/tag/v1.0.0) · [`release/`](release/)
 
 ---
 
@@ -180,7 +192,9 @@ Copy `dem.npy` into `data/` for the flood tab.
 
 | Resource | Purpose |
 |----------|---------|
-| [submission/README.md](submission/README.md) | Experiment reports (PDF + LaTeX) |
+| [experiment1/](experiment1/) · [experiment2/](experiment2/) · [experiment3/](experiment3/) · [experiment4/](experiment4/) | Engineering experiments (PDF + LaTeX) |
+| [portfolio/](portfolio/) | AI Engineering Portfolio |
+| [submission/README.md](submission/README.md) | Submission index |
 | [docs/README.md](docs/README.md) | Full documentation index |
 | [docs/ENGINEERING.md](docs/ENGINEERING.md) | Validation & AI engineering evidence |
 | [docs/PRESENTATION_OUTLINE.md](docs/PRESENTATION_OUTLINE.md) | 5-minute demo script |

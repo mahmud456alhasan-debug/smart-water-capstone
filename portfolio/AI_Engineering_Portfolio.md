@@ -166,7 +166,7 @@ See **`case_study_radar.png`**: six axes (technical quality, testing, physical v
 
 ## 11. Submission checklist
 
-- [x] Four experiment PDFs in `submission/` and `release/`
+- [x] Four experiment PDFs in `experiment1/`–`experiment4/` and `release/`
 - [x] AI Engineering Portfolio PDF compiled
 - [x] Assignment 3 & 4 PDFs compiled
 - [x] All capstone `pytest -q` green (**33** tests in this repo)

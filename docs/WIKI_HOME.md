@@ -23,11 +23,11 @@ See root README pipeline figure: `assets/smart_water_pipeline.png`
 
 | Experiment | PDF path in repo |
 |------------|------------------|
-| Case study | `submission/portfolio/AI_Engineering_Portfolio.pdf` |
-| Exp 1 | `submission/experiment_reports/Experiment1_Rainfall_Alert/` |
-| Exp 2 | `submission/experiment_reports/Experiment2_SCSCN_Runoff/` |
-| Exp 3 | `submission/experiment_reports/Experiment3_Reservoir_Optimization/` |
-| Exp 4 | `submission/experiment_reports/Experiment4_Flood_Inundation/` |
+| Case study | `portfolio/AI_Engineering_Portfolio.pdf` |
+| Exp 1 | `experiment1/` |
+| Exp 2 | `experiment2/` |
+| Exp 3 | `experiment3/` |
+| Exp 4 | `experiment4/` |
 
 ## Verification
 

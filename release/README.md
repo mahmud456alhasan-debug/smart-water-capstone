@@ -13,7 +13,7 @@ PDFs with short filenames for **GitHub Releases → v1.0 — Smart Water Lab Sub
 Regenerate from `submission/` after recompiling LaTeX, then copy here:
 
 ```bash
-cp submission/portfolio/AI_Engineering_Portfolio.pdf release/
-cp submission/experiment_reports/Experiment1_Rainfall_Alert/Experiment1_Rainfall_Alert_Report.pdf release/Experiment1_Rainfall_Alert.pdf
+cp portfolio/AI_Engineering_Portfolio.pdf release/
+cp experiment1/Experiment1_Rainfall_Alert_Report.pdf release/Experiment1_Rainfall_Alert.pdf
 # ... etc.
 ```

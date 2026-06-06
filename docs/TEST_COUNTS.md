@@ -36,7 +36,7 @@ Breakdown by file: `test_runoff.py` (11), `test_weather.py` (6), `test_flood.py`
 | Exp 4 Flood | `experiment4_flood_inundation/` | 22 |
 | **Subtotal** | | **88** |
 
-Evidence in formal reports: [`submission/portfolio/AI_Engineering_Portfolio.md`](../submission/portfolio/AI_Engineering_Portfolio.md)
+Evidence in formal reports: [`portfolio/AI_Engineering_Portfolio.md`](../portfolio/AI_Engineering_Portfolio.md)
 
 ---
 

@@ -28,7 +28,7 @@ Maps course rubric criteria to **exact evidence** in this repository.
 | Prompt log | Sessions 7A, 7B, 8A, 8B documented | [prompt_log.md](../prompt_log.md) |
 | AI errors corrected | 9 documented corrections | [AI_FAILURES.md](AI_FAILURES.md) |
 | Jagged Frontier reflection | Where AI excelled vs failed | [docs/JAGGED_FRONTIER.md](../docs/JAGGED_FRONTIER.md) |
-| Case study (extended) | Statistics, threats to validity | [submission/portfolio/AI_Engineering_Portfolio.pdf](../submission/portfolio/AI_Engineering_Portfolio.pdf) |
+| Case study (extended) | Statistics, threats to validity | [portfolio/AI_Engineering_Portfolio.pdf](../portfolio/AI_Engineering_Portfolio.pdf) |
 | Tool comparison | Cursor, ChatGPT, OpenCode notes | JAGGED_FRONTIER § Tool comparison |
 
 ---

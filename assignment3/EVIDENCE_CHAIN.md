@@ -111,7 +111,7 @@ P = 80 mm, CN = 85 → Q = 0.0019 mm   (expected ~43.6 mm)
 
 - Week 2 hand check: P=80, CN=85 → Q≈43.6 mm  
 - Experiment 2: **20 pytest cases** + `validate_reference.py` → Q = **13.80 mm** at P=50, CN=80  
-- Report: [`submission/experiment_reports/Experiment2_SCSCN_Runoff/`](../submission/experiment_reports/Experiment2_SCSCN_Runoff/)
+- Report: [`experiment2/`](../experiment2/)
 
 ### 4. Fix
 
