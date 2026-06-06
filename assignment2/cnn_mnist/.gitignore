@@ -1,2 +1,3 @@
 # MNIST data downloaded by PyTorch — do not commit
 data/
+mnist_cnn_model/
