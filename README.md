@@ -17,7 +17,6 @@
 <p align="center">
   <a href="#project-snapshot">Snapshot</a> ·
   <a href="#core-engineering-experiments">Experiments</a> ·
-  <a href="#reports">Reports</a> ·
   <a href="#platform-gallery">Gallery</a> ·
   <a href="#results-snapshot">Results</a> ·
   <a href="#course-assignments">Assignments</a> ·
@@ -58,38 +57,23 @@ Water managers must act under uncertainty — heavy rain, limited storage, and f
 
 ---
 
-## Core engineering experiments
+## Core engineering experiments & reports
 
 <a id="core-engineering-experiments"></a>
 
-These four experiments are the **primary technical component** of the course project. Each includes a formal PDF report, figures, and LaTeX sources in [`submission/`](submission/).
-
-| Experiment | Topic | Report |
-|------------|-------|--------|
-| **Experiment 1** | Rainfall Monitoring & Alert System | [PDF](submission/experiment_reports/Experiment1_Rainfall_Alert/Experiment1_Rainfall_Alert_Report.pdf) |
-| **Experiment 2** | SCS-CN Runoff Modeling | [PDF](submission/experiment_reports/Experiment2_SCSCN_Runoff/Experiment2_SCSCN_Runoff_Report.pdf) |
-| **Experiment 3** | Reservoir Dispatch Optimization | [PDF](submission/experiment_reports/Experiment3_Reservoir_Optimization/Experiment3_Reservoir_Optimization_Report.pdf) |
-| **Experiment 4** | Flood Inundation Analysis | [PDF](submission/experiment_reports/Experiment4_Flood_Inundation/Experiment4_Flood_Inundation_Report.pdf) |
-
-All four modules are integrated in the capstone app: `streamlit run app/main.py`
-
-➡️ Full package: [submission/](submission/) · [Release v1.0](https://github.com/mahmud456alhasan-debug/smart-water-capstone/releases/tag/v1.0.0)
-
----
-
-## Reports
-
-<a id="reports"></a>
+These four experiments are the **primary technical component** of the course project. Formal PDFs and LaTeX sources are in [`submission/`](submission/).
 
 | | Document | Download |
 |--|----------|----------|
 | 📘 | **AI Engineering Portfolio** — pipeline, AI statistics, threats to validity | [PDF](submission/portfolio/AI_Engineering_Portfolio.pdf) |
-| 📄 | **Experiment 1** — Rainfall monitoring & alerting | [PDF](submission/experiment_reports/Experiment1_Rainfall_Alert/Experiment1_Rainfall_Alert_Report.pdf) |
-| 📄 | **Experiment 2** — SCS-CN runoff modeling | [PDF](submission/experiment_reports/Experiment2_SCSCN_Runoff/Experiment2_SCSCN_Runoff_Report.pdf) |
-| 📄 | **Experiment 3** — Reservoir dispatch optimization | [PDF](submission/experiment_reports/Experiment3_Reservoir_Optimization/Experiment3_Reservoir_Optimization_Report.pdf) |
-| 📄 | **Experiment 4** — Flood inundation analysis | [PDF](submission/experiment_reports/Experiment4_Flood_Inundation/Experiment4_Flood_Inundation_Report.pdf) |
+| 📄 | **Experiment 1** — Rainfall Monitoring & Alert System | [PDF](submission/experiment_reports/Experiment1_Rainfall_Alert/Experiment1_Rainfall_Alert_Report.pdf) |
+| 📄 | **Experiment 2** — SCS-CN Runoff Modeling | [PDF](submission/experiment_reports/Experiment2_SCSCN_Runoff/Experiment2_SCSCN_Runoff_Report.pdf) |
+| 📄 | **Experiment 3** — Reservoir Dispatch Optimization | [PDF](submission/experiment_reports/Experiment3_Reservoir_Optimization/Experiment3_Reservoir_Optimization_Report.pdf) |
+| 📄 | **Experiment 4** — Flood Inundation Analysis | [PDF](submission/experiment_reports/Experiment4_Flood_Inundation/Experiment4_Flood_Inundation_Report.pdf) |
 
-➡️ Folder: [`submission/`](submission/) (PDF + LaTeX) · Release bundle: [`release/`](release/)
+All four modules are integrated in the capstone app: `streamlit run app/main.py`
+
+➡️ Full package: [submission/](submission/) · Release: [v1.0](https://github.com/mahmud456alhasan-debug/smart-water-capstone/releases/tag/v1.0.0) · [`release/`](release/)
 
 ---
 
