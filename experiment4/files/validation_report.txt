@@ -71,9 +71,9 @@ SECTION 3 - SEED SENSITIVITY (@ 50 m)
 
 SECTION 4 - PERFORMANCE (ms)
 ------------------------------------------------------------------------
-  DEM load              : 0.23
-  Single calculate_flood: 0.04
-  Full curve simulation : 2.68
+  DEM load              : 0.99
+  Single calculate_flood: 0.03
+  Full curve simulation : 2.84
 
   ALL CHECKS PASSED
 ========================================================================

@@ -18,21 +18,28 @@
 
 2. TESTS
 ------------------------------------------------------------------------
- pytest collected: 23 tests
- Includes: formula, boundaries, Q<=P, cn_uncertainty band
+ pytest collected: 27 tests
+ Includes: formula, boundaries, Q<=P, rational compare, AMC adjustment, cn_uncertainty band
 
 3. VALIDATION
 ------------------------------------------------------------------------
  [X] Hand reference: P=50 mm, CN=80 -> Q=13.80 mm (validate_reference.py)
  [X] Physical: Q >= 0, Q <= P for parametrized grid
  [X] CN uncertainty: band [75, 85] at P=50 mm (cn_uncertainty.py)
+ [X] Rational vs SCS-CN at CN=100 / C=1.0 (impervious limit)
 
-4. KNOWN LIMITATIONS
+4. OPTIONAL EXTENSIONS
+------------------------------------------------------------------------
+ [X] Rational method comparison (scs_vs_rational.png)
+ [X] AMC I/II/III adjustment (NRCS TR-55)
+ [X] CN uncertainty band analysis
+
+5. KNOWN LIMITATIONS
 ------------------------------------------------------------------------
  - Single-event depth; no hydrograph routing or AMC adjustment
  - CN uncertainty shown as deterministic sensitivity band, not PDF
 
-5. REPRODUCIBILITY
+6. REPRODUCIBILITY
 ------------------------------------------------------------------------
  [X] Pure Python + pytest; no API keys required
  [X] validate_reference.py prints PASS/FAIL for grader

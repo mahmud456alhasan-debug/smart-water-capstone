@@ -1,43 +1,52 @@
 ========================================================================
   ENGINEERING AUDIT SUMMARY — Experiment 4: Flood Inundation
   Student: Mahmudul Hasan (4125999049)
-  Generated: 2026-05-30 07:50 UTC
+  Generated: 2026-06-07 UTC
 ========================================================================
 
 1. FILES CHECKED
 ------------------------------------------------------------------------
- [X] flood_inundation.py          (20,908 bytes)
+ [X] flood_inundation.py          (routing + bathtub + buildings)
+ [X] flood_animation.py           (rising-water GIF with volume overlay)
+ [X] scientific_analysis.py        (sensitivity + performance)
  [X] validate_flood.py            (747 bytes)
- [X] scientific_analysis.py       (12,325 bytes)
- [X] flood_animation.py           (3,062 bytes)
- [X] AGENTS.md                    (1,705 bytes)
- [X] prompt_log.md                (2,880 bytes)
- [X] README.md                    (1,133 bytes)
- [X] requirements.txt             (54 bytes)
+ [X] AGENTS.md
+ [X] prompt_log.md
+ [X] README.md
+ [X] requirements.txt
  RESULT: 8/8 key files present
 
 2. TESTS
 ------------------------------------------------------------------------
- pytest collected: 22 tests
- Includes: flood physics, validation checklist, scientific analysis
+ pytest collected: 40 tests
+ Includes: bathtub physics, routing subset checks, building barriers,
+            animation smoke test, scientific analysis
 
 3. VALIDATION
 ------------------------------------------------------------------------
  [X] validate_flood.py: 9/9 physical checks PASS
  [X] Stage curve 40-50 m: area % and volume monotonic
- [X] Depth >= 0; max depth <= water_level - z_min
+ [X] Edge-routed flood is subset of bathtub mask
  [X] Seed sensitivity: seeds 42, 7, 99 documented
 
-4. KNOWN LIMITATIONS
+4. OPTIONAL EXTENSIONS (course guide)
 ------------------------------------------------------------------------
- - Bathtub inundation (no BFS routing or buildings)
- - Synthetic DEM; not a real terrain dataset
+ [X] Flood routing — edge-seeded 4-neighbor BFS
+ [X] Building footprints as barriers (3 synthetic blocks)
+ [X] Rising-water animation GIF (volume on each frame)
+ [X] Real DEM loader (ESRI .asc + resampled .npy)
+ [X] Bathtub vs routed comparison at 50 m
 
-5. REPRODUCIBILITY
+5. KNOWN LIMITATIONS
+------------------------------------------------------------------------
+ - Routing is a teaching model (no hydraulic timestep or PDE)
+ - Synthetic DEM; real terrain loader optional for future work
+
+6. REPRODUCIBILITY
 ------------------------------------------------------------------------
  [X] DEM seed 42 for main results
  [X] simulate_rising_water() fixed level step 0.5 m
 
 ========================================================================
-  VERDICT: READY FOR SUBMISSION
+  VERDICT: READY FOR SUBMISSION (required + optional extensions)
 ========================================================================

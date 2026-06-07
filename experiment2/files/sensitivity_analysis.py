@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from scscn_runoff import calculate_runoff
+from scscn_runoff import calculate_runoff, rational_runoff
 
 ROOT = Path(__file__).resolve().parent
 CN_VALUES = [60, 70, 80, 90, 95, 100]
@@ -70,6 +70,30 @@ def plot_rainfall_vs_runoff(out: Path) -> None:
     print(f"Saved {out}")
 
 
+def plot_scs_vs_rational(out: Path) -> None:
+    """Optional extension: SCS-CN vs Rational method on the same rainfall axis."""
+    rainfall = np.linspace(0, 80, 161)
+    cn_pairs = [(80, 0.75), (90, 0.85), (100, 1.0)]
+    fig, ax = plt.subplots(figsize=(9, 5.5))
+    for cn, c in cn_pairs:
+        scs = [calculate_runoff(float(p), cn) for p in rainfall]
+        rat = [rational_runoff(float(p), c) for p in rainfall]
+        ax.plot(rainfall, scs, linewidth=2, label=f"SCS-CN CN={cn}")
+        ax.plot(rainfall, rat, linestyle="--", linewidth=1.5, label=f"Rational C={c}")
+    ax.plot(rainfall, rainfall, "k:", alpha=0.35, linewidth=1, label="Q = P")
+    ax.set_xlabel("Rainfall P (mm)")
+    ax.set_ylabel("Runoff Q (mm)")
+    ax.set_title("SCS-CN vs Rational method (guide optional extension)")
+    ax.legend(loc="upper left", fontsize=8)
+    ax.grid(True, alpha=0.3)
+    ax.set_xlim(0, 80)
+    ax.set_ylim(0, 80)
+    fig.tight_layout()
+    fig.savefig(out, dpi=200)
+    plt.close(fig)
+    print(f"Saved {out}")
+
+
 def domain_checks() -> None:
     df = build_cn_sensitivity_table()
     qs = df["Q_mm"].tolist()
@@ -85,8 +109,10 @@ def domain_checks() -> None:
 def main() -> None:
     out_main = ROOT / "runoff_comparison.png"
     out_cn = ROOT / "cn_sensitivity.png"
+    out_methods = ROOT / "scs_vs_rational.png"
     plot_rainfall_vs_runoff(out_main)
     plot_cn_vs_q_at_fixed_p(out_cn)
+    plot_scs_vs_rational(out_methods)
     df = build_cn_sensitivity_table()
     df.to_csv(ROOT / "sensitivity_at_P50.csv", index=False)
     domain_checks()

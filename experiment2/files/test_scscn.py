@@ -6,7 +6,15 @@ import itertools
 
 import pytest
 
-from scscn_runoff import calculate_Ia, calculate_S, calculate_runoff
+from scscn_runoff import (
+    adjust_cn_for_amc,
+    calculate_Ia,
+    calculate_S,
+    calculate_runoff,
+    calculate_runoff_amc,
+    compare_at_impervious_limit,
+    rational_runoff,
+)
 
 
 def test_zero_rainfall():
@@ -81,3 +89,45 @@ def test_calculate_s_ia_cn80():
 def test_parametrized_boundaries(p, cn, expected_min, expected_max):
     q = calculate_runoff(p, cn)
     assert expected_min <= q <= expected_max
+
+
+def test_rational_runoff_basic():
+    assert rational_runoff(50.0, 0.8) == pytest.approx(40.0)
+    assert rational_runoff(0.0, 0.9) == 0.0
+
+
+def test_rational_q_never_exceeds_p():
+    for p in (10.0, 50.0, 100.0):
+        for c in (0.3, 0.7, 1.0):
+            assert rational_runoff(p, c) <= p
+
+
+def test_impervious_limit_scs_matches_rational():
+    for p in (20.0, 50.0, 80.0):
+        cmp = compare_at_impervious_limit(p)
+        assert cmp["scs_cn_Q"] == pytest.approx(cmp["rational_Q"], abs=1e-9)
+
+
+def test_rational_invalid_c_raises():
+    with pytest.raises(ValueError, match="C must"):
+        rational_runoff(10.0, 0.0)
+    with pytest.raises(ValueError, match="C must"):
+        rational_runoff(10.0, 1.1)
+
+
+def test_amc_ordering_at_p50():
+    p = 50.0
+    cn = 80.0
+    q_i = calculate_runoff_amc(p, cn, "I")
+    q_ii = calculate_runoff_amc(p, cn, "II")
+    q_iii = calculate_runoff_amc(p, cn, "III")
+    assert q_i <= q_ii <= q_iii
+
+
+def test_amc_ii_unchanged():
+    assert adjust_cn_for_amc(80.0, "II") == pytest.approx(80.0)
+
+
+def test_amc_invalid_raises():
+    with pytest.raises(ValueError, match="AMC must"):
+        adjust_cn_for_amc(80.0, "IV")

@@ -11,7 +11,9 @@ from pathlib import Path
 
 from alerts import check_alert, log_alert
 from api_client import WeatherAPIError, fetch_current_weather
-from config import ConfigError, load_settings
+from config import ConfigError, load_settings, offline_settings
+from email_alerts import send_red_alert_email
+from simulate import SCENARIO_MM_H, auto_simulate_mm, simulate_reading
 
 
 def load_cities_from_file(path: Path) -> list[str]:
@@ -24,17 +26,27 @@ def load_cities_from_file(path: Path) -> list[str]:
     return cities
 
 
-def run_city(city: str, delay_sec: float = 0.0) -> tuple[int, str | None]:
-    settings = load_settings()
+def run_city(
+    city: str,
+    delay_sec: float = 0.0,
+    simulate_mm: float | None = None,
+    send_email: bool = False,
+) -> tuple[int, str | None]:
+    settings = offline_settings() if simulate_mm is not None else load_settings()
     if delay_sec > 0:
         time.sleep(delay_sec)
-    try:
-        reading = fetch_current_weather(city, settings, use_cache=False)
-    except WeatherAPIError as exc:
-        print(f"{city}: API ERROR: {exc}")
-        return 1, None
+    if simulate_mm is not None:
+        reading = simulate_reading(city, simulate_mm)
+    else:
+        try:
+            reading = fetch_current_weather(city, settings, use_cache=False)
+        except WeatherAPIError as exc:
+            print(f"{city}: API ERROR: {exc}")
+            return 1, None
     alert = check_alert(reading.rainfall_mm_h, settings)
     log_alert(city, alert, settings)
+    if send_email and alert.level == "RED":
+        send_red_alert_email(city, alert, settings)
     print(
         f"{city}: rain={reading.rainfall_mm_h:.2f} mm/h "
         f"({reading.rain_field_used}) -> {alert.level}"
@@ -61,13 +73,39 @@ def main() -> int:
         default=0.15,
         help="Seconds between API calls when using --file (default 0.15)",
     )
+    parser.add_argument(
+        "--simulate",
+        nargs="?",
+        const=-1.0,
+        type=float,
+        metavar="MM_H",
+        help="Offline mode: fixed mm/h for all cities, or per-city auto if flag alone",
+    )
+    parser.add_argument(
+        "--scenario",
+        choices=sorted(SCENARIO_MM_H),
+        help="Offline preset: green=5, yellow=15, red=21 mm/h",
+    )
+    parser.add_argument(
+        "--email",
+        action="store_true",
+        help="Send SMTP email (or log to email_outbox.txt) on RED alerts",
+    )
     args = parser.parse_args()
 
-    try:
-        load_settings()
-    except ConfigError as exc:
-        print(exc)
-        return 1
+    simulate_mm: float | None = None
+    if args.scenario:
+        simulate_mm = SCENARIO_MM_H[args.scenario]
+    elif args.simulate is not None:
+        simulate_mm = None if args.simulate < 0 else args.simulate
+
+    offline = simulate_mm is not None or args.simulate is not None or args.scenario
+    if not offline:
+        try:
+            load_settings()
+        except ConfigError as exc:
+            print(exc)
+            return 1
 
     if args.file:
         if not args.file.is_file():
@@ -85,7 +123,12 @@ def main() -> int:
     errors = 0
     for i, city in enumerate(cities):
         delay = args.delay if args.file and i > 0 else 0.0
-        err, level = run_city(city, delay_sec=delay)
+        city_mm = simulate_mm
+        if args.simulate is not None and args.simulate < 0 and not args.scenario:
+            city_mm = auto_simulate_mm(city)
+        err, level = run_city(
+            city, delay_sec=delay, simulate_mm=city_mm, send_email=args.email
+        )
         code |= err
         if level:
             levels[level] += 1

@@ -20,7 +20,7 @@
 
 2. TESTS
 ------------------------------------------------------------------------
- pytest collected: 20 tests
+ pytest collected: 25 tests
  Coverage: api_client, alerts, forecast_engine (mocked, no network)
 
 3. VALIDATION
@@ -35,9 +35,16 @@
 ------------------------------------------------------------------------
  - OpenWeather 3h forecast is interval accumulation, not radar nowcast
  - 6h rate uses first two forecast intervals (6 hours total)
- - Email alerts not implemented (log file only)
+ - Email/SMS alerts: SMTP via env vars, or outbox log without credentials
 
-5. REPRODUCIBILITY
+5. OPTIONAL EXTENSIONS
+------------------------------------------------------------------------
+ [X] Demo storm mode (Streamlit ?demo_mm= + slider)
+ [X] CLI --simulate / --scenario (offline, no API key)
+ [X] --email RED notifications (SMTP or email_outbox.txt)
+ [X] 50-city batch CLI: main.py --file cities_world_famous.txt
+
+6. REPRODUCIBILITY
 ------------------------------------------------------------------------
  [X] OPENWEATHER_API_KEY from environment (.env.example provided)
  [X] pytest runs offline with mocks

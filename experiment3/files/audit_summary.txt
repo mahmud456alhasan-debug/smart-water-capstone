@@ -7,6 +7,7 @@
 1. FILES CHECKED
 ------------------------------------------------------------------------
  [X] formulation.md               (4,289 bytes)
+ [X] rolling_horizon.py           (daily re-optimize extension)
  [X] reservoir_optimize.py        (24,835 bytes)
  [X] validate_constraints.py      (1,452 bytes)
  [X] tradeoff_analysis.py         (5,476 bytes)
@@ -20,8 +21,8 @@
 
 2. TESTS
 ------------------------------------------------------------------------
- pytest collected: 23 tests
- Includes: optimize, trade-off, scenarios, Monte Carlo uncertainty
+ pytest collected: 22 tests
+ Includes: optimize, trade-off, Monte Carlo uncertainty, rolling horizon
 
 3. VALIDATION
 ------------------------------------------------------------------------
@@ -32,12 +33,16 @@
  [X] Scenario analysis: drought may be infeasible (honest)
  [X] Monte Carlo: 100 perturbed inflows, P10/P50/P90 revenue & storage
 
-4. KNOWN LIMITATIONS
+4. OPTIONAL EXTENSIONS
 ------------------------------------------------------------------------
- - 7-day horizon; no MPC rolling horizon
+ [X] Monte Carlo inflow uncertainty (100 scenarios, P10/P50/P90)
+ [X] Rolling-horizon daily re-optimization (rolling_horizon.py)
+
+5. KNOWN LIMITATIONS
+------------------------------------------------------------------------
  - Inflow uncertainty is multiplicative Normal, not ensemble forecast
 
-5. REPRODUCIBILITY
+6. REPRODUCIBILITY
 ------------------------------------------------------------------------
  [X] Fixed seed (42) for Monte Carlo
  [X] formulation.md documents units and constraints before code

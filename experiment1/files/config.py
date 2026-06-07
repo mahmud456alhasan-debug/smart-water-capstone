@@ -19,6 +19,19 @@ class Settings:
     alert_log_path: str
 
 
+def offline_settings() -> Settings:
+    """Thresholds and paths for --simulate / demo runs (no API key)."""
+    return Settings(
+        openweather_api_key="offline",
+        default_city=os.getenv("MONITOR_CITY", "Beijing,CN"),
+        cache_ttl_sec=int(os.getenv("CACHE_TTL_SEC", "300")),
+        api_timeout_sec=float(os.getenv("API_TIMEOUT_SEC", "10")),
+        green_max_mm_h=float(os.getenv("GREEN_MAX_MM_H", "10")),
+        yellow_max_mm_h=float(os.getenv("YELLOW_MAX_MM_H", "20")),
+        alert_log_path=os.getenv("ALERT_LOG_PATH", "alert_log.txt"),
+    )
+
+
 def load_settings() -> Settings:
     key = os.getenv("OPENWEATHER_API_KEY", "").strip()
     if not key:

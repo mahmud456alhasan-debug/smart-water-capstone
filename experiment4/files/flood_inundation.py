@@ -12,6 +12,7 @@ Conventions (documented in prompt_log.md):
 from __future__ import annotations
 
 import csv
+from collections import deque
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, List, Optional, Sequence, Tuple, Union
@@ -81,16 +82,64 @@ def generate_dem(
 
 
 def load_dem(filepath: Union[str, Path, None] = None) -> np.ndarray:
-    """Load dem_data.npy or generate and save if missing."""
+    """Load dem_data.npy / .asc or generate and save if missing."""
     path = Path(filepath) if filepath else DEM_PATH
     if path.is_file():
+        if path.suffix.lower() == ".asc":
+            return load_dem_ascii(path)
         dem = np.load(path)
         if dem.shape != (DEM_SIZE, DEM_SIZE):
-            raise ValueError(f"DEM shape {dem.shape} expected ({DEM_SIZE}, {DEM_SIZE})")
+            dem = resize_dem_to_grid(dem, DEM_SIZE)
         return np.asarray(dem, dtype=np.float64)
     dem = generate_dem()
     save_dem(dem, path)
     return dem
+
+
+def resize_dem_to_grid(dem: np.ndarray, size: int = DEM_SIZE) -> np.ndarray:
+    """Nearest-neighbour resample to size x size (for imported rasters)."""
+    dem = np.asarray(dem, dtype=np.float64)
+    if dem.shape == (size, size):
+        return dem
+    ny, nx = dem.shape
+    row_idx = (np.arange(size) * ny / size).astype(int).clip(0, ny - 1)
+    col_idx = (np.arange(size) * nx / size).astype(int).clip(0, nx - 1)
+    return dem[np.ix_(row_idx, col_idx)]
+
+
+def load_dem_ascii(path: Union[str, Path]) -> np.ndarray:
+    """
+    Load ESRI ASCII grid (.asc): ncols, nrows, xllcorner, yllcorner, cellsize, NODATA_value.
+    """
+    path = Path(path)
+    header: dict = {}
+    data_rows: List[List[float]] = []
+    with path.open(encoding="utf-8") as f:
+        for line in f:
+            parts = line.split()
+            if not parts:
+                continue
+            key = parts[0].lower()
+            if key in ("ncols", "nrows", "xllcorner", "yllcorner", "cellsize", "nodata_value"):
+                header[key] = float(parts[1]) if key != "ncols" and key != "nrows" else int(float(parts[1]))
+                continue
+            try:
+                data_rows.append([float(x) for x in parts])
+            except ValueError:
+                continue
+    if "ncols" not in header or "nrows" not in header:
+        raise ValueError(f"Invalid ASC header in {path}")
+    nodata = header.get("nodata_value", -9999.0)
+    dem = np.array(data_rows, dtype=np.float64)
+    if dem.shape != (int(header["nrows"]), int(header["ncols"])):
+        dem = dem.reshape(int(header["nrows"]), int(header["ncols"]))
+    dem = np.where(dem == nodata, np.nan, dem)
+    if np.any(np.isnan(dem)):
+        fill = float(np.nanmean(dem))
+        dem = np.where(np.isnan(dem), fill, dem)
+    # ASC rows often top-to-bottom; flip for origin='lower' plots
+    dem = np.flipud(dem)
+    return resize_dem_to_grid(dem, DEM_SIZE)
 
 
 def save_dem(dem: np.ndarray, filepath: Union[str, Path, None] = None) -> Path:
@@ -122,6 +171,163 @@ def calculate_flood_volume(
 ) -> float:
     """Total flood volume (m^3) = sum(depth) * cell area."""
     return float(np.sum(depth) * cell_area_m2)
+
+
+@dataclass(frozen=True)
+class BuildingFootprint:
+    """Axis-aligned building block on the DEM grid (row/col, origin='lower')."""
+
+    row_min: int
+    col_min: int
+    row_max: int
+    col_max: int
+
+
+def default_building_footprints(size: int = DEM_SIZE) -> List[BuildingFootprint]:
+    """Three synthetic barrier blocks for the optional extension demo."""
+    return [
+        BuildingFootprint(35, 40, 45, 55),
+        BuildingFootprint(60, 20, 70, 35),
+        BuildingFootprint(15, 70, 25, 85),
+    ]
+
+
+def building_barrier_mask(
+    shape: Tuple[int, int],
+    footprints: Sequence[BuildingFootprint],
+) -> np.ndarray:
+    """True where building cells block lateral flood spread."""
+    mask = np.zeros(shape, dtype=bool)
+    for fp in footprints:
+        r0, r1 = max(0, fp.row_min), min(shape[0], fp.row_max)
+        c0, c1 = max(0, fp.col_min), min(shape[1], fp.col_max)
+        mask[r0:r1, c0:c1] = True
+    return mask
+
+
+def calculate_flood_routed(
+    dem: np.ndarray,
+    water_level: float,
+    barrier_mask: Optional[np.ndarray] = None,
+) -> Tuple[np.ndarray, np.ndarray, float]:
+    """
+    Edge-seeded 4-neighbor flood spread (optional extension).
+
+    Water enters from domain edges where elevation < water_level and spreads
+    to adjacent wet cells. Endorheic cells below the level but not connected
+    to the edge remain dry — unlike the bathtub model.
+    """
+    dem = np.asarray(dem, dtype=np.float64)
+    ny, nx = dem.shape
+    eligible = dem < water_level
+    if barrier_mask is not None:
+        eligible &= ~np.asarray(barrier_mask, dtype=bool)
+
+    flooded = np.zeros((ny, nx), dtype=bool)
+    queue: deque[Tuple[int, int]] = deque()
+
+    for i in range(ny):
+        for j in range(nx):
+            if i == 0 or i == ny - 1 or j == 0 or j == nx - 1:
+                if eligible[i, j]:
+                    flooded[i, j] = True
+                    queue.append((i, j))
+
+    while queue:
+        i, j = queue.popleft()
+        for di, dj in ((0, 1), (0, -1), (1, 0), (-1, 0)):
+            ni, nj = i + di, j + dj
+            if 0 <= ni < ny and 0 <= nj < nx and eligible[ni, nj] and not flooded[ni, nj]:
+                flooded[ni, nj] = True
+                queue.append((ni, nj))
+
+    depth = np.maximum(0.0, water_level - dem)
+    depth = np.where(flooded, depth, 0.0)
+    percentage = 100.0 * float(flooded.sum()) / dem.size
+    return flooded, depth, percentage
+
+
+def flood_result_routed(
+    dem: np.ndarray,
+    water_level: float,
+    barrier_mask: Optional[np.ndarray] = None,
+) -> FloodResult:
+    """Statistics for edge-routed inundation."""
+    mask, depth, pct = calculate_flood_routed(dem, water_level, barrier_mask)
+    wet = int(mask.sum())
+    if wet:
+        mean_d = float(depth[mask].mean())
+        max_d = float(depth[mask].max())
+    else:
+        mean_d = 0.0
+        max_d = 0.0
+    return FloodResult(
+        water_level_m=water_level,
+        flooded_mask=mask,
+        depth=depth,
+        percentage=pct,
+        mean_depth_wet_m=mean_d,
+        flooded_area_m2=wet * CELL_SIZE_M**2,
+        max_depth_m=max_d,
+        flood_volume_m3=calculate_flood_volume(depth),
+    )
+
+
+def compare_bathtub_vs_routed(
+    dem: np.ndarray,
+    water_level: float,
+    barrier_mask: Optional[np.ndarray] = None,
+) -> dict:
+    """Side-by-side summary for report tables."""
+    bath = flood_result(dem, water_level)
+    routed = flood_result_routed(dem, water_level, barrier_mask)
+    return {
+        "water_level_m": water_level,
+        "bathtub_pct": bath.percentage,
+        "routed_pct": routed.percentage,
+        "bathtub_volume_m3": bath.flood_volume_m3,
+        "routed_volume_m3": routed.flood_volume_m3,
+        "routed_is_subset": bool(np.all(~routed.flooded_mask | bath.flooded_mask)),
+    }
+
+
+def plot_routing_comparison(
+    dem: np.ndarray,
+    water_level: float,
+    outpath: Union[str, Path],
+    barrier_mask: Optional[np.ndarray] = None,
+    dpi: int = 200,
+) -> Path:
+    """Bathtub vs edge-routed extent at one water level."""
+    import matplotlib.pyplot as plt
+
+    bath = flood_result(dem, water_level)
+    routed = flood_result_routed(dem, water_level, barrier_mask)
+    outpath = Path(outpath)
+
+    fig, axes = plt.subplots(1, 2, figsize=(10, 4.5))
+    for ax, res, title in zip(
+        axes,
+        (bath, routed),
+        (
+            f"Bathtub ({bath.percentage:.1f}% flooded)",
+            f"Edge-routed ({routed.percentage:.1f}% flooded)",
+        ),
+    ):
+        ax.imshow(dem, cmap="gray", origin="lower", vmin=dem.min(), vmax=dem.max())
+        depth_ma = np.ma.masked_where(~res.flooded_mask, res.depth)
+        ax.imshow(depth_ma, cmap="Blues", origin="lower", alpha=0.65, vmin=0)
+        if barrier_mask is not None:
+            barrier = np.ma.masked_where(~barrier_mask, np.ones_like(dem))
+            ax.imshow(barrier, cmap="Reds", origin="lower", alpha=0.35, vmin=0, vmax=1)
+        ax.set_title(f"{title} @ {water_level:.0f} m")
+        ax.set_xlabel("Column")
+        ax.set_ylabel("Row")
+    fig.suptitle("Bathtub vs connected flood routing", fontsize=11)
+    fig.tight_layout()
+    fig.savefig(outpath, dpi=dpi, bbox_inches="tight")
+    plt.close(fig)
+    return outpath
 
 
 def flood_result(dem: np.ndarray, water_level: float) -> FloodResult:
@@ -556,6 +762,7 @@ def export_volume_curve_csv(
 
 def run_pipeline(root: Optional[Path] = None) -> dict:
     """Generate all Experiment 4 deliverables."""
+    from flood_animation import build_flood_animation
     from scientific_analysis import run_scientific_outputs
 
     root = root or ROOT
@@ -566,6 +773,11 @@ def run_pipeline(root: Optional[Path] = None) -> dict:
     r40 = flood_result(dem, 40.0)
     r50 = flood_result(dem, 50.0)
     plot_side_by_side(dem, [40.0, 50.0], root / "flood_comparison_40_50m.png")
+    build_flood_animation(dem, outpath=root / "flood_rise_animation.gif")
+
+    barriers = building_barrier_mask(dem.shape, default_building_footprints())
+    plot_routing_comparison(dem, 50.0, root / "routing_comparison_50m.png", barriers)
+    routing_cmp = compare_bathtub_vs_routed(dem, 50.0, barriers)
 
     export_curve_csv(curve, root / "flood_percentages.csv")
     export_curve_csv(curve, root / "flood_curve_data.csv")
@@ -591,20 +803,26 @@ def run_pipeline(root: Optional[Path] = None) -> dict:
         "volume_50_m3": r50.flood_volume_m3,
         "sensitivity": sci["sensitivity"],
         "benchmarks": sci["benchmarks"],
+        "routing_comparison_50m": routing_cmp,
     }
 
 
 def main() -> None:
-    print("Experiment 4 - Flood inundation (DEM bathtub model)")
+    print("Experiment 4 - Flood inundation (DEM bathtub + routing extensions)")
     out = run_pipeline()
     print(f"DEM elevation: {out['dem'].min():.1f} - {out['dem'].max():.1f} m")
     print(f"40 m: {out['r40'].percentage:.2f}% flooded, volume {out['volume_40_m3']:.0f} m^3")
     print(f"50 m: {out['r50'].percentage:.2f}% flooded, volume {out['volume_50_m3']:.0f} m^3")
+    rc = out["routing_comparison_50m"]
+    print(
+        f"50 m routing: bathtub {rc['bathtub_pct']:.2f}% -> routed {rc['routed_pct']:.2f}%"
+    )
     print(f"Curve points: {len(out['curve'])} (step {CURVE_LEVEL_STEP} m)")
     print(f"Validation: {'PASS' if out['check']['ok'] else 'FAIL'}")
     print("\nWrote dem_overview.png, dem_histogram.png, flood_extent_*.png,")
-    print("flood_curve.png, flood_volume_curve.png, interpretation.md,")
-    print("sensitivity_seeds.csv, validation_report.txt")
+    print("flood_curve.png, flood_volume_curve.png, flood_rise_animation.gif,")
+    print("routing_comparison_50m.png, interpretation.md, sensitivity_seeds.csv,")
+    print("validation_report.txt")
 
 
 if __name__ == "__main__":
