@@ -8,17 +8,27 @@ Verified: `pytest --collect-only` on 2026-05-31.
 
 ## One-sentence answer (safe for professors)
 
-> **Capstone GitHub repository:** **33** automated pytest tests (`pytest -q` in this repo).  
-> **Additional experiment development folders** (local `ai_water_lab/experiment*`, not in this repo): **88** pytest tests.  
-> **Total verification tests:** **121** — only **33** run in this repo’s CI.
+> **Capstone GitHub CI:** **33** automated pytest tests (`pytest -q` at repo root).  
+> **Experiment appendix suites:** **114** pytest tests in `experiment1/files/` … `experiment4/files/`.  
+> **Total verification tests:** **147** — only **33** run in GitHub Actions CI.
 
 ---
 
-## Capstone repository (GitHub)
+## Verification summary
 
 | Scope | Command | Count |
 |-------|---------|------:|
-| Capstone pytest | `cd capstone && pytest -q` | **33** |
+| Capstone CI (integrated app) | `pytest -q` (repo root) | **33** |
+| Experiment 1 — Rainfall | `cd experiment1/files && pytest -q` | **25** |
+| Experiment 2 — SCS-CN | `cd experiment2/files && pytest -q` | **27** |
+| Experiment 3 — Reservoir | `cd experiment3/files && pytest -q` | **22** |
+| Experiment 4 — Flood | `cd experiment4/files && pytest -q` | **40** |
+| **Experiment subtotal** | | **114** |
+| **Grand total** | | **147** |
+
+---
+
+## Capstone repository (GitHub CI)
 
 Breakdown by file: `test_runoff.py` (11), `test_weather.py` (6), `test_flood.py` (5), `test_reservoir.py` (5), `test_integration.py` (4), `test_validation.py` (2), `conftest.py` (fixtures only).
 
@@ -26,27 +36,22 @@ Breakdown by file: `test_runoff.py` (11), `test_weather.py` (6), `test_flood.py`
 
 ---
 
-## Experiment codebases (local `ai_water_lab/`, not duplicated in capstone repo)
+## Experiment appendix tests (in this repository)
 
-| Experiment | Folder | pytest count |
-|------------|--------|-------------:|
-| Exp 1 Rainfall | `experiment1_rainfall_alert/` | 20 |
-| Exp 2 SCS-CN | `experiment2_scscn_runoff/` | 23 |
-| Exp 3 Reservoir | `experiment3_reservoir_optimization/` | 23 |
-| Exp 4 Flood | `experiment4_flood_inundation/` | 22 |
-| **Subtotal** | | **88** |
+Each `experimentN/files/` folder contains standalone pytest for that experiment (simulate/email, rational/AMC, rolling horizon, routing/GIF/DEM loader, etc.).
 
-Evidence in formal reports: [`portfolio/AI_Engineering_Portfolio.md`](../portfolio/AI_Engineering_Portfolio.md)
+Evidence: per-experiment `audit_summary.txt`, README feature tables, and formal PDF reports.
 
 ---
 
-## What “88 tests” means
+## What to tell a grader
 
-**88** = supplementary pytest in local experiment development folders (not run in this repo’s GitHub CI).
-
-**33** = automated tests in this capstone repository (`pytest -q`).
-
-See portfolio PDF for experiment-level test evidence.
+| Claim | Accurate? |
+|-------|-----------|
+| “This repo has 33 CI tests” | ✅ Run `pytest -q` at root |
+| “Each experiment has its own test suite” | ✅ Run pytest inside `experimentN/files/` |
+| “147 total verification tests” | ✅ 33 + 114 (not all in one CI job) |
+| “Clone and `pytest -q` gives 147” | ❌ Root pytest collects **33** only |
 
 ---
 

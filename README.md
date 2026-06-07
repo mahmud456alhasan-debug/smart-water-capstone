@@ -50,21 +50,34 @@ Water managers must act under uncertainty — heavy rain, limited storage, and f
 | | |
 |--|--|
 | **4** core engineering experiments | **5** formal PDF reports |
-| **33** automated tests in this repository (CI) | **96%** coverage on `src/` |
+| **33** automated tests in capstone CI (`pytest -q` at repo root) | **114** experiment pytest suites (`experimentN/files/`) |
+| **147** total verification tests | **96%** coverage on `src/` |
 | **18** physical validation rules | **16** weekly lab reports (supporting) |
 
-*Additional local experiment verification:* **88** supplementary pytest tests in development folders (not in this repo). See [docs/TEST_COUNTS.md](docs/TEST_COUNTS.md).
+### Verification layer
+
+| Layer | Count | How to run |
+|-------|------:|------------|
+| Capstone repository (GitHub CI) | **33** | `pytest -q` (repo root) |
+| Experiment 1 — Rainfall | **25** | `cd experiment1/files && pytest -q` |
+| Experiment 2 — SCS-CN | **27** | `cd experiment2/files && pytest -q` |
+| Experiment 3 — Reservoir | **22** | `cd experiment3/files && pytest -q` |
+| Experiment 4 — Flood | **40** | `cd experiment4/files && pytest -q` |
+| **Total verification tests** | **147** | See [docs/TEST_COUNTS.md](docs/TEST_COUNTS.md) |
+| Physical validation rules | **18** | [docs/PHYSICAL_VALIDATION.md](docs/PHYSICAL_VALIDATION.md) |
+
+> **Note:** Only the **33** capstone tests run in GitHub Actions CI. The **114** experiment tests live in `experiment1/files/` … `experiment4/files/` and are run per folder during development and grading. This keeps CI fast while preserving full per-experiment verification.
 
 ### Repository layout
 
 ```text
 smart-water-capstone/
-├── experiment1/ … experiment4/   Core hydrology experiments (PDF + LaTeX + code)
+├── experiment1/ … experiment4/   Core hydrology experiments (reports, code, verification)
 ├── portfolio/                    AI Engineering Portfolio
 ├── assignment1/ … assignment4/   Course assignments
-├── app/ · src/ · tests/          Integrated capstone (Streamlit + 33 pytest)
+├── app/ · src/ · tests/          Integrated capstone (Streamlit + 33 pytest CI)
 ├── lab_reports/                  16 weekly lab reports
-└── docs/                           Engineering documentation
+└── docs/                         Engineering documentation
 ```
 
 ---
@@ -84,6 +97,16 @@ These four experiments are the **primary technical component** of the course pro
 | 📄 | **Experiment 4** — Flood Inundation Analysis | [PDF](experiment4/Experiment4_Flood_Inundation_Report.pdf) · [folder](experiment4/) |
 
 All four modules are integrated in the capstone app: `streamlit run app/main.py`
+
+### Experiment verification summary
+
+| Experiment | pytest count | Appendix code |
+|------------|-------------:|---------------|
+| [Experiment 1](experiment1/) — Rainfall alert | **25** | [`experiment1/files/`](experiment1/files/) |
+| [Experiment 2](experiment2/) — SCS-CN runoff | **27** | [`experiment2/files/`](experiment2/files/) |
+| [Experiment 3](experiment3/) — Reservoir dispatch | **22** | [`experiment3/files/`](experiment3/files/) |
+| [Experiment 4](experiment4/) — Flood inundation | **40** | [`experiment4/files/`](experiment4/files/) |
+| **Experiment subtotal** | **114** | Each folder includes PDF report + `screenshots/` |
 
 ➡️ Release: [v1.0](https://github.com/mahmud456alhasan-debug/smart-water-capstone/releases/tag/v1.0.0) · [`release/`](release/)
 

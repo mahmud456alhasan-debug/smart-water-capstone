@@ -55,7 +55,7 @@
 | Experiments not in capstone repo | Grader may not see 88 tests | Point to portfolio + local paths in TEST_COUNTS.md |
 | Case A = test-design assumption, not wrong code | Slightly weaker than Case B | Lead with Case B (`buggy_rainfall.py`) |
 | GitHub About / Release empty | Presentation | Manual — GITHUB_SETUP.md |
-| No PDF compiled for assignment3/4 | LMS upload | PDFs in `assignment3/` and `assignment4/` (recompiled 2026-06) |
+| No PDF compiled for assignment3/4 | LMS upload | PDFs in `assignment3/` and `assignment4/` (recompiled 2026-05) |
 
 ---
 

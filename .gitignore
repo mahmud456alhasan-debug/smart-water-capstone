@@ -38,3 +38,7 @@ htmlcov/
 # Assignment 2 — MNIST dataset (auto-download)
 assignment2/cnn_mnist/data/
 smart-water-capstone/
+
+# Experiment 1 — runtime logs (local demo only)
+experiment1/files/alert_log.txt
+experiment1/files/email_outbox.txt
